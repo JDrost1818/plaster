@@ -1,21 +1,30 @@
 package github.jdrost1818.domain;
 
-import lombok.AllArgsConstructor;
+import com.google.common.collect.Lists;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @Data
-@AllArgsConstructor
 public class JavaType {
 
-    private String type;
+    private JavaTypeDeclaration type;
 
-    private List<String> dependencies = new ArrayList<>();
+    private List<String> dependencies;
 
     public JavaType(String type) {
-        this.type = type;
+        this(type, Lists.newArrayList());
+    }
+
+    public JavaType(String type, List<String> dependencies) {
+        this.type = new JavaTypeDeclaration(type);
+        this.dependencies = dependencies;
+    }
+
+    public List<String> getDependencies() {
+        return nonNull(this.dependencies) ? this.dependencies : Lists.newArrayList();
     }
 
 }
