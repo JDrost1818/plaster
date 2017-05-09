@@ -1,6 +1,7 @@
 package github.jdrost1818.data;
 
 import com.google.common.collect.Lists;
+import github.jdrost1818.exception.EnumSearchException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public enum Mode {
      * @return the mode corresponding to the search term provided
      * @throws NoSuchElementException  if no matching mode
      */
-    public static Mode getMode(String searchTerm) {
+    public static Mode getMode(String searchTerm) throws EnumSearchException {
         if (isNull(searchTerm)) {
             throw new IllegalArgumentException("searchTerm cannot be null");
         }
@@ -46,7 +47,7 @@ public enum Mode {
             }
         }
 
-        throw new NoSuchElementException("Cannot find mode for: " + searchTerm);
+        throw new EnumSearchException("Cannot find mode for: " + searchTerm);
     }
 
     /**
