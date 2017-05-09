@@ -1,5 +1,7 @@
 package github.jdrost1818;
 
+import github.jdrost1818.service.ConfigurationService;
+
 /**
  * Main entry point
  *
@@ -11,6 +13,7 @@ package github.jdrost1818;
 public class Plaster {
 
     public static void main(String[] args) {
+        ConfigurationService.load();
         System.out.println("Hello World");
     }
 

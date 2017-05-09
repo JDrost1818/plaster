@@ -5,7 +5,6 @@ import github.jdrost1818.domain.JavaType;
 import github.jdrost1818.exception.EnumSearchException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -38,20 +37,43 @@ public enum StoredJavaType {
             Lists.newArrayList("date")),
     TIMESTAMP(
             new JavaType("Timestamp", Lists.newArrayList("java.util.Timestamp")),
-            Lists.newArrayList("timestamp"));
+            Lists.newArrayList("timestamp")),
+
+    LIST(
+            new JavaType("List", Lists.newArrayList("java.util.List")),
+            Lists.newArrayList("list"),
+            1),
+    SET(
+            new JavaType("Set", Lists.newArrayList("java.util.Set")),
+            Lists.newArrayList("set"),
+            1),
+    MAP(
+            new JavaType("Map", Lists.newArrayList("java.util.Map")),
+            Lists.newArrayList("map"),
+            2);
 
     private final JavaType type;
     private final JavaType primitiveType;
     private final List<String> searchTerms;
+    public final int numTypedArgsRequired;
 
     StoredJavaType(JavaType type, List<String> searchTerms) {
         this(type, null, searchTerms);
     }
 
+    StoredJavaType(JavaType type, List<String> searchTerms, int numTypedArgsRequired) {
+        this(type, null, searchTerms, numTypedArgsRequired);
+    }
+
     StoredJavaType(JavaType type, JavaType primitiveType, List<String> searchTerms) {
+        this(type, primitiveType, searchTerms, 0);
+    }
+
+    StoredJavaType(JavaType type, JavaType primitiveType, List<String> searchTerms, int numTypedArgsRequired) {
         this.type = type;
         this.primitiveType = primitiveType;
         this.searchTerms = searchTerms;
+        this.numTypedArgsRequired = numTypedArgsRequired;
     }
 
     public static StoredJavaType getStoredJavaType(String searchTerm) throws EnumSearchException {
