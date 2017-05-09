@@ -19,4 +19,7 @@ public class ServiceProvider {
     @Getter
     private static final SearchService searchService = new SearchService();
 
+    @Getter
+    private static final DependencyService dependencyService = new DependencyService();
+
 }

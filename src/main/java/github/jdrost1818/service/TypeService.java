@@ -1,6 +1,5 @@
 package github.jdrost1818.service;
 
-import com.google.common.collect.Lists;
 import github.jdrost1818.data.Regex;
 import github.jdrost1818.data.Setting;
 import github.jdrost1818.data.StoredJavaType;
@@ -26,16 +25,26 @@ public class TypeService {
     @Setter
     private SearchService searchService = ServiceProvider.getSearchService();
 
+    @Setter
+    private DependencyService dependencyService = ServiceProvider.getDependencyService();
+
     TypeService() {
         // Do nothing
     }
 
+    /**
+     * Validates that the string is correctly formatted for a Java type
+     *
+     * @param typeString
+     *          string to validate
+     * @return whether the string is valid
+     */
     public boolean validateType(String typeString) {
         String trimmedString = typeString.replace(" ", "");
 
         return typeString.contains("<")
                 ? this.validateComplexType(trimmedString, new Stack<>())
-                : this.validateString(trimmedString, true);
+                : this.validateClassName(trimmedString, true);
     }
 
     /**
@@ -43,9 +52,14 @@ public class TypeService {
      * its dependencies if it can find a matching class.
      *
      * @param typeString
-     * @return
+     *          string to convert
+     * @return the converted type
      */
     public JavaType convertToType(String typeString) {
+        if (!validateType(typeString)) {
+            throw new PlasterException("Malformed type provided: " + typeString);
+        }
+
         StoredJavaType storedJavaType = null;
         try {
             storedJavaType = StoredJavaType.getStoredJavaType(typeString);
@@ -55,7 +69,7 @@ public class TypeService {
         }
 
         boolean shouldUsePrimitive = this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES);
-        return nonNull(storedJavaType) ? storedJavaType.getType(shouldUsePrimitive) : fetchCustomType(typeString);
+        return nonNull(storedJavaType) ? storedJavaType.getType(shouldUsePrimitive) : this.fetchCustomType(typeString);
     }
 
     private JavaType fetchCustomType(String typeString) {
@@ -64,50 +78,99 @@ public class TypeService {
         if (matchingClasses.size() > 1) {
             String possibleChoices = StringUtils.join(matchingClasses, ",\n\t");
             throw new PlasterException("Could not decide which type to use. Options: " + possibleChoices);
+        } else if (matchingClasses.isEmpty()) {
+            throw new PlasterException("Could not find custom type: " + typeString);
         }
 
-        return matchingClasses.isEmpty()
-                ? null : new JavaType(matchingClasses.get(0), this.fetchDependencies(matchingClasses.get(0)));
+        String matchingClass = matchingClasses.get(0);
+
+        return new JavaType(matchingClass, this.dependencyService.fetchDependencies(matchingClass));
     }
 
-    private List<String> fetchDependencies(String className) {
-        return Lists.newArrayList();
-    }
-
+    /**
+     * Recursive function to determine whether or not the given string is a valid
+     * Java type. This examines the parameterized types to ensure everything is properly
+     * formatted
+     *
+     * @param typeString
+     *          string to check
+     * @param stack
+     *          the stack of typed parameters so far
+     * @return whether the string is a properly formatted java type
+     */
     private boolean validateComplexType(String typeString, Stack<String> stack) {
         if (typeString.isEmpty()) {
-            return stack.size() == 1 && validateString(stack.pop(), false);
-        } else if (typeString.isEmpty()
-                || POP_PATTERN.matcher(typeString.substring(0, 1)).matches()) {
+            // Since there is nothing left to parse, there should be
+            // exactly one item on the stack left to verify, if there
+            // are more or less, it means the string is not valid
+            return stack.size() == 1 && validateClassName(stack.pop(), false);
+        } else if (POP_PATTERN.matcher(typeString.substring(0, 1)).matches()) {
+            // If we've hit a closing tag '>' or a ',', it
+            // signifies we should pop an element of the stack
+            // Thus we validate that item, and remove the pop indicator
+            //
+            // The typeString will look like ",Something>" or ">..."
             String newTypeString = typeString.substring(1);
-            return validateString(stack.pop(), false)
+            return validateClassName(stack.pop(), false)
                     && validateComplexType(newTypeString, stack);
         } else {
+            // This means we are adding something needs to be added to the stack
+            // because we are not done, and we are not removing anything from the stack
+            //
+            // The typeString will look like "Something..."
             String strToAddToStack;
             int leftIndex = !typeString.contains("<") ? Integer.MAX_VALUE : typeString.indexOf("<");
             int rightIndex = !typeString.contains(">") ? Integer.MAX_VALUE : typeString.indexOf(">");
             int commaIndex = !typeString.contains(",") ? Integer.MAX_VALUE : typeString.indexOf(",");
 
+            // We just need to get the text between the next indicator,
+            // whether that's an "<", ">", or "," doesn't matter now,
+            // we will be adding something to the stack regardless
             if (leftIndex < commaIndex && leftIndex < rightIndex) {
+                // Since "<" isn't a pop indicator, we don't want to keep it
                 strToAddToStack = typeString.substring(0, leftIndex);
                 typeString = typeString.substring(leftIndex + 1);
             } else if (rightIndex < commaIndex) {
+                // Since ">" is a pop indicator, we want to keep it
                 strToAddToStack = typeString.substring(0, rightIndex);
                 typeString = typeString.substring(rightIndex);
             } else if (commaIndex != Integer.MAX_VALUE){
+                // Since "," is a pop indicator, we want to keep it
                 strToAddToStack = typeString.substring(0, commaIndex);
                 typeString = typeString.substring(commaIndex);
             } else {
-                strToAddToStack = typeString;
-                typeString = stack.size() > 0 ? ">" : "";
+                // Since we are dealing with typed parameters in this function,
+                // there will never be an instance for a valid string where
+                // the string isn't empty and there are no "<", ">", or ","s left
+                return false;
             }
 
+            // Add the new string and recurse
             stack.add(strToAddToStack);
             return validateComplexType(typeString, stack);
         }
     }
 
-    private boolean validateString(String str, boolean allowForPrimitives) {
+    /**
+     * Validates that the string provided is a proper class. This only works
+     * for non-parameterized types.
+     *
+     * Examples:
+     * <pre>
+     *     Integer, false ->                true
+     *     integer, false ->                false
+     *     int, true ->                     true
+     *     int, false ->                    false
+     *     Something<Something>, false      false -> all parameterized types will be false
+     * </pre>
+     *
+     * @param str
+     *          string to check
+     * @param allowForPrimitives
+     *          whether to allow primitives such as "int", "float", etc.
+     * @return whether the string is a valid class name
+     */
+    private boolean validateClassName(String str, boolean allowForPrimitives) {
         return StringUtils.isNotBlank(str)
                 && allowForPrimitives
                     ? Regex.JAVA_CLASS_NAME_WITH_PRIMITIVES.matcher(str).matches()

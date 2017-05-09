@@ -1,6 +1,7 @@
 package github.jdrost1818.data;
 
 import com.google.common.collect.Lists;
+import github.jdrost1818.domain.JavaDependency;
 import github.jdrost1818.domain.JavaType;
 import github.jdrost1818.exception.EnumSearchException;
 
@@ -33,22 +34,22 @@ public enum StoredJavaType {
             Lists.newArrayList("string", "str")),
 
     DATE(
-            new JavaType("Date", Lists.newArrayList("java.util.Date")),
+            new JavaType("Date", Lists.newArrayList(new JavaDependency("java.util.Date"))),
             Lists.newArrayList("date")),
     TIMESTAMP(
-            new JavaType("Timestamp", Lists.newArrayList("java.util.Timestamp")),
+            new JavaType("Timestamp", Lists.newArrayList(new JavaDependency("java.util.Timestamp"))),
             Lists.newArrayList("timestamp")),
 
     LIST(
-            new JavaType("List", Lists.newArrayList("java.util.List")),
+            new JavaType("List", Lists.newArrayList(new JavaDependency("java.util.List"))),
             Lists.newArrayList("list"),
             1),
     SET(
-            new JavaType("Set", Lists.newArrayList("java.util.Set")),
+            new JavaType("Set", Lists.newArrayList(new JavaDependency("java.util.Set"))),
             Lists.newArrayList("set"),
             1),
     MAP(
-            new JavaType("Map", Lists.newArrayList("java.util.Map")),
+            new JavaType("Map", Lists.newArrayList(new JavaDependency("java.util.Map"))),
             Lists.newArrayList("map"),
             2);
 
