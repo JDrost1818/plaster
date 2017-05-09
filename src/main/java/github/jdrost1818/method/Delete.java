@@ -1,4 +1,4 @@
-package github.jdrost1818.methods;
+package github.jdrost1818.method;
 
 import github.jdrost1818.service.DeleteService;
 import github.jdrost1818.service.ServiceProvider;

@@ -2,9 +2,9 @@ package github.jdrost1818.data;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.domain.FileInformation;
-import github.jdrost1818.methods.Delete;
-import github.jdrost1818.methods.Generate;
-import github.jdrost1818.methods.PlasterMethod;
+import github.jdrost1818.method.Delete;
+import github.jdrost1818.method.Generate;
+import github.jdrost1818.method.PlasterMethod;
 
 import java.util.List;
 
