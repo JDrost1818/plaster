@@ -1,12 +1,11 @@
 package github.jdrost1818.service;
 
 import github.jdrost1818.domain.FileInformation;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class GenerateService {
-
-    GenerateService() {
-       // Do nothing
-    }
 
     public void generateModel(FileInformation fileInformation) {
         

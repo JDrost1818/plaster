@@ -1,12 +1,11 @@
 package github.jdrost1818.service;
 
 import github.jdrost1818.domain.FileInformation;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class DeleteService {
-
-    DeleteService() {
-        // Do nothing
-    }
 
     public void deleteModel(FileInformation fileInformation) {
 

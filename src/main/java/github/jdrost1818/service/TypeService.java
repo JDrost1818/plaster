@@ -6,6 +6,8 @@ import github.jdrost1818.data.StoredJavaType;
 import github.jdrost1818.domain.JavaType;
 import github.jdrost1818.exception.EnumSearchException;
 import github.jdrost1818.exception.PlasterException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +21,7 @@ import static java.util.Objects.nonNull;
 /**
  * Service for converting strings into full fledged {@link JavaType}s
  */
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class TypeService {
 
     private static final Pattern POP_PATTERN = Pattern.compile("[>,]");
@@ -31,10 +34,6 @@ public class TypeService {
 
     @Setter
     private DependencyService dependencyService = ServiceProvider.getDependencyService();
-
-    TypeService() {
-        // Do nothing
-    }
 
     /**
      * Validates that the string is correctly formatted for a Java type
