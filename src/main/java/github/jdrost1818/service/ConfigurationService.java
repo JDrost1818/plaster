@@ -7,12 +7,20 @@ import github.jdrost1818.data.Setting;
  */
 public class ConfigurationService {
 
-    public static void load() {
+    ConfigurationService() {
+        load();
+    }
+
+    public void load() {
 
     }
 
-    public static String get(Setting setting) {
+    public String get(Setting setting) {
         return "";
+    }
+
+    public boolean getBoolean(Setting setting) {
+        return true;
     }
 
 }

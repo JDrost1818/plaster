@@ -1,15 +1,18 @@
 package github.jdrost1818.methods;
 
 import github.jdrost1818.service.DeleteService;
+import github.jdrost1818.service.ServiceProvider;
 
 public class Delete {
 
-    public static final PlasterMethod MODEL = (DeleteService::deleteModel);
+    private static final DeleteService deleteService = ServiceProvider.getDeleteService();
 
-    public static final PlasterMethod CONTROLLER = (DeleteService::deleteController);
+    public static final PlasterMethod MODEL = (deleteService::deleteModel);
 
-    public static final PlasterMethod SERVICE = (DeleteService::deleteService);
+    public static final PlasterMethod CONTROLLER = (deleteService::deleteController);
 
-    public static final PlasterMethod REPOSITORY = (DeleteService::deleteRepository);
+    public static final PlasterMethod SERVICE = (deleteService::deleteService);
+
+    public static final PlasterMethod REPOSITORY = (deleteService::deleteRepository);
 
 }

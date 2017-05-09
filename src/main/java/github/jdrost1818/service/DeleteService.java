@@ -4,19 +4,23 @@ import github.jdrost1818.domain.FileInformation;
 
 public class DeleteService {
 
-    public static void deleteModel(FileInformation fileInformation) {
+    DeleteService() {
+        // Do nothing
+    }
+
+    public void deleteModel(FileInformation fileInformation) {
 
     }
 
-    public static void deleteController(FileInformation fileInformation) {
+    public void deleteController(FileInformation fileInformation) {
 
     }
 
-    public static void deleteService(FileInformation fileInformation) {
+    public void deleteService(FileInformation fileInformation) {
 
     }
 
-    public static void deleteRepository(FileInformation fileInformation) {
+    public void deleteRepository(FileInformation fileInformation) {
 
     }
 
