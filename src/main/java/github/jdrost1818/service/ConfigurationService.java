@@ -2,10 +2,12 @@ package github.jdrost1818.service;
 
 import github.jdrost1818.data.Setting;
 
-/**
- * Created by jake on 5/8/17.
- */
+import java.util.HashMap;
+import java.util.Map;
+
 public class ConfigurationService {
+
+    Map<Setting, String> configMap = new HashMap<>();
 
     ConfigurationService() {
         load();
@@ -20,7 +22,7 @@ public class ConfigurationService {
     }
 
     public boolean getBoolean(Setting setting) {
-        return true;
+        return Boolean.valueOf(this.configMap.get(setting));
     }
 
 }

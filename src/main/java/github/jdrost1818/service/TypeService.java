@@ -7,6 +7,7 @@ import github.jdrost1818.domain.JavaType;
 import github.jdrost1818.exception.EnumSearchException;
 import github.jdrost1818.exception.PlasterException;
 import lombok.Setter;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.regex.Pattern;
 
 import static java.util.Objects.nonNull;
 
+/**
+ * Service for converting strings into full fledged {@link JavaType}s
+ */
 public class TypeService {
 
     private static final Pattern POP_PATTERN = Pattern.compile("[>,]");
@@ -73,16 +77,16 @@ public class TypeService {
     }
 
     private JavaType fetchCustomType(String typeString) {
-        List<String> matchingClasses = this.searchService.findClass(typeString);
+        List<String> matchingClassPaths = this.searchService.findClassesWithName(typeString);
 
-        if (matchingClasses.size() > 1) {
-            String possibleChoices = StringUtils.join(matchingClasses, ",\n\t");
+        if (matchingClassPaths.size() > 1) {
+            String possibleChoices = StringUtils.join(matchingClassPaths, ",\n\t");
             throw new PlasterException("Could not decide which type to use. Options: " + possibleChoices);
-        } else if (matchingClasses.isEmpty()) {
+        } else if (matchingClassPaths.isEmpty()) {
             throw new PlasterException("Could not find custom type: " + typeString);
         }
 
-        String matchingClass = matchingClasses.get(0);
+        String matchingClass = FilenameUtils.getBaseName(matchingClassPaths.get(0));
 
         return new JavaType(matchingClass, this.dependencyService.fetchDependencies(matchingClass));
     }

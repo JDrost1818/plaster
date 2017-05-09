@@ -70,7 +70,7 @@ public class TypeServiceTest {
         List<String> expectedResult = Lists.newArrayList("1", "2");
 
         when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
-        when(this.searchService.findClass(className)).thenReturn(expectedResult);
+        when(this.searchService.findClassesWithName(className)).thenReturn(expectedResult);
 
         this.classUnderTest.convertToType(className);
     }
@@ -81,7 +81,7 @@ public class TypeServiceTest {
         List<String> expectedResult = Lists.newArrayList();
 
         when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
-        when(this.searchService.findClass(className)).thenReturn(expectedResult);
+        when(this.searchService.findClassesWithName(className)).thenReturn(expectedResult);
 
         this.classUnderTest.convertToType(className);
     }
@@ -89,11 +89,13 @@ public class TypeServiceTest {
     @Test
     public void convertToType_custom_type() throws Exception {
         String className = "CustomClass";
-        List<String> expectedResult = Lists.newArrayList(className);
+        String filePath = "src/main/java/com/example/CustomClass.java";
+
+        List<String> expectedSearchResult = Lists.newArrayList(filePath);
         List<JavaDependency> dependencies = Lists.newArrayList();
 
         when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
-        when(this.searchService.findClass(className)).thenReturn(expectedResult);
+        when(this.searchService.findClassesWithName(className)).thenReturn(expectedSearchResult);
         when(this.dependencyService.fetchDependencies(className)).thenReturn(dependencies);
 
         JavaType javaType = this.classUnderTest.convertToType(className);

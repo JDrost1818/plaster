@@ -1,7 +1,13 @@
 package github.jdrost1818.service;
 
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 
+/**
+ * A provider for all the services defined in this package.
+ * Ensures a singleton patter
+ */
+@UtilityClass
 public class ServiceProvider {
 
     @Getter
