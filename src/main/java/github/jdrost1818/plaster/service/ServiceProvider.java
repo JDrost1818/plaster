@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
 public class ServiceProvider {
 
     @Getter
-    private static final ConfigurationService configurationService = new ConfigurationService();
+    private static final ConfigurationService configurationService = new ConfigurationService().load("");
 
     @Getter
     private static final DeleteService deleteService = new DeleteService();
