@@ -6,6 +6,7 @@ import github.jdrost1818.data.StoredJavaType;
 import github.jdrost1818.domain.JavaDependency;
 import github.jdrost1818.exception.EnumSearchException;
 import github.jdrost1818.exception.PlasterException;
+import github.jdrost1818.util.PathUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -77,13 +78,7 @@ public class DependencyService {
                     "Could not convert path ['" + systemPath + "'] into Java path. Does not contain project root");
         }
 
-        // "/somewhere/someplace/Something.java" -> "somewhere.someplace.Something.java"
-        String javaPortion = parts[1]
-                .replaceAll("[/]", " ")
-                .trim()
-                .replaceAll(" ", ".");
-
-        return FilenameUtils.removeExtension(javaPortion);
+        return FilenameUtils.removeExtension(PathUtil.normalize(parts[1], "."));
     }
 
     private JavaDependency fetchDependency(String className) {

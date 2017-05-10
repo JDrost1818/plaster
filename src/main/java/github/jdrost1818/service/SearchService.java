@@ -1,8 +1,10 @@
 package github.jdrost1818.service;
 
 import github.jdrost1818.data.Setting;
+import github.jdrost1818.util.PathUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,7 +14,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SearchService {
 
-    private final ConfigurationService configurationService = ServiceProvider.getConfigurationService();
+    @Setter
+    private ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
     /**
      * Finds the system path for classes with the given name, ignoring case
@@ -24,8 +27,10 @@ public class SearchService {
     public List<String> findClassesWithName(String className) {
         String basePath = this.configurationService.get(Setting.BASE_PATH);
 
-        return this.findFilesWithName(new File(basePath), className).stream()
+        return this.findFilesWithName(new File(basePath), className + ".java").stream()
                 .map(File::getPath)
+                .map(p -> p.split(basePath)[1])
+                .map(p -> PathUtil.normalize(p, "/"))
                 .collect(Collectors.toList());
     }
 
