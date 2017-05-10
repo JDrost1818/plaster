@@ -9,7 +9,6 @@ import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 

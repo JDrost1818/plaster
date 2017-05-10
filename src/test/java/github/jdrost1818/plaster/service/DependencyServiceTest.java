@@ -2,22 +2,13 @@ package github.jdrost1818.plaster.service;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
-import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
