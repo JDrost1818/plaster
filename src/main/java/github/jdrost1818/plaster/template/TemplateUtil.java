@@ -29,7 +29,7 @@ public final class TemplateUtil {
         return model.with("id", fileInformation.getId());
     }
 
-    public static JtwigModel addField(JtwigModel model, FileInformation fileInformation) {
+    public static JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {
         String fieldString = fileInformation.getFields().stream()
                 .map(Field::getTemplate)
                 .collect(Collectors.joining("\n\n"));

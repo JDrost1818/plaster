@@ -10,9 +10,17 @@ public class GenTypeModel {
 
     private String className;
 
+    private boolean lombokEnabled;
+
     public GenTypeModel(@NonNull String packageName, @NonNull String className) {
         this.packageName = packageName;
         this.className = className;
+    }
+
+    public GenTypeModel(@NonNull String packageName, @NonNull String className, boolean lombokEnabled) {
+        this.packageName = packageName;
+        this.className = className;
+        this.lombokEnabled = lombokEnabled;
     }
 
 }
