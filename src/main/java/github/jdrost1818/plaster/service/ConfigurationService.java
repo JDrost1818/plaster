@@ -1,15 +1,20 @@
 package github.jdrost1818.plaster.service;
 
-import github.jdrost1818.plaster.Plaster;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import github.jdrost1818.plaster.data.Setting;
+import github.jdrost1818.plaster.domain.customization.DirectoryCustomization;
+import github.jdrost1818.plaster.domain.customization.LombokCustomization;
+import github.jdrost1818.plaster.domain.customization.PlasterCustomization;
+import github.jdrost1818.plaster.domain.customization.PropertyCustomization;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -20,6 +25,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class ConfigurationService {
@@ -53,16 +61,18 @@ public class ConfigurationService {
      *  KEY                     = id:int
      *  IS_LOMBOK_ENABLED       = false
      *  BASE_PATH               = src/main/java/
-     *  SUB_DIR_PATH            =
-     *  REL_PATH                = *
-     *  MAVEN_GROUP_ID          = *
+     *  SUB_DIR_PATH            = *
+     *  REL_PATH                = **
+     *  MAVEN_GROUP_ID          = **
      *  REL_MODEL_PACKAGE       = model
      *  REL_REPOSITORY_PACKAGE  = repository
      *  REL_SERVICE_PACKAGE     = service
      *  REL_CONTROLLER_PACKAGE  = controller
      *  SHOULD_USE_PRIMITIVES   = false
      *
-     *  * = These are not set, but will be set during inspection of the pom. If the
+     * *  = This can only be configured at invocation as a command-line argumnet
+     *
+     * ** = These are not set, but will be set during inspection of the pom. If the
      *      pom cannot be read, the generation will fail, therefore, they do not
      *      need to be set in here.
      */
@@ -137,7 +147,117 @@ public class ConfigurationService {
     }
 
     private void loadFromSettingsFile() {
+        File plasterYaml = new File(FilenameUtils.concat(this.applicationRoot, "plaster.yml"));
+        if (!plasterYaml.exists()) {
+            return;
+        }
 
+        ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+        try {
+            PlasterCustomization customization = yamlMapper.readValue(plasterYaml, PlasterCustomization.class);
+
+            loadProperties(customization.getProperty());
+            loadDirectories(customization.getDirectory());
+            loadLombok(customization.getLombok());
+        } catch (IOException e) {
+            // This just means the file is empty and isn't really an error
+            // Todo: make this more reliable
+            if (!e.getMessage().contains("No content to map due to end-of-input")) {
+                throw new PlasterException("Plaster.yml file is malformed", e);
+            }
+        }
+
+    }
+
+    /**
+     * Loads the customizations from the property tag
+     *
+     * Supported configurations:
+     *
+     *      allowPrimitives:boolean ->  should int be used in place of Integer, etc
+     *      key:string ->               the name:type pair to be used instead of id:int
+     *
+     * @param customization
+     *          object containing the customizations allowed in the property tag
+     */
+    private void loadProperties(PropertyCustomization customization) {
+        if (isNull(customization)) {
+            return;
+        }
+
+        // Set a custom key
+        if (StringUtils.isNotBlank(customization.getKey())) {
+            this.configMap.put(Setting.KEY , customization.getKey());
+        }
+
+        // Set custom primitive config
+        if (nonNull(customization.getEnablePrimitives())) {
+            this.configMap.put(Setting.SHOULD_USE_PRIMITIVES, customization.getEnablePrimitives().toString());
+        }
+
+    }
+
+    /**
+     * Loads the customizations from the directory tag
+     *
+     * Supported configurations:
+     *
+     *      base:string ->              what to use instead of src/main/java
+     *      model:string ->             defines base model package location
+     *      repository:string ->        defines base repository package location
+     *      controller:string ->        defines base controller package location
+     *      service:string ->           defines base service package location
+     *
+     * @param customization
+     *          object containing the customizations from the directory tag
+     */
+    private void loadDirectories(DirectoryCustomization customization) {
+        if (isNull(customization)) {
+            return;
+        }
+
+        if (nonNull(customization.getBase())) {
+            String mavenGroupId = this.get(Setting.MAVEN_GROUP_ID);
+
+            this.configMap.put(Setting.BASE_PATH, customization.getBase());
+            this.configMap.put(Setting.REL_PATH, PathUtil.
+                    normalize(customization.getBase() + "/" + mavenGroupId.replace(".", "/"), "/"));
+        }
+
+        Map<Setting, String> dirMap = new HashMap<>();
+        dirMap.put(Setting.REL_MODEL_PACKAGE, customization.getModel());
+        dirMap.put(Setting.REL_REPOSITORY_PACKAGE, customization.getRepository());
+        dirMap.put(Setting.REL_CONTROLLER_PACKAGE, customization.getController());
+        dirMap.put(Setting.REL_SERVICE_PACKAGE, customization.getService());
+
+        // Safely put in all the paths into the settings
+        for (Map.Entry<Setting, String> curEntry : dirMap.entrySet()) {
+            if (StringUtils.isNotBlank(curEntry.getValue())) {
+                String unixPath = FilenameUtils.separatorsToUnix(curEntry.getValue());
+                this.configMap.put(curEntry.getKey(), unixPath);
+            }
+        }
+
+    }
+
+    /**
+     * Loads the customizations from the lombok tag
+     *
+     * Supported configurations:
+     *
+     *      enable:boolean ->           whether to use lombok annotations or getters and setters
+     *
+     * @param customization
+     *          object containing the customizations from the lombok tag
+     */
+    private void loadLombok(LombokCustomization customization) {
+        if (isNull(customization)) {
+            return;
+        }
+
+        if (nonNull(customization.getEnable())) {
+            this.configMap.put(Setting.IS_LOMBOK_SUPPORTED, customization.getEnable().toString());
+        }
     }
 
 }

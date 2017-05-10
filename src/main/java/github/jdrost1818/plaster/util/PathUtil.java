@@ -23,6 +23,7 @@ public class PathUtil {
     public static String normalize(String path, String separator) {
         return FilenameUtils.separatorsToUnix(path)
                 .replaceAll("[/]", " ")
+                .replaceAll(" +", " ")
                 .trim()
                 .replaceAll(" ", separator);
     }
