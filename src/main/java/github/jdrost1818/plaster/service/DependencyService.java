@@ -28,6 +28,10 @@ public class DependencyService {
 
 
     public Dependency fetchDependency(String className) {
+        if (StringUtils.isBlank(className)) {
+            return null;
+        }
+
         StoredJavaType storedJavaType = null;
         try {
             storedJavaType = StoredJavaType.getStoredJavaType(className);

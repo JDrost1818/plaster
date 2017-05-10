@@ -52,7 +52,7 @@ public class TypeServiceTest {
 
         Type foundType = this.classUnderTest.convertToType("int");
 
-        assertThat(foundType.getType().getDeclaration(), equalTo("int"));
+        assertThat(foundType.getClassName(), equalTo("int"));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TypeServiceTest {
 
         Type foundType = this.classUnderTest.convertToType("int");
 
-        assertThat(foundType.getType().getDeclaration(), equalTo("Integer"));
+        assertThat(foundType.getClassName(), equalTo("Integer"));
     }
 
     @Test(expected = PlasterException.class)
@@ -92,16 +92,16 @@ public class TypeServiceTest {
         String filePath = "src/main/java/com/example/CustomClass.java";
 
         List<String> expectedSearchResult = Lists.newArrayList(filePath);
-        List<Dependency> dependencies = Lists.newArrayList();
+        Dependency dependency = new Dependency("com.example.Something");
 
         when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
         when(this.searchService.findClassesWithName(className)).thenReturn(expectedSearchResult);
-        when(this.dependencyService.fetchDependency(className)).thenReturn(dependencies);
+        when(this.dependencyService.fetchDependency(className)).thenReturn(dependency);
 
         Type type = this.classUnderTest.convertToType(className);
 
-        assertThat(type.getType().getDeclaration(), equalTo(className));
-        assertThat(type.getDependencies(), sameInstance(dependencies));
+        assertThat(type.getClassName(), equalTo(className));
+        assertThat(type.getDependency(), sameInstance(dependency));
     }
 
     /*

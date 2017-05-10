@@ -80,27 +80,22 @@ public class DependencyServiceTest {
 
     @Test
     public void fetchCustomDependencies_null() throws Exception {
-        assertThat(this.classUnderTest.fetchDependency(null), hasSize(0));
+        assertThat(this.classUnderTest.fetchDependency(null), equalTo(null));
     }
 
     @Test
     public void fetchCustomDependencies_empty() throws Exception {
-        assertThat(this.classUnderTest.fetchDependency(""), hasSize(0));
+        assertThat(this.classUnderTest.fetchDependency(""), equalTo(null));
     }
 
     @Test
     public void fetchCustomDependencies_stored_no_deps() throws Exception {
-        assertThat(this.classUnderTest.fetchDependency("int"), hasSize(0));
+        assertThat(this.classUnderTest.fetchDependency("int"), equalTo(null));
     }
 
     @Test
     public void fetchCustomDependencies_stored() throws Exception {
-        assertThat(this.classUnderTest.fetchDependency("List<Integer>"), hasSize(1));
-    }
-
-    @Test
-    public void fetchCustomDependencies_stored_remove_duplicates() throws Exception {
-        assertThat(this.classUnderTest.fetchDependency("List<List<Integer>>"), hasSize(1));
+        assertThat(this.classUnderTest.fetchDependency("List").getPath(), equalTo("java.util.List"));
     }
 
     @Test(expected = PlasterException.class)
@@ -121,25 +116,6 @@ public class DependencyServiceTest {
         when(this.searchService.findClassesWithName(customClassName)).thenReturn(Lists.newArrayList());
 
         this.classUnderTest.fetchDependency(className);
-    }
-
-    @Test
-    public void fetchCustomDependencies_custom() throws Exception {
-        String customClassName = "Something";
-        String className = String.format("Map<List<Integer>, %s>", customClassName);
-
-        when(this.searchService.findClassesWithName(customClassName))
-                .thenReturn(Lists.newArrayList("project/module/src/main/java/com/example/Something.java"));
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("src/main/java");
-
-        List<Dependency> foundDependencies = this.classUnderTest.fetchDependency(className);
-        List<String> depStrings = foundDependencies.stream()
-                .map(Dependency::getPath)
-                .collect(Collectors.toList());
-
-        assertThat(foundDependencies, hasSize(3));
-        assertThat(depStrings, hasItems("java.util.List", "java.util.Map", "com.example.Something"));
-        verify(this.searchService, times(1)).findClassesWithName(anyString());
     }
 
 }

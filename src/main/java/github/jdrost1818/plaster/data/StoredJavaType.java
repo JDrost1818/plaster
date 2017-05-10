@@ -34,22 +34,22 @@ public enum StoredJavaType {
             Lists.newArrayList("string", "str")),
 
     DATE(
-            new Type("Date", Lists.newArrayList(new Dependency("java.util.Date"))),
+            new Type("Date", new Dependency("java.util.Date")),
             Lists.newArrayList("date")),
     TIMESTAMP(
-            new Type("Timestamp", Lists.newArrayList(new Dependency("java.util.Timestamp"))),
+            new Type("Timestamp", new Dependency("java.util.Timestamp")),
             Lists.newArrayList("timestamp")),
 
     LIST(
-            new Type("List", Lists.newArrayList(new Dependency("java.util.List"))),
+            new Type("List", new Dependency("java.util.List")),
             Lists.newArrayList("list"),
             1),
     SET(
-            new Type("Set", Lists.newArrayList(new Dependency("java.util.Set"))),
+            new Type("Set", new Dependency("java.util.Set")),
             Lists.newArrayList("set"),
             1),
     MAP(
-            new Type("Map", Lists.newArrayList(new Dependency("java.util.Map"))),
+            new Type("Map", new Dependency("java.util.Map")),
             Lists.newArrayList("map"),
             2);
 
