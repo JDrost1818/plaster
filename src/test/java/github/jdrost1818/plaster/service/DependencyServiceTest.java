@@ -2,7 +2,7 @@ package github.jdrost1818.plaster.service;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
-import github.jdrost1818.plaster.domain.JavaDependency;
+import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,27 +80,27 @@ public class DependencyServiceTest {
 
     @Test
     public void fetchCustomDependencies_null() throws Exception {
-        assertThat(this.classUnderTest.fetchDependencies(null), hasSize(0));
+        assertThat(this.classUnderTest.fetchDependency(null), hasSize(0));
     }
 
     @Test
     public void fetchCustomDependencies_empty() throws Exception {
-        assertThat(this.classUnderTest.fetchDependencies(""), hasSize(0));
+        assertThat(this.classUnderTest.fetchDependency(""), hasSize(0));
     }
 
     @Test
     public void fetchCustomDependencies_stored_no_deps() throws Exception {
-        assertThat(this.classUnderTest.fetchDependencies("int"), hasSize(0));
+        assertThat(this.classUnderTest.fetchDependency("int"), hasSize(0));
     }
 
     @Test
     public void fetchCustomDependencies_stored() throws Exception {
-        assertThat(this.classUnderTest.fetchDependencies("List<Integer>"), hasSize(1));
+        assertThat(this.classUnderTest.fetchDependency("List<Integer>"), hasSize(1));
     }
 
     @Test
     public void fetchCustomDependencies_stored_remove_duplicates() throws Exception {
-        assertThat(this.classUnderTest.fetchDependencies("List<List<Integer>>"), hasSize(1));
+        assertThat(this.classUnderTest.fetchDependency("List<List<Integer>>"), hasSize(1));
     }
 
     @Test(expected = PlasterException.class)
@@ -110,7 +110,7 @@ public class DependencyServiceTest {
 
         when(this.searchService.findClassesWithName(customClassName)).thenReturn(Lists.newArrayList("", ""));
 
-        this.classUnderTest.fetchDependencies(className);
+        this.classUnderTest.fetchDependency(className);
     }
 
     @Test(expected = PlasterException.class)
@@ -120,7 +120,7 @@ public class DependencyServiceTest {
 
         when(this.searchService.findClassesWithName(customClassName)).thenReturn(Lists.newArrayList());
 
-        this.classUnderTest.fetchDependencies(className);
+        this.classUnderTest.fetchDependency(className);
     }
 
     @Test
@@ -132,9 +132,9 @@ public class DependencyServiceTest {
                 .thenReturn(Lists.newArrayList("project/module/src/main/java/com/example/Something.java"));
         when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("src/main/java");
 
-        List<JavaDependency> foundDependencies = this.classUnderTest.fetchDependencies(className);
+        List<Dependency> foundDependencies = this.classUnderTest.fetchDependency(className);
         List<String> depStrings = foundDependencies.stream()
-                .map(JavaDependency::getPath)
+                .map(Dependency::getPath)
                 .collect(Collectors.toList());
 
         assertThat(foundDependencies, hasSize(3));

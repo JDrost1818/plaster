@@ -1,8 +1,8 @@
 package github.jdrost1818.plaster.data;
 
 import com.google.common.collect.Lists;
-import github.jdrost1818.plaster.domain.JavaDependency;
-import github.jdrost1818.plaster.domain.JavaType;
+import github.jdrost1818.plaster.domain.Dependency;
+import github.jdrost1818.plaster.domain.Type;
 import github.jdrost1818.plaster.exception.EnumSearchException;
 
 import java.util.List;
@@ -13,64 +13,64 @@ import static java.util.Objects.nonNull;
 public enum StoredJavaType {
 
     INTEGER(
-            new JavaType("Integer"),
-            new JavaType("int"),
+            new Type("Integer"),
+            new Type("int"),
             Lists.newArrayList("int", "integer")),
     LONG(
-            new JavaType("Long"),
-            new JavaType("long"),
+            new Type("Long"),
+            new Type("long"),
             Lists.newArrayList("long")),
     FLOAT(
-            new JavaType("Float"),
-            new JavaType("float"),
+            new Type("Float"),
+            new Type("float"),
             Lists.newArrayList("float")),
     DOUBLE(
-            new JavaType("Double"),
-            new JavaType("double"),
+            new Type("Double"),
+            new Type("double"),
             Lists.newArrayList("double", "dbl")),
 
     STRING(
-            new JavaType("String"),
+            new Type("String"),
             Lists.newArrayList("string", "str")),
 
     DATE(
-            new JavaType("Date", Lists.newArrayList(new JavaDependency("java.util.Date"))),
+            new Type("Date", Lists.newArrayList(new Dependency("java.util.Date"))),
             Lists.newArrayList("date")),
     TIMESTAMP(
-            new JavaType("Timestamp", Lists.newArrayList(new JavaDependency("java.util.Timestamp"))),
+            new Type("Timestamp", Lists.newArrayList(new Dependency("java.util.Timestamp"))),
             Lists.newArrayList("timestamp")),
 
     LIST(
-            new JavaType("List", Lists.newArrayList(new JavaDependency("java.util.List"))),
+            new Type("List", Lists.newArrayList(new Dependency("java.util.List"))),
             Lists.newArrayList("list"),
             1),
     SET(
-            new JavaType("Set", Lists.newArrayList(new JavaDependency("java.util.Set"))),
+            new Type("Set", Lists.newArrayList(new Dependency("java.util.Set"))),
             Lists.newArrayList("set"),
             1),
     MAP(
-            new JavaType("Map", Lists.newArrayList(new JavaDependency("java.util.Map"))),
+            new Type("Map", Lists.newArrayList(new Dependency("java.util.Map"))),
             Lists.newArrayList("map"),
             2);
 
-    private final JavaType type;
-    private final JavaType primitiveType;
+    private final Type type;
+    private final Type primitiveType;
     private final List<String> searchTerms;
     public final int numTypedArgsRequired;
 
-    StoredJavaType(JavaType type, List<String> searchTerms) {
+    StoredJavaType(Type type, List<String> searchTerms) {
         this(type, null, searchTerms);
     }
 
-    StoredJavaType(JavaType type, List<String> searchTerms, int numTypedArgsRequired) {
+    StoredJavaType(Type type, List<String> searchTerms, int numTypedArgsRequired) {
         this(type, null, searchTerms, numTypedArgsRequired);
     }
 
-    StoredJavaType(JavaType type, JavaType primitiveType, List<String> searchTerms) {
+    StoredJavaType(Type type, Type primitiveType, List<String> searchTerms) {
         this(type, primitiveType, searchTerms, 0);
     }
 
-    StoredJavaType(JavaType type, JavaType primitiveType, List<String> searchTerms, int numTypedArgsRequired) {
+    StoredJavaType(Type type, Type primitiveType, List<String> searchTerms, int numTypedArgsRequired) {
         this.type = type;
         this.primitiveType = primitiveType;
         this.searchTerms = searchTerms;
@@ -92,7 +92,7 @@ public enum StoredJavaType {
         throw new EnumSearchException("Cannot find java type for: " + searchTerm);
     }
 
-    public JavaType getType(boolean shouldUsePrimitive) {
+    public Type getType(boolean shouldUsePrimitive) {
         return nonNull(this.primitiveType) && shouldUsePrimitive ? this.primitiveType : type;
     }
 

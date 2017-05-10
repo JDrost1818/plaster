@@ -1,0 +1,41 @@
+package {{ package }}
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+{{ dependencies }}
+import {{ servicePackage }}.{{ serviceClass }}
+import {{ modelPackage }}.{{ modelClas }}
+
+@RestController
+@RequestMapping("/{{ baseRoute }}")
+public class {{ className }} {
+
+    private final {{ serviceClass }} {{ serviceVar }};
+
+    @Autowired
+    public {{ class_name }} ({{ service_class }} {{ service_var }}) {{
+            this.{{ service_var }} = {{ service_var }};
+    }}
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public {model_class} create(@RequestBody {model_class} {model_var}) {{
+            return this.{service_var}.create({model_var});
+    }}
+
+    @RequestMapping(value = "/{{{id.name}}}", method = RequestMethod.GET)
+    public {model_class} read(@PathVariable {id.field_type.class_name} {id.name}) {{
+            return this.{service_var}.read({id.name});
+    }}
+
+    @RequestMapping(value = "/{{{id.name}}}", method = RequestMethod.PUT)
+    public {model_class} update(@PathVariable {id.field_type.class_name} {id.name}, @RequestBody {model_class} {model_var}) {{
+            return this.{service_var}.update({model_var});
+    }}
+
+    @RequestMapping(value = "/{{{id.name}}}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable {id.field_type.class_name} {id.name}) {{
+            this.{service_var}.delete({id.name});
+    }}
+
+}

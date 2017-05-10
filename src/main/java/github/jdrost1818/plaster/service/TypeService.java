@@ -3,23 +3,27 @@ package github.jdrost1818.plaster.service;
 import github.jdrost1818.plaster.data.Regex;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.StoredJavaType;
-import github.jdrost1818.plaster.domain.JavaType;
+import github.jdrost1818.plaster.domain.Type;
+import github.jdrost1818.plaster.domain.TypeDeclaration;
 import github.jdrost1818.plaster.exception.EnumSearchException;
 import github.jdrost1818.plaster.exception.PlasterException;
+import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
 /**
- * Service for converting strings into full fledged {@link JavaType}s
+ * Service for converting strings into full fledged {@link Type}s
  */
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class TypeService {
@@ -50,6 +54,18 @@ public class TypeService {
                 : this.validateClassName(trimmedString, true);
     }
 
+    public TypeDeclaration convertToTypeDeclaration(String typeString) {
+        if (StringUtils.isBlank(typeString)) {
+            throw new PlasterException("Malformed type provided: " + typeString);
+        }
+
+        List<Type> types = TypeUtil.splitToIndividualTypes(typeString).stream()
+                .map(t -> new Type(t, this.dependencyService.fetchDependency(t)))
+                .collect(Collectors.toList());
+
+        return new TypeDeclaration(typeString, types);
+    }
+
     /**
      * Transforms a string into an object which describes the type and
      * its dependencies if it can find a matching class.
@@ -58,7 +74,7 @@ public class TypeService {
      *          string to convert
      * @return the converted type
      */
-    public JavaType convertToType(String typeString) {
+    public Type convertToType(String typeString) {
         if (!validateType(typeString)) {
             throw new PlasterException("Malformed type provided: " + typeString);
         }
@@ -75,7 +91,7 @@ public class TypeService {
         return nonNull(storedJavaType) ? storedJavaType.getType(shouldUsePrimitive) : this.fetchCustomType(typeString);
     }
 
-    private JavaType fetchCustomType(String typeString) {
+    private Type fetchCustomType(String typeString) {
         List<String> matchingClassPaths = this.searchService.findClassesWithName(typeString);
 
         if (matchingClassPaths.size() > 1) {
@@ -87,7 +103,7 @@ public class TypeService {
 
         String matchingClass = FilenameUtils.getBaseName(matchingClassPaths.get(0));
 
-        return new JavaType(matchingClass, this.dependencyService.fetchDependencies(matchingClass));
+        return new Type(matchingClass, this.dependencyService.fetchDependency(matchingClass));
     }
 
     /**

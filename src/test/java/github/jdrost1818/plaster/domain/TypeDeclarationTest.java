@@ -10,15 +10,15 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-public class JavaTypeDeclarationTest {
+public class TypeDeclarationTest {
 
     @Test
     public void getAllTypeDeclarations_single_declaration() throws Exception {
         String type = "int";
 
-        JavaTypeDeclaration typeDeclaration = new JavaTypeDeclaration(type);
+        TypeDeclaration typeDeclaration = new TypeDeclaration(type);
 
-        List<JavaTypeDeclaration> typeDeclarations = typeDeclaration.getAllTypeDeclarations();
+        List<TypeDeclaration> typeDeclarations = typeDeclaration.getAllTypeDeclarations();
 
         assertThat(typeDeclarations, hasSize(1));
         assertThat(typeDeclarations.get(0).getDeclaration(), equalTo(type));
@@ -34,15 +34,15 @@ public class JavaTypeDeclarationTest {
 
         String allTypes = String.format("%s<%s<%s>, %s<%s>>", type1, type2, type3, type4, type5);
 
-        JavaTypeDeclaration typeDeclaration = new JavaTypeDeclaration(allTypes);
+        TypeDeclaration typeDeclaration = new TypeDeclaration(allTypes);
 
-        List<JavaTypeDeclaration> typeDeclarations = typeDeclaration.getAllTypeDeclarations();
+        List<TypeDeclaration> typeDeclarations = typeDeclaration.getAllTypeDeclarations();
 
         // Have to filter out duplicates
         assertThat(typeDeclarations, hasSize(3));
 
         List<String> typeStrings = typeDeclarations.stream()
-                .map(JavaTypeDeclaration::getDeclaration)
+                .map(TypeDeclaration::getDeclaration)
                 .collect(Collectors.toList());
 
         assertThat(typeStrings, contains(type1, type2, type3));
@@ -52,7 +52,7 @@ public class JavaTypeDeclarationTest {
     public void getTemplate() throws Exception {
         String templateString = "List<Integer>";
 
-        JavaTypeDeclaration declaration = new JavaTypeDeclaration(templateString);
+        TypeDeclaration declaration = new TypeDeclaration(templateString);
         assertThat(declaration.getTemplate(), equalTo(templateString));
     }
 

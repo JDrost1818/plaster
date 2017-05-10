@@ -2,8 +2,8 @@ package github.jdrost1818.plaster.service;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
-import github.jdrost1818.plaster.domain.JavaDependency;
-import github.jdrost1818.plaster.domain.JavaType;
+import github.jdrost1818.plaster.domain.Dependency;
+import github.jdrost1818.plaster.domain.Type;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class TypeServiceTest {
     public void convertToType_should_be_primitive() throws Exception {
         when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
 
-        JavaType foundType = this.classUnderTest.convertToType("int");
+        Type foundType = this.classUnderTest.convertToType("int");
 
         assertThat(foundType.getType().getDeclaration(), equalTo("int"));
     }
@@ -59,7 +59,7 @@ public class TypeServiceTest {
     public void convertToType_should_not_be_primitive() throws Exception {
         when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(false);
 
-        JavaType foundType = this.classUnderTest.convertToType("int");
+        Type foundType = this.classUnderTest.convertToType("int");
 
         assertThat(foundType.getType().getDeclaration(), equalTo("Integer"));
     }
@@ -92,16 +92,16 @@ public class TypeServiceTest {
         String filePath = "src/main/java/com/example/CustomClass.java";
 
         List<String> expectedSearchResult = Lists.newArrayList(filePath);
-        List<JavaDependency> dependencies = Lists.newArrayList();
+        List<Dependency> dependencies = Lists.newArrayList();
 
         when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
         when(this.searchService.findClassesWithName(className)).thenReturn(expectedSearchResult);
-        when(this.dependencyService.fetchDependencies(className)).thenReturn(dependencies);
+        when(this.dependencyService.fetchDependency(className)).thenReturn(dependencies);
 
-        JavaType javaType = this.classUnderTest.convertToType(className);
+        Type type = this.classUnderTest.convertToType(className);
 
-        assertThat(javaType.getType().getDeclaration(), equalTo(className));
-        assertThat(javaType.getDependencies(), sameInstance(dependencies));
+        assertThat(type.getType().getDeclaration(), equalTo(className));
+        assertThat(type.getDependencies(), sameInstance(dependencies));
     }
 
     /*

@@ -1,9 +1,8 @@
 package github.jdrost1818.plaster.service;
 
-import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.StoredJavaType;
-import github.jdrost1818.plaster.domain.JavaDependency;
+import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.exception.EnumSearchException;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.PathUtil;
@@ -14,10 +13,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
@@ -30,24 +26,22 @@ public class DependencyService {
     @Setter
     private SearchService searchService = ServiceProvider.getSearchService();
 
-    public List<JavaDependency> fetchDependencies(String className) {
-        if (StringUtils.isEmpty(className)) {
-            return Lists.newArrayList();
+
+    public Dependency fetchDependency(String className) {
+        StoredJavaType storedJavaType = null;
+        try {
+            storedJavaType = StoredJavaType.getStoredJavaType(className);
+        } catch (EnumSearchException e) {
+            // This really isn't an error in this case. The type
+            // isn't guaranteed to be a stored type here
         }
 
-        // Map<String, List<String>> -> ["Map", "String", "List", "String"]
-        String[] individualClasses = className
-                .replaceAll("[<>,]", " ")
-                .replaceAll("[ +]", " ")
-                .trim()
-                .split(" ");
-
-        return Arrays.stream(individualClasses)
-                .distinct()
-                .filter(StringUtils::isNotBlank)
-                .map(this::fetchDependency)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        // We are making a safe assumptions here:
+        //      We can use primitives regardless of configuration here.
+        //      Since we are getting the dependencies, there are no
+        //      objects related to primitives that need to be imported
+        return nonNull(storedJavaType)
+                ? storedJavaType.getType(true).getDependency() : this.fetchCustomDependency(className);
     }
 
     /**
@@ -81,31 +75,7 @@ public class DependencyService {
         return FilenameUtils.removeExtension(PathUtil.normalize(parts[1], "."));
     }
 
-    private JavaDependency fetchDependency(String className) {
-        StoredJavaType storedJavaType = null;
-        try {
-            storedJavaType = StoredJavaType.getStoredJavaType(className);
-        } catch (EnumSearchException e) {
-            // This really isn't an error in this case. The type
-            // isn't guaranteed to be a stored type here
-        }
-
-        // We are making some safe assumptions here:
-        //      (1) -   We can use primitives regardless here,
-        //              since we are getting the dependencies, there are no
-        //              objects related to primitives that need to be imported
-        //      (2) -   That if a stored java type has dependencies, there is only
-        //              ever going to be one. Stored dependencies are only ever just
-        //              one class and not typed eg "List" or "Integer" or "Map", these
-        //              can therefore never have more than one dependency
-        if (nonNull(storedJavaType)) {
-            List<JavaDependency> dependencies = storedJavaType.getType(true).getDependencies();
-            return CollectionUtils.isNotEmpty(dependencies) ? dependencies.get(0) : null;
-        }
-        return this.fetchCustomDependency(className);
-    }
-
-    private JavaDependency fetchCustomDependency(String className) {
+    private Dependency fetchCustomDependency(String className) {
         List<String> matchingClassPaths = this.searchService.findClassesWithName(className);
 
         if (matchingClassPaths.size() > 1) {
@@ -115,7 +85,7 @@ public class DependencyService {
             throw new PlasterException("Could not find custom type: " + className);
         }
 
-        return new JavaDependency(this.convertSystemPathToJavaPath(matchingClassPaths.get(0)));
+        return new Dependency(this.convertSystemPathToJavaPath(matchingClassPaths.get(0)));
     }
 
 }

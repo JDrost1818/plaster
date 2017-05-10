@@ -1,0 +1,19 @@
+package {{ package }};
+
+import javax.persistence.*
+
+{{ dependencies }}
+
+{{ header }}
+@Entity
+public class {{ className }} {
+
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+{{ idClass }}
+
+    {{ fields }}
+
+    {{ methods }}
+
+}
