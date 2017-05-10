@@ -8,9 +8,9 @@ import javax.persistence.*
 @Entity
 public class {{ className }} {
 
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-{{ idClass }}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    {{ idField }}
 
     {{ fields }}
 

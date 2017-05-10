@@ -16,6 +16,6 @@ public class Dependency implements PlasterTemplate {
      */
     @Override
     public String getTemplate() {
-        return null;
+        return String.format("import %s;", this.path);
     }
 }

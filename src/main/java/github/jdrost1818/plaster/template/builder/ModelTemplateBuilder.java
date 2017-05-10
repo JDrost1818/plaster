@@ -1,16 +1,14 @@
 package github.jdrost1818.plaster.template.builder;
 
+import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.template.TemplateBuilder;
-import org.jtwig.JtwigTemplate;
+import org.jtwig.JtwigModel;
 
-/**
- * Created by jake on 5/10/17.
- */
-public class ModelTemplateBuilder implements TemplateBuilder {
+public class ModelTemplateBuilder extends TemplateBuilder {
 
     @Override
-    public JtwigTemplate buildTemplate() {
-            return null;
+    public JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
+        return model;
     }
 
 }
