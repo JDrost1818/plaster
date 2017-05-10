@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.parboiled.common.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ public class DependencyService {
 
     public List<JavaDependency> fetchDependencies(String className) {
         if (StringUtils.isEmpty(className)) {
-            Lists.newArrayList();
+            return Lists.newArrayList();
         }
 
         // Map<String, List<String>> -> ["Map", "String", "List", "String"]
@@ -43,6 +43,7 @@ public class DependencyService {
 
         return Arrays.stream(individualClasses)
                 .distinct()
+                .filter(StringUtils::isNotBlank)
                 .map(this::fetchDependency)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -113,7 +114,7 @@ public class DependencyService {
         List<String> matchingClassPaths = this.searchService.findClassesWithName(className);
 
         if (matchingClassPaths.size() > 1) {
-            String possibleChoices = org.apache.commons.lang3.StringUtils.join(matchingClassPaths, ",\n\t");
+            String possibleChoices = StringUtils.join(matchingClassPaths, ",\n\t");
             throw new PlasterException("Could not decide which type to import. Options: " + possibleChoices);
         } else if (matchingClassPaths.isEmpty()) {
             throw new PlasterException("Could not find custom type: " + className);

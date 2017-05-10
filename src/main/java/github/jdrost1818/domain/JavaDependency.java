@@ -1,5 +1,8 @@
 package github.jdrost1818.domain;
 
+import lombok.Getter;
+
+@Getter
 public class JavaDependency implements PlasterTemplate {
 
     public String path;
