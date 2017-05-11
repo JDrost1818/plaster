@@ -36,7 +36,7 @@ public class ConfigurationServiceTest {
         this.classUnderTest.load(root + "/root1");
 
         assertThat(this.classUnderTest.get(Setting.KEY), equalTo("id:int"));
-        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_SUPPORTED), equalTo("true"));
+        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_ENABLED), equalTo("true"));
         assertThat(this.classUnderTest.get(Setting.BASE_PATH), equalTo("src/main/java"));
         assertThat(this.classUnderTest.get(Setting.SUB_DIR_PATH), equalTo(""));
         assertThat(this.classUnderTest.get(Setting.REL_PATH), equalTo("src/main/java/com/example/app"));
@@ -57,7 +57,7 @@ public class ConfigurationServiceTest {
         this.classUnderTest.load(root + "/root2");
 
         assertThat(this.classUnderTest.get(Setting.KEY), equalTo("key:string"));
-        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_SUPPORTED), equalTo("true"));
+        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_ENABLED), equalTo("true"));
         assertThat(this.classUnderTest.get(Setting.BASE_PATH), equalTo("custom/path"));
         assertThat(this.classUnderTest.get(Setting.SUB_DIR_PATH), equalTo(""));
         assertThat(this.classUnderTest.get(Setting.REL_PATH), equalTo("custom/path/com/example/app"));
@@ -77,7 +77,7 @@ public class ConfigurationServiceTest {
         this.classUnderTest.load(root + "/root3");
 
         assertThat(this.classUnderTest.get(Setting.KEY), equalTo("id:int"));
-        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_SUPPORTED), equalTo("false"));
+        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_ENABLED), equalTo("false"));
         assertThat(this.classUnderTest.get(Setting.BASE_PATH), equalTo("src/main/java"));
         assertThat(this.classUnderTest.get(Setting.SUB_DIR_PATH), equalTo(""));
         assertThat(this.classUnderTest.get(Setting.REL_PATH), equalTo("src/main/java/com/example/app"));

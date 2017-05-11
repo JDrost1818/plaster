@@ -1,7 +1,9 @@
 package github.jdrost1818.plaster.util;
 
+import github.jdrost1818.plaster.exception.PlasterException;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @UtilityClass
 public class PathUtil {
@@ -26,6 +28,44 @@ public class PathUtil {
                 .replaceAll(" +", " ")
                 .trim()
                 .replaceAll(" ", separator);
+    }
+
+    /**
+     * Converts a fully qualified path to a java package.
+     *
+     * Example
+     *
+     *      "somewhere/src/main/java/com/example/Something.java -> com.example.Something.java
+     *
+     * @param systemPath
+     *          path on system
+     * @param basePath
+     *          path which signifies all after it is what is needed by java to qualify package
+     * @return path that Java can use to find resource
+     */
+    public static String pathToPackage(String systemPath, String basePath) {
+        if (StringUtils.isEmpty(systemPath)) {
+            return systemPath;
+        }
+
+        // The following code takes a full system path
+        //      ie "project/module/src/main/java/com/example/Something.java"
+        // and converts it into the portion needed for an import
+        //      ie "com/example/Something.java
+        // also converts all paths to unix style
+        String unixSystemPath = FilenameUtils.separatorsToUnix(systemPath);
+        String unixBasePath = FilenameUtils.separatorsToUnix(basePath);
+        String[] parts = unixSystemPath.split(unixBasePath);
+        if (parts.length == 1) {
+            throw new PlasterException(
+                    "Could not convert path ['" + systemPath + "'] into Java path. Does not contain project root");
+        }
+
+        return pathToPackage(parts[1]);
+    }
+
+    public static String pathToPackage(String systemPath) {
+        return FilenameUtils.removeExtension(normalize(systemPath, "."));
     }
 
 }

@@ -7,7 +7,7 @@ package github.jdrost1818.plaster.data;
 public enum Setting {
 
     KEY,
-    IS_LOMBOK_SUPPORTED,
+    IS_LOMBOK_ENABLED,
     BASE_PATH,
     SUB_DIR_PATH,
     REL_PATH,

@@ -80,7 +80,7 @@ public class ConfigurationService {
         this.applicationRoot = applicationRoot;
 
         this.configMap.put(Setting.KEY, "id:int");
-        this.configMap.put(Setting.IS_LOMBOK_SUPPORTED, "false");
+        this.configMap.put(Setting.IS_LOMBOK_ENABLED, "false");
         this.configMap.put(Setting.BASE_PATH, "src/main/java");
         this.configMap.put(Setting.SUB_DIR_PATH, "");
         this.configMap.put(Setting.REL_MODEL_PACKAGE, "model");
@@ -134,7 +134,7 @@ public class ConfigurationService {
                     // Search for lombok
                     String dependencyId = curGroupIds.item(0).getTextContent();
                     if (dependencyId.contains("org.projectlombok")) {
-                        this.configMap.put(Setting.IS_LOMBOK_SUPPORTED, "true");
+                        this.configMap.put(Setting.IS_LOMBOK_ENABLED, "true");
                     }
 
                 }
@@ -256,7 +256,7 @@ public class ConfigurationService {
         }
 
         if (nonNull(customization.getEnable())) {
-            this.configMap.put(Setting.IS_LOMBOK_SUPPORTED, customization.getEnable().toString());
+            this.configMap.put(Setting.IS_LOMBOK_ENABLED, customization.getEnable().toString());
         }
     }
 

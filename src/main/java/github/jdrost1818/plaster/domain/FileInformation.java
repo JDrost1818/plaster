@@ -9,6 +9,8 @@ import java.util.List;
 @Data
 public class FileInformation {
 
+    private String className;
+
     private Field id;
 
     private List<Field> fields;

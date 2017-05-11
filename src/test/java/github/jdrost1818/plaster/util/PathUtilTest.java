@@ -1,5 +1,7 @@
 package github.jdrost1818.plaster.util;
 
+import github.jdrost1818.plaster.exception.PlasterException;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -15,6 +17,42 @@ public class PathUtilTest {
     @Test
     public void normalize_path_without_file() throws Exception {
         assertThat(PathUtil.normalize("/src/main/", "/"), equalTo("src/main"));
+    }
+
+    @Test
+    public void convertSystemPathToJavaPath_null() throws Exception {
+        MatcherAssert.assertThat(PathUtil.pathToPackage(null, "anything"), equalTo(null));
+    }
+
+    @Test
+    public void convertSystemPathToJavaPath_empty() throws Exception {
+        MatcherAssert.assertThat(PathUtil.pathToPackage("", "anything"), equalTo(""));
+
+    }
+
+    @Test
+    public void convertSystemPathToJavaPath_linux() throws Exception {
+        String absolutePath = "somewhere/project/module/src/main/java/com/example/somewhere/Something.java";
+
+        String convertedPath = PathUtil.pathToPackage(absolutePath, "src/main/java");
+
+        MatcherAssert.assertThat(convertedPath, equalTo("com.example.somewhere.Something"));
+    }
+
+    @Test
+    public void convertSystemPathToJavaPath_windows() throws Exception {
+        String absolutePath = "somewhere\\project\\module\\src\\main\\java\\com\\example\\somewhere\\Something.java";
+
+        String convertedPath = PathUtil.pathToPackage(absolutePath, "src/main/java");
+
+        MatcherAssert.assertThat(convertedPath, equalTo("com.example.somewhere.Something"));
+    }
+
+    @Test(expected = PlasterException.class)
+    public void convertSystemPathToJavaPath_root_not_contained() throws Exception {
+        String absolutePath = "somewhere/project/module/src/main/java/com/example/somewhere/Something.java";
+
+        PathUtil.pathToPackage(absolutePath, "false/root");
     }
 
 }

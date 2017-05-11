@@ -31,45 +31,6 @@ public class DependencyServiceTest {
     }
 
     @Test
-    public void convertSystemPathToJavaPath_null() throws Exception {
-        assertThat(this.classUnderTest.convertSystemPathToJavaPath(null), equalTo(null));
-    }
-
-    @Test
-    public void convertSystemPathToJavaPath_empty() throws Exception {
-        assertThat(this.classUnderTest.convertSystemPathToJavaPath(""), equalTo(""));
-
-    }
-
-    @Test
-    public void convertSystemPathToJavaPath_linux() throws Exception {
-        String absolutePath = "somewhere/project/module/src/main/java/com/example/somewhere/Something.java";
-
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("src/main/java");
-        String convertedPath = this.classUnderTest.convertSystemPathToJavaPath(absolutePath);
-
-        assertThat(convertedPath, equalTo("com.example.somewhere.Something"));
-    }
-
-    @Test
-    public void convertSystemPathToJavaPath_windows() throws Exception {
-        String absolutePath = "somewhere\\project\\module\\src\\main\\java\\com\\example\\somewhere\\Something.java";
-
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("src/main/java");
-        String convertedPath = this.classUnderTest.convertSystemPathToJavaPath(absolutePath);
-
-        assertThat(convertedPath, equalTo("com.example.somewhere.Something"));
-    }
-
-    @Test(expected = PlasterException.class)
-    public void convertSystemPathToJavaPath_root_not_contained() throws Exception {
-        String absolutePath = "somewhere/project/module/src/main/java/com/example/somewhere/Something.java";
-
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("false/root");
-        this.classUnderTest.convertSystemPathToJavaPath(absolutePath);
-    }
-
-    @Test
     public void fetchCustomDependencies_null() throws Exception {
         assertThat(this.classUnderTest.fetchDependency(null), equalTo(null));
     }

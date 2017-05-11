@@ -47,37 +47,6 @@ public class DependencyService {
                 ? storedJavaType.getType(true).getDependency() : this.fetchCustomDependency(className);
     }
 
-    /**
-     * Converts a system path to a java path.
-     *
-     * Example:
-     *  project/src/main/java/com/example/Something.java -> com.example.Something
-     *
-     * @param systemPath
-     *          path on system
-     * @return path that Java can use to find resource
-     */
-    public String convertSystemPathToJavaPath(String systemPath) {
-        if (StringUtils.isEmpty(systemPath)) {
-            return systemPath;
-        }
-
-        // The following code takes a full system path
-        //      ie "project/module/src/main/java/com/example/Something.java"
-        // and converts it into the portion needed for an import
-        //      ie "com/example/Something.java
-        // also converts all paths to unix style
-        String unixSystemPath = FilenameUtils.separatorsToUnix(systemPath);
-        String basePath = this.configurationService.get(Setting.BASE_PATH);
-        String[] parts = unixSystemPath.split(basePath);
-        if (parts.length == 1) {
-            throw new PlasterException(
-                    "Could not convert path ['" + systemPath + "'] into Java path. Does not contain project root");
-        }
-
-        return FilenameUtils.removeExtension(PathUtil.normalize(parts[1], "."));
-    }
-
     private Dependency fetchCustomDependency(String className) {
         List<String> matchingClassPaths = this.searchService.findClassesWithName(className);
 
@@ -88,7 +57,8 @@ public class DependencyService {
             throw new PlasterException("Could not find custom type: " + className);
         }
 
-        return new Dependency(this.convertSystemPathToJavaPath(matchingClassPaths.get(0)));
+        String basePath = this.configurationService.get(Setting.BASE_PATH);
+        return new Dependency(PathUtil.pathToPackage(matchingClassPaths.get(0), basePath));
     }
 
 }
