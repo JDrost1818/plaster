@@ -1,7 +1,8 @@
 package github.jdrost1818.plaster.data;
 
 import com.google.common.collect.Lists;
-import github.jdrost1818.plaster.exception.EnumSearchException;
+import github.jdrost1818.plaster.domain.FileInformation;
+import github.jdrost1818.plaster.exception.PlasterException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public enum Mode {
      * @return the mode corresponding to the search term provided
      * @throws NoSuchElementException  if no matching mode
      */
-    public static Mode getMode(String searchTerm) throws EnumSearchException {
+    public static Mode getMode(String searchTerm) {
         if (isNull(searchTerm)) {
             throw new IllegalArgumentException("searchTerm cannot be null");
         }
@@ -47,7 +48,7 @@ public enum Mode {
             }
         }
 
-        throw new EnumSearchException("Cannot find mode for: " + searchTerm);
+        throw new PlasterException("Cannot find mode for: " + searchTerm);
     }
 
     /**
@@ -55,15 +56,21 @@ public enum Mode {
      *
      * @param scopeKey
      *          name of the scope to get
-     * @return the scope
      */
-    public ModeScope getScope(String scopeKey) {
+    public void perform(String scopeKey, FileInformation fileInformation) {
         ModeScope scope = ModeScope.valueOf(StringUtils.upperCase(scopeKey));
 
-        if (this.scopes.contains(scope)) {
-            return scope;
+        if (!this.scopes.contains(scope)) {
+            throw new PlasterException(this.name() + " does not support: " + scope.name());
+        }
+
+        // Todo: I don't like this. Make this better
+        if (this == GENERATE) {
+            scope.generate(fileInformation);
+        } else if (this == DELETE) {
+            scope.delete(fileInformation);
         } else {
-            throw new UnsupportedOperationException(this.name() + " does not support: " + scope.name());
+            throw new PlasterException("I don't know how you got here and frankly, I'm impressed");
         }
     }
 
