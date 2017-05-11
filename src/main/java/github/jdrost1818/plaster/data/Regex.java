@@ -1,7 +1,10 @@
 package github.jdrost1818.plaster.data;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.regex.Pattern;
 
+@UtilityClass
 public class Regex {
 
     private static final String className = "([A-Z+][a-zA-Z0-9]*)";
