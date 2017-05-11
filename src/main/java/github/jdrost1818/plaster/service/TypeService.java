@@ -53,8 +53,15 @@ public class TypeService {
                 : this.validateClassName(trimmedString, true);
     }
 
+    /**
+     * Converts the given string into a fully populated {@link TypeDeclaration}
+     *
+     * @param typeString
+     *          string to convert
+     * @return the converted declaration
+     */
     public TypeDeclaration convertToTypeDeclaration(String typeString) {
-        if (StringUtils.isBlank(typeString)) {
+        if (StringUtils.isBlank(typeString) || !this.validateType(typeString)) {
             throw new PlasterException("Malformed type provided: " + typeString);
         }
 

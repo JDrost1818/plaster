@@ -4,18 +4,21 @@ import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.domain.Type;
+import github.jdrost1818.plaster.domain.TypeDeclaration;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -39,6 +42,41 @@ public class TypeServiceTest {
         this.classUnderTest.setConfigurationService(configurationService);
         this.classUnderTest.setSearchService(searchService);
         this.classUnderTest.setDependencyService(dependencyService);
+    }
+
+    @Test(expected = PlasterException.class)
+    public void convertToTypeDeclaration_null() throws Exception {
+        this.classUnderTest.convertToTypeDeclaration(null);
+    }
+
+    @Test(expected = PlasterException.class)
+    public void convertToTypeDeclaration_empty() throws Exception {
+        this.classUnderTest.convertToTypeDeclaration("");
+    }
+
+    @Test(expected = PlasterException.class)
+    public void convertToTypeDeclaration_malformed_type() throws Exception {
+        this.classUnderTest.convertToTypeDeclaration("Map<List<String>>, <Integer>>");
+    }
+
+    @Test
+    public void convertToTypeDeclaration() throws Exception {
+        when(this.dependencyService.fetchDependency("Map")).thenReturn(new Dependency("mapDependency"));
+        when(this.dependencyService.fetchDependency("List")).thenReturn(new Dependency("listDependency"));
+
+        TypeDeclaration declaration = this.classUnderTest.convertToTypeDeclaration("Map  <List<String>, Integer>");
+
+        assertThat(declaration.getDeclaration(), equalTo("Map<List<String>, Integer>"));
+
+        List<Type> types = declaration.getTypes();
+        assertThat(types, hasSize(4));
+
+        List<String> typeNames = types.stream().map(Type::getClassName).collect(Collectors.toList());
+        assertThat(typeNames, hasItems("Map", "List", "String", "Integer"));
+
+        List<String> dependencyNames = types.stream().map(Type::getDependency).filter(Objects::nonNull).map(Dependency::getPath).collect(Collectors.toList());
+        assertThat(dependencyNames, hasSize(2));
+        assertThat(dependencyNames, hasItems("mapDependency", "listDependency"));
     }
 
     @Test(expected = PlasterException.class)
