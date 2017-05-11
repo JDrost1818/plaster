@@ -1,12 +1,12 @@
 package github.jdrost1818.plaster.domain;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
 
-@Builder
 @Data
+@AllArgsConstructor
 public class FileInformation {
 
     private String className;
