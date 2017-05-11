@@ -9,7 +9,6 @@ import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -25,7 +24,15 @@ public class DependencyService {
     @Setter
     private SearchService searchService = ServiceProvider.getSearchService();
 
-
+    /**
+     * Fetches the dependency for the given class name, if one is required.
+     * Supports only single, non-typed classes. So Class will fetch correctly,
+     * Class<Other> will not. This is not a case sensitive search.
+     *
+     * @param className
+     *          name of class to find a dependency for.
+     * @return the dependency of the class, null if none
+     */
     public Dependency fetchDependency(String className) {
         if (StringUtils.isBlank(className)) {
             return null;
@@ -47,6 +54,14 @@ public class DependencyService {
                 ? storedJavaType.getType(true).getDependency() : this.fetchCustomDependency(className);
     }
 
+    /**
+     * Finds a dependency that is not part of the java language. This searches
+     * for any classes that have been defined in the project.
+     *
+     * @param className
+     *          class for which to find a dependency
+     * @return the dependency for the class, null if not found
+     */
     private Dependency fetchCustomDependency(String className) {
         List<String> matchingClassPaths = this.searchService.findClassesWithName(className);
 

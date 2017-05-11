@@ -2,6 +2,7 @@ package github.jdrost1818.plaster.service;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
+import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,11 +54,10 @@ public class DependencyServiceTest {
     @Test(expected = PlasterException.class)
     public void fetchCustomDependencies_custom_too_many() throws Exception {
         String customClassName = "Something";
-        String className = String.format("Map<List<Integer>, %s>", customClassName);
 
         when(this.searchService.findClassesWithName(customClassName)).thenReturn(Lists.newArrayList("", ""));
 
-        this.classUnderTest.fetchDependency(className);
+        this.classUnderTest.fetchDependency(customClassName);
     }
 
     @Test(expected = PlasterException.class)
@@ -68,6 +68,20 @@ public class DependencyServiceTest {
         when(this.searchService.findClassesWithName(customClassName)).thenReturn(Lists.newArrayList());
 
         this.classUnderTest.fetchDependency(className);
+    }
+
+    @Test
+    public void fetchCustomDependencies() throws Exception {
+        String absPath = "somewhere/src/main/java/com/example/Something.java";
+        String relPath = "src/main/java";
+        String customClassName = "Something";
+
+        when(this.searchService.findClassesWithName(customClassName)).thenReturn(Lists.newArrayList(absPath));
+        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn(relPath);
+
+        Dependency foundDependency = this.classUnderTest.fetchDependency(customClassName);
+
+        assertThat(foundDependency.getPath(), equalTo("com.example.Something"));
     }
 
 }
