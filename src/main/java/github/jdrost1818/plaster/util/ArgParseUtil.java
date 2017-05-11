@@ -114,7 +114,7 @@ public class ArgParseUtil {
         String customDir = parsedArgs.getString(Arg.DIR.key);
         if (StringUtils.isNotBlank(customDir)) {
             String normalizedPath = PathUtil.normalize(customDir, "/");
-            if (!normalizedPath.matches("[a-zA-Z0-9/]")) {
+            if (!normalizedPath.matches("[a-zA-Z0-9/]+")) {
                 throw new PlasterException("Invalid directory provided: " + customDir);
             }
         }
