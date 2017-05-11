@@ -36,6 +36,19 @@ public class ConfigurationService {
 
     private String applicationRoot;
 
+    /**
+     * This should not be used anywhere but when we are parsing the command
+     * line arguments in {@link github.jdrost1818.plaster.Plaster}
+     *
+     * @param setting
+     *          setting to change
+     * @param value
+     *          value to set
+     */
+    public void put(Setting setting, String value) {
+        this.configMap.put(setting, value);
+    }
+
     public String get(Setting setting) {
         return this.configMap.get(setting);
     }

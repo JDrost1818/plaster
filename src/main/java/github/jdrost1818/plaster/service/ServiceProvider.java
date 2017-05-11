@@ -28,4 +28,6 @@ public class ServiceProvider {
     @Getter
     private static final DependencyService dependencyService = new DependencyService();
 
+    @Getter
+    private static final FieldService fieldService = new FieldService();
 }

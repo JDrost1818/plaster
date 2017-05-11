@@ -1,9 +1,21 @@
 package github.jdrost1818.plaster;
 
+import com.google.common.collect.Lists;
+import github.jdrost1818.plaster.data.Arg;
+import github.jdrost1818.plaster.data.Setting;
+import github.jdrost1818.plaster.domain.Field;
+import github.jdrost1818.plaster.domain.FileInformation;
+import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.FieldService;
+import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.util.ArgParseUtil;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
  * Main entry point
@@ -14,6 +26,10 @@ import net.sourceforge.argparse4j.inf.Namespace;
  * plaster g scaffold Something name:string
  */
 public class Plaster {
+
+    private static ConfigurationService configurationService = ServiceProvider.getConfigurationService();
+
+    private static FieldService fieldService = ServiceProvider.getFieldService();
 
     public static void main(String[] args) {
         ArgumentParser parser = ArgParseUtil.getArgParser();
@@ -26,8 +42,40 @@ public class Plaster {
         }
 
         ArgParseUtil.validateParsedArgs(parsedArgs);
+        setCommandLineArgs(parsedArgs);
 
         System.out.println(parsedArgs.toString());
+    }
+
+    private static void setCommandLineArgs(Namespace parsedArgs) {
+        /*
+            Set the key if provided
+         */
+        String customKey = parsedArgs.getString(Arg.KEY.key);
+        String keyString = StringUtils.isNotBlank(customKey) ? customKey : configurationService.get(Setting.KEY);
+
+        configurationService.put(Setting.KEY, keyString);
+
+        /*
+            Set the custom directory if provided
+         */
+        String customSubDir = parsedArgs.get(Arg.DIR.key);
+        String safeCustomSubDir = StringUtils.isBlank(customSubDir) ? "" : "/" + customSubDir;
+        List<Setting> directories = Lists.newArrayList(
+                Setting.REL_MODEL_PACKAGE, Setting.REL_CONTROLLER_PACKAGE, Setting.REL_SERVICE_PACKAGE, Setting.REL_REPOSITORY_PACKAGE);
+
+        for (Setting dir : directories) {
+            String currentDir = configurationService.get(dir);
+            String customDir = FilenameUtils.concat(currentDir, safeCustomSubDir);
+
+            configurationService.put(dir, customDir);
+        }
+    }
+
+    private static FileInformation buildFileInformation(Namespace parsedArgs) {
+        Field key = fieldService.convertToField(configurationService.get(Setting.KEY));
+
+        return new FileInformation();
     }
 
 }
