@@ -1,6 +1,5 @@
 package github.jdrost1818.plaster;
 
-import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.util.ArgParseUtil;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
@@ -27,9 +26,6 @@ public class Plaster {
         }
 
         ArgParseUtil.validateParsedArgs(parsedArgs);
-
-        FileInformation fileInformation = new FileInformation();
-
 
         System.out.println(parsedArgs.toString());
     }
