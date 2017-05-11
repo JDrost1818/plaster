@@ -93,7 +93,7 @@ public enum StoredJavaType {
     }
 
     public Type getType(boolean shouldUsePrimitive) {
-        return nonNull(this.primitiveType) && shouldUsePrimitive ? this.primitiveType : type;
+        return nonNull(this.primitiveType) && shouldUsePrimitive ? this.primitiveType : this.type;
     }
 
 }

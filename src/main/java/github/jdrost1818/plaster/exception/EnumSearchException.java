@@ -1,24 +1,12 @@
 package github.jdrost1818.plaster.exception;
 
 /**
- * Created by jake on 5/9/17.
+ * Exception to be thrown when searching in an enum and not finding any results
  */
 public class EnumSearchException extends Exception {
 
-    public EnumSearchException () {
-
-    }
-
     public EnumSearchException (String message) {
         super (message);
-    }
-
-    public EnumSearchException (Throwable cause) {
-        super (cause);
-    }
-
-    public EnumSearchException (String message, Throwable cause) {
-        super (message, cause);
     }
 
 }

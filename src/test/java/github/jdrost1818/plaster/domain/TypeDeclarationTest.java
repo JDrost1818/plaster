@@ -8,12 +8,16 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class TypeDeclarationTest {
 
+    public static TypeDeclaration buildTypeDeclaration(String className) {
+        return new TypeDeclaration(className, Lists.newArrayList(new Type(className, new Dependency(className))));
+    }
+
 
     @Test
     public void getTemplate() throws Exception {
         String templateString = "List<Integer>";
 
-        TypeDeclaration declaration = new TypeDeclaration(templateString, Lists.newArrayList());
+        TypeDeclaration declaration = buildTypeDeclaration("List<Integer>");
         assertThat(declaration.getTemplate(), equalTo(templateString));
     }
 
