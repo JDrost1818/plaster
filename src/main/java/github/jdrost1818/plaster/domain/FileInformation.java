@@ -5,8 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
 @AllArgsConstructor
+@Data
 public class FileInformation {
 
     private String className;
