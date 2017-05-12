@@ -13,7 +13,7 @@ public class FieldTest {
 
         Field field = new Field(declaration, "varName");
 
-        assertThat(field.getTemplate(), equalTo("private Class varName;"));
+        assertThat(field.getTemplate(), equalTo("\tprivate Class varName;"));
     }
 
 }
