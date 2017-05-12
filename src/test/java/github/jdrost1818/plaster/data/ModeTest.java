@@ -1,6 +1,6 @@
 package github.jdrost1818.plaster.data;
 
-import github.jdrost1818.plaster.exception.EnumSearchException;
+import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Test;
 
 import static github.jdrost1818.plaster.data.Mode.GENERATE;
@@ -21,7 +21,7 @@ public class ModeTest {
         assertThat(foundMode, equalTo(GENERATE));
     }
 
-    @Test(expected = EnumSearchException.class)
+    @Test(expected = PlasterException.class)
     public void getMode_no_result() throws Exception {
         Mode.getMode("this will return no results");
     }

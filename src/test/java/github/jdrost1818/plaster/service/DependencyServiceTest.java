@@ -77,7 +77,7 @@ public class DependencyServiceTest {
         String customClassName = "Something";
 
         when(this.searchService.findClassesWithName(customClassName)).thenReturn(Lists.newArrayList(absPath));
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn(relPath);
+        when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn(relPath);
 
         Dependency foundDependency = this.classUnderTest.fetchDependency(customClassName);
 

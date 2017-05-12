@@ -8,7 +8,9 @@ public enum Setting {
 
     KEY,
     IS_LOMBOK_ENABLED,
+    PROJECT_PATH,
     BASE_PATH,
+    APP_PATH,
     SUB_DIR_PATH,
     REL_PATH,
     MAVEN_GROUP_ID,

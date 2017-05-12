@@ -43,7 +43,7 @@ public class ConfigurationService {
      * @param setting
      *          setting to change
      * @param value
-     *          value to set
+     *
      */
     public void put(Setting setting, String value) {
         this.configMap.put(setting, value);
@@ -73,7 +73,7 @@ public class ConfigurationService {
      *
      *  KEY                     = id:int
      *  IS_LOMBOK_ENABLED       = false
-     *  BASE_PATH               = src/main/java/
+     *  PROJECT_PATH            =
      *  SUB_DIR_PATH            = *
      *  REL_PATH                = **
      *  MAVEN_GROUP_ID          = **
@@ -94,6 +94,7 @@ public class ConfigurationService {
 
         this.configMap.put(Setting.KEY, "id:int");
         this.configMap.put(Setting.IS_LOMBOK_ENABLED, "false");
+        this.configMap.put(Setting.PROJECT_PATH, "");
         this.configMap.put(Setting.BASE_PATH, "src/main/java");
         this.configMap.put(Setting.SUB_DIR_PATH, "");
         this.configMap.put(Setting.REL_MODEL_PACKAGE, "model");
@@ -110,7 +111,8 @@ public class ConfigurationService {
      *
      *  IS_LOMBOK_ENABLED   = true if found in dependencies
      *  MAVEN_GROUP_ID      = found in pom under the group-id tag
-     *  REL_PATH            = if group id == "com.example.app" rel_path = "src/main/java/com/example/app/
+     *  BASE_PATH           = "src/main/java" in most (nearly all) cases
+     *  APP_PATH            = if group id == "com.example.app" app_path = "com/example/app/
      *
      */
     private void loadFromPom() {
@@ -130,8 +132,8 @@ public class ConfigurationService {
             String mavenGroupId = groupIds.item(0).getTextContent();
 
             this.configMap.put(Setting.MAVEN_GROUP_ID, mavenGroupId);
-            this.configMap.put(Setting.REL_PATH, PathUtil.
-                    normalize("/src/main/java/" + mavenGroupId.replace(".", "/"), "/"));
+            this.configMap.put(Setting.APP_PATH, PathUtil.
+                    normalize(mavenGroupId.replace(".", "/"), "/"));
 
             /*
                 This part inspects the dependencies to see what we can turn on
@@ -233,8 +235,8 @@ public class ConfigurationService {
             String mavenGroupId = this.get(Setting.MAVEN_GROUP_ID);
 
             this.configMap.put(Setting.BASE_PATH, customization.getBase());
-            this.configMap.put(Setting.REL_PATH, PathUtil.
-                    normalize(customization.getBase() + "/" + mavenGroupId.replace(".", "/"), "/"));
+            this.configMap.put(Setting.APP_PATH, PathUtil.
+                    normalize(mavenGroupId.replace(".", "/"), "/"));
         }
 
         Map<Setting, String> dirMap = new HashMap<>();

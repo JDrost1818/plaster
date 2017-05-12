@@ -11,20 +11,31 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ConfigurationServiceTest {
+    
+    public static ConfigurationService getTestConfigurationService(String root) {
+        File file = new File(ConfigurationServiceTest.class.getClassLoader().getResource("testProject").getFile());
+        return new ConfigurationService().load(file.getAbsolutePath() + "/" + root);
+    }
 
-    ConfigurationService classUnderTest = new ConfigurationService();
+    public static void transformToItService(ConfigurationService configurationService) {
+        ConfigurationService itConfigurationService = getTestConfigurationService("");
+        itConfigurationService.put(Setting.PROJECT_PATH, "src/test/resources/testProject/");
 
-    private String root;
+        for (Setting curSetting : Setting.values()) {
+            configurationService.put(curSetting, itConfigurationService.get(curSetting));
+        }
+
+        String dir = System.getProperty("user.dir");
+    }
 
     @Before
     public void setUp() throws Exception {
-        File file = new File(getClass().getClassLoader().getResource("testProject").getFile());
-        this.root = file.getAbsolutePath();
+        
     }
 
     @Test(expected = PlasterException.class)
     public void load_pom_does_not_exist() throws Exception {
-        this.classUnderTest.load("thisDoesNotExist.xml");
+        getTestConfigurationService("thisDoesNotExist.xml");
     }
 
     /**
@@ -33,19 +44,20 @@ public class ConfigurationServiceTest {
      */
     @Test
     public void load_root1() throws Exception {
-        this.classUnderTest.load(root + "/root1");
+        ConfigurationService configurationService = getTestConfigurationService("/root1");
 
-        assertThat(this.classUnderTest.get(Setting.KEY), equalTo("id:int"));
-        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_ENABLED), equalTo("true"));
-        assertThat(this.classUnderTest.get(Setting.BASE_PATH), equalTo("src/main/java"));
-        assertThat(this.classUnderTest.get(Setting.SUB_DIR_PATH), equalTo(""));
-        assertThat(this.classUnderTest.get(Setting.REL_PATH), equalTo("src/main/java/com/example/app"));
-        assertThat(this.classUnderTest.get(Setting.MAVEN_GROUP_ID), equalTo("com.example.app"));
-        assertThat(this.classUnderTest.get(Setting.REL_MODEL_PACKAGE), equalTo("model"));
-        assertThat(this.classUnderTest.get(Setting.REL_REPOSITORY_PACKAGE), equalTo("repository"));
-        assertThat(this.classUnderTest.get(Setting.REL_SERVICE_PACKAGE), equalTo("service"));
-        assertThat(this.classUnderTest.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("controller"));
-        assertThat(this.classUnderTest.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("false"));
+        assertThat(configurationService.get(Setting.KEY), equalTo("id:int"));
+        assertThat(configurationService.get(Setting.IS_LOMBOK_ENABLED), equalTo("true"));
+        assertThat(configurationService.get(Setting.PROJECT_PATH), equalTo(""));
+        assertThat(configurationService.get(Setting.SUB_DIR_PATH), equalTo(""));
+        assertThat(configurationService.get(Setting.BASE_PATH), equalTo("src/main/java"));
+        assertThat(configurationService.get(Setting.APP_PATH), equalTo("com/example/app"));
+        assertThat(configurationService.get(Setting.MAVEN_GROUP_ID), equalTo("com.example.app"));
+        assertThat(configurationService.get(Setting.REL_MODEL_PACKAGE), equalTo("model"));
+        assertThat(configurationService.get(Setting.REL_REPOSITORY_PACKAGE), equalTo("repository"));
+        assertThat(configurationService.get(Setting.REL_SERVICE_PACKAGE), equalTo("service"));
+        assertThat(configurationService.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("controller"));
+        assertThat(configurationService.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("false"));
     }
 
     /**
@@ -54,19 +66,20 @@ public class ConfigurationServiceTest {
      */
     @Test
     public void load_root2() throws Exception {
-        this.classUnderTest.load(root + "/root2");
+        ConfigurationService configurationService = getTestConfigurationService("/root2");
 
-        assertThat(this.classUnderTest.get(Setting.KEY), equalTo("key:string"));
-        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_ENABLED), equalTo("true"));
-        assertThat(this.classUnderTest.get(Setting.BASE_PATH), equalTo("custom/path"));
-        assertThat(this.classUnderTest.get(Setting.SUB_DIR_PATH), equalTo(""));
-        assertThat(this.classUnderTest.get(Setting.REL_PATH), equalTo("custom/path/com/example/app"));
-        assertThat(this.classUnderTest.get(Setting.MAVEN_GROUP_ID), equalTo("com.example.app"));
-        assertThat(this.classUnderTest.get(Setting.REL_MODEL_PACKAGE), equalTo("somewhere/model"));
-        assertThat(this.classUnderTest.get(Setting.REL_REPOSITORY_PACKAGE), equalTo("somewhere/repository"));
-        assertThat(this.classUnderTest.get(Setting.REL_SERVICE_PACKAGE), equalTo("somewhere/service"));
-        assertThat(this.classUnderTest.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("somewhere/controller"));
-        assertThat(this.classUnderTest.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("true"));
+        assertThat(configurationService.get(Setting.KEY), equalTo("key:string"));
+        assertThat(configurationService.get(Setting.IS_LOMBOK_ENABLED), equalTo("true"));
+        assertThat(configurationService.get(Setting.PROJECT_PATH), equalTo(""));
+        assertThat(configurationService.get(Setting.SUB_DIR_PATH), equalTo(""));
+        assertThat(configurationService.get(Setting.BASE_PATH), equalTo("custom/path"));
+        assertThat(configurationService.get(Setting.APP_PATH), equalTo("com/example/app"));
+        assertThat(configurationService.get(Setting.MAVEN_GROUP_ID), equalTo("com.example.app"));
+        assertThat(configurationService.get(Setting.REL_MODEL_PACKAGE), equalTo("somewhere/model"));
+        assertThat(configurationService.get(Setting.REL_REPOSITORY_PACKAGE), equalTo("somewhere/repository"));
+        assertThat(configurationService.get(Setting.REL_SERVICE_PACKAGE), equalTo("somewhere/service"));
+        assertThat(configurationService.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("somewhere/controller"));
+        assertThat(configurationService.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("true"));
     }
 
     /**
@@ -74,19 +87,20 @@ public class ConfigurationServiceTest {
      */
     @Test
     public void load_root3() throws Exception {
-        this.classUnderTest.load(root + "/root3");
+        ConfigurationService configurationService = getTestConfigurationService("/root3");
 
-        assertThat(this.classUnderTest.get(Setting.KEY), equalTo("id:int"));
-        assertThat(this.classUnderTest.get(Setting.IS_LOMBOK_ENABLED), equalTo("false"));
-        assertThat(this.classUnderTest.get(Setting.BASE_PATH), equalTo("src/main/java"));
-        assertThat(this.classUnderTest.get(Setting.SUB_DIR_PATH), equalTo(""));
-        assertThat(this.classUnderTest.get(Setting.REL_PATH), equalTo("src/main/java/com/example/app"));
-        assertThat(this.classUnderTest.get(Setting.MAVEN_GROUP_ID), equalTo("com.example.app"));
-        assertThat(this.classUnderTest.get(Setting.REL_MODEL_PACKAGE), equalTo("model"));
-        assertThat(this.classUnderTest.get(Setting.REL_REPOSITORY_PACKAGE), equalTo("repository"));
-        assertThat(this.classUnderTest.get(Setting.REL_SERVICE_PACKAGE), equalTo("service"));
-        assertThat(this.classUnderTest.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("controller"));
-        assertThat(this.classUnderTest.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("false"));
+        assertThat(configurationService.get(Setting.KEY), equalTo("id:int"));
+        assertThat(configurationService.get(Setting.IS_LOMBOK_ENABLED), equalTo("false"));
+        assertThat(configurationService.get(Setting.PROJECT_PATH), equalTo(""));
+        assertThat(configurationService.get(Setting.SUB_DIR_PATH), equalTo(""));
+        assertThat(configurationService.get(Setting.BASE_PATH), equalTo("src/main/java"));
+        assertThat(configurationService.get(Setting.APP_PATH), equalTo("com/example/app"));
+        assertThat(configurationService.get(Setting.MAVEN_GROUP_ID), equalTo("com.example.app"));
+        assertThat(configurationService.get(Setting.REL_MODEL_PACKAGE), equalTo("model"));
+        assertThat(configurationService.get(Setting.REL_REPOSITORY_PACKAGE), equalTo("repository"));
+        assertThat(configurationService.get(Setting.REL_SERVICE_PACKAGE), equalTo("service"));
+        assertThat(configurationService.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("controller"));
+        assertThat(configurationService.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("false"));
     }
 
 

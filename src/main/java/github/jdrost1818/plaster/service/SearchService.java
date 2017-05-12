@@ -25,7 +25,7 @@ public class SearchService {
      * @return the java paths for all found class names
      */
     public List<String> findClassesWithName(String className) {
-        String basePath = this.configurationService.get(Setting.BASE_PATH);
+        String basePath = this.configurationService.get(Setting.PROJECT_PATH);
 
         return this.findFilesWithName(new File(basePath), className + ".java").stream()
                 .map(File::getPath)
@@ -44,6 +44,7 @@ public class SearchService {
      * @return all files with the given name
      */
     private List<File> findFilesWithName(File root, String searchName) {
+        String absPath = root.getAbsolutePath();
         List<File> foundFiles = new ArrayList<>();
 
         File[] files = root.listFiles();

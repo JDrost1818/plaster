@@ -37,7 +37,7 @@ public class SearchServiceTest {
 
     @Test
     public void findClassesWithName_multiple() throws Exception {
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn(this.resourceDir);
+        when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn(this.resourceDir);
 
         List<String> foundPaths = this.classUnderTest.findClassesWithName("duplicate");
 
@@ -48,7 +48,7 @@ public class SearchServiceTest {
 
     @Test
     public void findClassesWithName_start_with_file() throws Exception {
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn(this.resourceDir + "/testProject/root1/pom.xml");
+        when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn(this.resourceDir + "/testProject/root1/pom.xml");
 
         List<String> foundPaths = this.classUnderTest.findClassesWithName("duplicate");
 
