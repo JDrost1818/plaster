@@ -1,6 +1,7 @@
 package github.jdrost1818.plaster.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 /**
@@ -21,6 +22,7 @@ import lombok.NonNull;
  *  For complex types see {@link TypeDeclaration}
  */
 @Data
+@EqualsAndHashCode
 public class Type implements PlasterTemplate {
 
     private String className;

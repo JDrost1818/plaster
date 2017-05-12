@@ -1,6 +1,7 @@
 package github.jdrost1818.plaster.domain;
 
 import github.jdrost1818.plaster.util.TypeUtil;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  *  private Map<List<Integer>, SomeClass> map; ->   TypeDeclaration represents "Map<List<Integer>, SomeClass>"
  */
 @Getter
+@EqualsAndHashCode
 public class TypeDeclaration implements PlasterTemplate {
 
     private final String declaration;

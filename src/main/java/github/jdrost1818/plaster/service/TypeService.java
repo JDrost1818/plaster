@@ -1,7 +1,6 @@
 package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.data.Regex;
-import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.StoredJavaType;
 import github.jdrost1818.plaster.domain.Type;
 import github.jdrost1818.plaster.domain.TypeDeclaration;
@@ -28,9 +27,6 @@ import static java.util.Objects.nonNull;
 public class TypeService {
 
     private static final Pattern POP_PATTERN = Pattern.compile("[>,]");
-
-    @Setter
-    private ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
     @Setter
     private SearchService searchService = ServiceProvider.getSearchService();
@@ -78,9 +74,10 @@ public class TypeService {
      *
      * @param typeString
      *          string to convert
+     * @param shouldUsePrimitive
      * @return the converted type
      */
-    public Type convertToType(String typeString) {
+    public Type convertToType(String typeString, boolean shouldUsePrimitive) {
         if (!validateType(typeString)) {
             throw new PlasterException("Malformed type provided: " + typeString);
         }
@@ -93,7 +90,6 @@ public class TypeService {
             // isn't guaranteed to be a stored type here
         }
 
-        boolean shouldUsePrimitive = this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES);
         return nonNull(storedJavaType) ? storedJavaType.getType(shouldUsePrimitive) : this.fetchCustomType(typeString);
     }
 

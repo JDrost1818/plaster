@@ -1,7 +1,6 @@
 package github.jdrost1818.plaster.service;
 
 import com.google.common.collect.Lists;
-import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.domain.Type;
 import github.jdrost1818.plaster.domain.TypeDeclaration;
@@ -39,7 +38,6 @@ public class TypeServiceTest {
     public void setUp() {
         initMocks(this);
 
-        this.classUnderTest.setConfigurationService(configurationService);
         this.classUnderTest.setSearchService(searchService);
         this.classUnderTest.setDependencyService(dependencyService);
     }
@@ -81,23 +79,19 @@ public class TypeServiceTest {
 
     @Test(expected = PlasterException.class)
     public void convertToType_malformed_type() throws Exception {
-        this.classUnderTest.convertToType("Map<<string>");
+        this.classUnderTest.convertToType("Map<<string>", true);
     }
 
     @Test
     public void convertToType_should_be_primitive() throws Exception {
-        when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
-
-        Type foundType = this.classUnderTest.convertToType("int");
+        Type foundType = this.classUnderTest.convertToType("int", true);
 
         assertThat(foundType.getClassName(), equalTo("int"));
     }
 
     @Test
     public void convertToType_should_not_be_primitive() throws Exception {
-        when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(false);
-
-        Type foundType = this.classUnderTest.convertToType("int");
+        Type foundType = this.classUnderTest.convertToType("int", false);
 
         assertThat(foundType.getClassName(), equalTo("Integer"));
     }
@@ -107,10 +101,9 @@ public class TypeServiceTest {
         String className = "CustomClass";
         List<String> expectedResult = Lists.newArrayList("1", "2");
 
-        when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
         when(this.searchService.findClassesWithName(className)).thenReturn(expectedResult);
 
-        this.classUnderTest.convertToType(className);
+        this.classUnderTest.convertToType(className, true);
     }
 
     @Test(expected = PlasterException.class)
@@ -118,10 +111,9 @@ public class TypeServiceTest {
         String className = "CustomClass";
         List<String> expectedResult = Lists.newArrayList();
 
-        when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
         when(this.searchService.findClassesWithName(className)).thenReturn(expectedResult);
 
-        this.classUnderTest.convertToType(className);
+        this.classUnderTest.convertToType(className, true);
     }
 
     @Test
@@ -132,11 +124,10 @@ public class TypeServiceTest {
         List<String> expectedSearchResult = Lists.newArrayList(filePath);
         Dependency dependency = new Dependency("com.example.Something");
 
-        when(this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(true);
         when(this.searchService.findClassesWithName(className)).thenReturn(expectedSearchResult);
         when(this.dependencyService.fetchDependency(className)).thenReturn(dependency);
 
-        Type type = this.classUnderTest.convertToType(className);
+        Type type = this.classUnderTest.convertToType(className, true);
 
         assertThat(type.getClassName(), equalTo(className));
         assertThat(type.getDependency(), sameInstance(dependency));
