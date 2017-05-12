@@ -21,7 +21,7 @@ public class SearchServiceTest {
     @Mock
     ConfigurationService configurationService;
 
-    SearchService classUnderTest = ServiceProvider.getSearchService();
+    SearchService classUnderTest = new SearchService();
 
     String resourceDir;
 
@@ -42,8 +42,8 @@ public class SearchServiceTest {
         List<String> foundPaths = this.classUnderTest.findClassesWithName("duplicate");
 
         assertThat(foundPaths, hasSize(2));
-        assertThat("src/main/java/com/example/dir1/Duplicate.java", isIn(foundPaths));
-        assertThat("src/main/java/com/example/dir2/Duplicate.java", isIn(foundPaths));
+        assertThat("src/main/java/com/example/app/dir1/Duplicate.java", isIn(foundPaths));
+        assertThat("src/main/java/com/example/app/dir2/Duplicate.java", isIn(foundPaths));
     }
 
     @Test

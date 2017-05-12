@@ -72,7 +72,7 @@ public class DependencyService {
             throw new PlasterException("Could not find custom type: " + className);
         }
 
-        String basePath = this.configurationService.get(Setting.PROJECT_PATH);
+        String basePath = this.configurationService.get(Setting.BASE_PATH);
         return new Dependency(PathUtil.pathToPackage(matchingClassPaths.get(0), basePath));
     }
 

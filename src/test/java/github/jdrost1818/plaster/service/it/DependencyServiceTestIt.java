@@ -39,7 +39,7 @@ public class DependencyServiceTestIt {
     public void fetchDependency_custom() {
         Dependency foundDependency = this.classUnderTest.fetchDependency("example");
 
-        assertThat(foundDependency.getPath(), equalTo("com.example.dir1.Example"));
+        assertThat(foundDependency.getPath(), equalTo("com.example.app.dir1.Example"));
     }
 
 

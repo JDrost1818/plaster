@@ -44,7 +44,6 @@ public class SearchService {
      * @return all files with the given name
      */
     private List<File> findFilesWithName(File root, String searchName) {
-        String absPath = root.getAbsolutePath();
         List<File> foundFiles = new ArrayList<>();
 
         File[] files = root.listFiles();
