@@ -5,7 +5,11 @@ import github.jdrost1818.plaster.domain.GenTypeModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 public abstract class TemplateBuilder {
 
@@ -19,7 +23,19 @@ public abstract class TemplateBuilder {
                 .with("className", genTypeModel.getClassName());
         model = addCustomInformation(model, fileInformation);
 
-        template.render(model, out);
+        ByteArrayOutputStream inMemOut = new ByteArrayOutputStream();
+        PrintStream inMemPrint = new PrintStream(inMemOut);
+
+        template.render(model, inMemPrint);
+
+        String fileContent = new String(inMemOut.toByteArray(), StandardCharsets.UTF_8);
+        String formattedContent = TemplateUtil.formatFile(fileContent);
+
+        try {
+            out.write(formattedContent.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation);

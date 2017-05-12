@@ -16,7 +16,6 @@ public class ModelTemplateBuilder extends TemplateBuilder {
         return instance;
     }
 
-
     @Override
     public JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
         model = TemplateUtil.addDependencies(model, fileInformation);

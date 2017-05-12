@@ -26,7 +26,7 @@ public final class TemplateUtil {
     }
 
     public static JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
-        return model.with("id", fileInformation.getId());
+        return model.with("idField", fileInformation.getId().getTemplate());
     }
 
     public static JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {
@@ -35,6 +35,10 @@ public final class TemplateUtil {
                 .collect(Collectors.joining("\n\n"));
 
         return model.with("fields", fieldString);
+    }
+
+    public static String formatFile(String file) {
+        return file.replaceAll("(\r?\n){3,}", "\r\n\r\n");
     }
 
 }

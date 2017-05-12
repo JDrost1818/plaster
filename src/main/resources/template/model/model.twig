@@ -1,6 +1,6 @@
 package {{ package }};
 
-import javax.persistence.*
+import javax.persistence.*;
 
 {{ dependencies }}
 
@@ -10,10 +10,10 @@ public class {{ className }} {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    {{ idField }}
+{{ idField }}
 
-    {{ fields }}
+{{ fields }}
 
-    {{ methods }}
+{{ methods }}
 
 }

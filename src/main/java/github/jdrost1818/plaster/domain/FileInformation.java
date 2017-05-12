@@ -1,11 +1,10 @@
 package github.jdrost1818.plaster.domain;
 
-import lombok.AllArgsConstructor;
+import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.Data;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Data
 public class FileInformation {
 
@@ -14,5 +13,11 @@ public class FileInformation {
     private Field id;
 
     private List<Field> fields;
+
+    public FileInformation(String className, Field id, List<Field> fields) {
+        this.className = TypeUtil.normalizeTypeString(className);
+        this.id = id;
+        this.fields = fields;
+    }
 
 }

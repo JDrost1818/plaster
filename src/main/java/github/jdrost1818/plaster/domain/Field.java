@@ -13,6 +13,6 @@ public class Field implements PlasterTemplate {
 
     @Override
     public String getTemplate() {
-        return String.format("private %s %s;", this.typeDeclaration.getTemplate(), this.variableName);
+        return String.format("\tprivate %s %s;", this.typeDeclaration.getTemplate(), this.variableName);
     }
 }
