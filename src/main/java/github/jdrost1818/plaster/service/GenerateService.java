@@ -5,8 +5,10 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.exception.PlasterException;
+import github.jdrost1818.plaster.template.TemplateBuilder;
 import github.jdrost1818.plaster.template.builder.ControllerTemplateBuilder;
 import github.jdrost1818.plaster.template.builder.ModelTemplateBuilder;
+import github.jdrost1818.plaster.template.builder.ServiceTemplateBuilder;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -24,40 +26,36 @@ public class GenerateService {
     private ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
     public void generateModel(FileInformation fileInformation) {
-        GenTypeModel genTypeModel = new GenTypeModel(
-                fileInformation.getClassName(),
-                this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
-
-        String genFilePath = this.getRenderLocation(Setting.REL_MODEL_PACKAGE, fileInformation.getClassName());
-        ModelTemplateBuilder.getInstance().renderTemplate(
-                "model/model.twig",
-                fileInformation,
-                genTypeModel,
-                this.getOutputStream(genFilePath));
+        this.generate(fileInformation, TemplateType.MODEL, ModelTemplateBuilder.getInstance());
     }
 
     public void generateController(FileInformation fileInformation) {
-        GenTypeModel genTypeModel = new GenTypeModel(
-                fileInformation.getClassName(),
-                this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
-
-        String genFilePath = this.getRenderLocation(Setting.REL_CONTROLLER_PACKAGE, fileInformation.getClassName() + TemplateType.CONTROLLER.suffix);
-        ControllerTemplateBuilder.getInstance().renderTemplate(
-                "controller/controller.twig",
-                fileInformation,
-                genTypeModel,
-                this.getOutputStream(genFilePath));    }
+        this.generate(fileInformation, TemplateType.CONTROLLER, ControllerTemplateBuilder.getInstance());
+    }
     
     public void generateService(FileInformation fileInformation) {
-        
+        this.generate(fileInformation, TemplateType.SERVICE, ServiceTemplateBuilder.getInstance());
     }
     
     public void generateRepository(FileInformation fileInformation) {
-        
+
     }
     
     public void addFields(FileInformation fileInformation) {
         
+    }
+
+    private void generate(FileInformation fileInformation, TemplateType templateType, TemplateBuilder templateBuilder) {
+        GenTypeModel genTypeModel = new GenTypeModel(
+                fileInformation.getClassName(),
+                this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
+
+        String genFilePath = this.getRenderLocation(templateType.relPathSetting, fileInformation.getClassName() + templateType.suffix);
+        templateBuilder.renderTemplate(
+                templateType.templateLocation,
+                fileInformation,
+                genTypeModel,
+                this.getOutputStream(genFilePath));
     }
 
     private OutputStream getOutputStream(String location) {

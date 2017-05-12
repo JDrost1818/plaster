@@ -26,11 +26,26 @@ public final class TemplateUtil {
         List<Field> fields = fileInformation.getFields();
         fields.add(fileInformation.getId());
 
-        String dependencyString = fields.stream()
+        List<Dependency> dependencies = fields.stream()
                 .map(Field::getTypeDeclaration)
                 .map(TypeDeclaration::getTypes)
                 .flatMap(List::stream)
                 .map(Type::getDependency)
+                .collect(Collectors.toList());
+
+        return addDependencies(model, dependencies);
+    }
+
+    public static JtwigModel addDependencies(JtwigModel model, Field field) {
+        List<Dependency> dependencies = field.getTypeDeclaration().getTypes().stream()
+                .map(Type::getDependency)
+                .collect(Collectors.toList());
+
+        return addDependencies(model, dependencies);
+    }
+
+    public static JtwigModel addDependencies(JtwigModel model, List<Dependency> dependencies) {
+         String dependencyString = dependencies.stream()
                 .filter(Objects::nonNull)
                 .map(Dependency::getTemplate)
                 .distinct()
