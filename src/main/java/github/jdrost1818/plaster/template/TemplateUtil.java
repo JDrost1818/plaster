@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import org.jtwig.JtwigModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public final class TemplateUtil {
     private static ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
     public static JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
-        List<Field> fields = fileInformation.getFields();
+        List<Field> fields = new ArrayList<>(fileInformation.getFields());
         fields.add(fileInformation.getId());
 
         List<Dependency> dependencies = fields.stream()

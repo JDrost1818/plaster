@@ -10,7 +10,7 @@ public class {{ modelField.className }} {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-{{ idField }}
+    private {{ idField.className }} {{ idField.varName }};
 
 {{ fields }}
 
