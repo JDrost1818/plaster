@@ -1,9 +1,11 @@
 package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.data.Setting;
+import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.exception.PlasterException;
+import github.jdrost1818.plaster.template.builder.ControllerTemplateBuilder;
 import github.jdrost1818.plaster.template.builder.ModelTemplateBuilder;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AccessLevel;
@@ -35,8 +37,16 @@ public class GenerateService {
     }
 
     public void generateController(FileInformation fileInformation) {
-        
-    }
+        GenTypeModel genTypeModel = new GenTypeModel(
+                fileInformation.getClassName(),
+                this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
+
+        String genFilePath = this.getRenderLocation(Setting.REL_CONTROLLER_PACKAGE, fileInformation.getClassName() + TemplateType.CONTROLLER.suffix);
+        ControllerTemplateBuilder.getInstance().renderTemplate(
+                "controller/controller.twig",
+                fileInformation,
+                genTypeModel,
+                this.getOutputStream(genFilePath));    }
     
     public void generateService(FileInformation fileInformation) {
         

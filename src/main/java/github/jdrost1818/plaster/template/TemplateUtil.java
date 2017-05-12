@@ -23,7 +23,10 @@ public final class TemplateUtil {
     private static ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
     public static JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
-        String dependencyString = fileInformation.getFields().stream()
+        List<Field> fields = fileInformation.getFields();
+        fields.add(fileInformation.getId());
+
+        String dependencyString = fields.stream()
                 .map(Field::getTypeDeclaration)
                 .map(TypeDeclaration::getTypes)
                 .flatMap(List::stream)
@@ -37,7 +40,8 @@ public final class TemplateUtil {
     }
 
     public static JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
-        return model.with("idField", fileInformation.getId().getTemplate());
+        Field id = fileInformation.getId();
+        return model.with("idField", new FlattenedField("", id.getTypeDeclaration().getDeclaration(), id.getVariableName()));
     }
 
     public static JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {

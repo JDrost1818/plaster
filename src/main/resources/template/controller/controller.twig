@@ -1,41 +1,41 @@
-package {{ package }}
+package {{ controllerField.packagePath }};
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 {{ dependencies }}
-import {{ servicePackage }}.{{ serviceClass }}
-import {{ modelPackage }}.{{ modelClas }}
+import {{ serviceField.packagePath }}.{{ serviceField.className }};
+import {{ modelField.packagePath }}.{{ modelField.className }};
 
 @RestController
 @RequestMapping("/{{ baseRoute }}")
-public class {{ className }} {
+public class {{ controllerField.className }} {
 
-    private final {{ serviceClass }} {{ serviceVar }};
+    private final {{ serviceField.className }} {{ serviceField.varName }};
 
     @Autowired
-    public {{ class_name }} ({{ service_class }} {{ service_var }}) {{
-            this.{{ service_var }} = {{ service_var }};
-    }}
+    public {{ controllerField.className }}({{ serviceField.className }} {{ serviceField.varName }}) {
+            this.{{ serviceField.varName }} = {{ serviceField.varName }};
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public {model_class} create(@RequestBody {model_class} {model_var}) {{
-            return this.{service_var}.create({model_var});
-    }}
+    public {{ modelField.className }} create(@RequestBody {{ modelField.className }} {{ modelField.varName }}) {
+            return this.{{ serviceField.varName }}.create({{ modelField.varName }});
+    }
 
-    @RequestMapping(value = "/{{{id.name}}}", method = RequestMethod.GET)
-    public {model_class} read(@PathVariable {id.field_type.class_name} {id.name}) {{
-            return this.{service_var}.read({id.name});
-    }}
+    @RequestMapping(value = "/{{ '{' ~ idField.varName ~ '}' }}", method = RequestMethod.GET)
+    public {{ modelField.className }} read(@PathVariable {{ idField.className }} {{ idField.varName }}) {
+            return this.{{ serviceField.varName }}.read({{ idField.varName }});
+    }
 
-    @RequestMapping(value = "/{{{id.name}}}", method = RequestMethod.PUT)
-    public {model_class} update(@PathVariable {id.field_type.class_name} {id.name}, @RequestBody {model_class} {model_var}) {{
-            return this.{service_var}.update({model_var});
-    }}
+    @RequestMapping(value = "/{{ '{' ~ idField.varName ~ '}' }}", method = RequestMethod.PUT)
+    public {{ modelField.className }} update(@PathVariable {{ idField.className }} {{ idField.varName }}, @RequestBody {{ modelField.className }} {{ modelField.varName }}) {
+            return this.{{ serviceField.varName }}.update({{ modelField.varName }});
+    }
 
-    @RequestMapping(value = "/{{{id.name}}}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable {id.field_type.class_name} {id.name}) {{
-            this.{service_var}.delete({id.name});
-    }}
+    @RequestMapping(value = "/{{ '{' ~ idField.varName ~ '}' }}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable {{ idField.className }} {{ idField.varName }}) {
+            this.{{ serviceField.varName }}.delete({{ idField.varName }});
+    }
 
 }
