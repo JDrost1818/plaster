@@ -234,7 +234,9 @@ public class ConfigurationService {
         if (nonNull(customization.getBase())) {
             String mavenGroupId = this.get(Setting.MAVEN_GROUP_ID);
 
-            this.configMap.put(Setting.BASE_PATH, customization.getBase());
+            this.configMap.put(Setting.BASE_PATH,
+                    StringUtils.isNotBlank(customization.getBase()) ? customization.getBase() : "");
+
             this.configMap.put(Setting.APP_PATH, PathUtil.
                     normalize(mavenGroupId.replace(".", "/"), "/"));
         }
