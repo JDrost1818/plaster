@@ -33,7 +33,7 @@ public class SearchServiceTest {
     }
 
     @Test
-    public void findClassesWithName_multiple() throws Exception {
+    public void findClassesWithName_multiple_2_point_oh() throws Exception {
         when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn(this.resourceDir);
         when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("src/main/java");
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("com/example/app");
