@@ -42,11 +42,11 @@ public class TypeService {
      * @return whether the string is valid
      */
     public boolean validateType(String typeString) {
-        String trimmedString = typeString.replace(" ", "");
+        String normalizedTypeString = TypeUtil.normalizeTypeString(typeString).replaceAll(" ", "");
 
         return typeString.contains("<")
-                ? this.validateComplexType(trimmedString, new Stack<>())
-                : this.validateClassName(trimmedString, true);
+                ? this.validateComplexType(normalizedTypeString, new Stack<>())
+                : this.validateClassName(normalizedTypeString, true);
     }
 
     /**
@@ -57,15 +57,19 @@ public class TypeService {
      * @return the converted declaration
      */
     public TypeDeclaration convertToTypeDeclaration(String typeString) {
-        if (StringUtils.isBlank(typeString) || !this.validateType(typeString)) {
+        String normalizedTypeString = TypeUtil.normalizeTypeString(typeString);
+
+        if (StringUtils.isBlank(normalizedTypeString) || !this.validateType(normalizedTypeString)) {
             throw new PlasterException("Malformed type provided: " + typeString);
         }
 
-        List<Type> types = TypeUtil.splitToIndividualTypes(typeString).stream()
-                .map(t -> new Type(t, this.dependencyService.fetchDependency(t)))
+        List<Type> types = TypeUtil.splitToIndividualTypes(normalizedTypeString).stream()
+                .map(t -> this.convertToType(t, false))
                 .collect(Collectors.toList());
 
-        return new TypeDeclaration(typeString, types);
+        String mergedTypeString = TypeUtil.mergeTypeStringAndListOfTypes(typeString, types);
+
+        return new TypeDeclaration(mergedTypeString, types);
     }
 
     /**
@@ -78,19 +82,22 @@ public class TypeService {
      * @return the converted type
      */
     public Type convertToType(String typeString, boolean shouldUsePrimitive) {
-        if (!validateType(typeString)) {
+        String normalizedTypeString = TypeUtil.normalizeTypeString(typeString);
+
+        if (!validateType(normalizedTypeString)) {
             throw new PlasterException("Malformed type provided: " + typeString);
         }
 
         StoredJavaType storedJavaType = null;
         try {
-            storedJavaType = StoredJavaType.getStoredJavaType(typeString);
+            storedJavaType = StoredJavaType.getStoredJavaType(normalizedTypeString);
         } catch (EnumSearchException e) {
             // This really isn't an error in this case. The type
             // isn't guaranteed to be a stored type here
         }
 
-        return nonNull(storedJavaType) ? storedJavaType.getType(shouldUsePrimitive) : this.fetchCustomType(typeString);
+        return nonNull(storedJavaType)
+                ? storedJavaType.getType(shouldUsePrimitive) : this.fetchCustomType(normalizedTypeString);
     }
 
     private Type fetchCustomType(String typeString) {

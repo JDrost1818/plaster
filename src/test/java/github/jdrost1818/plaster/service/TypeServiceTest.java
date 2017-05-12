@@ -25,13 +25,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class TypeServiceTest {
 
     @Mock
-    SearchService searchService;
+    private SearchService searchService;
 
     @Mock
-    DependencyService dependencyService;
+    private DependencyService dependencyService;
 
     @InjectMocks
-    TypeService classUnderTest = new TypeService();
+    private TypeService classUnderTest = new TypeService();
 
     @Before
     public void setUp() {
@@ -55,22 +55,24 @@ public class TypeServiceTest {
 
     @Test
     public void convertToTypeDeclaration() throws Exception {
-        when(this.dependencyService.fetchDependency("Map")).thenReturn(new Dependency("mapDependency"));
-        when(this.dependencyService.fetchDependency("List")).thenReturn(new Dependency("listDependency"));
+        when(this.dependencyService.fetchDependency("Something")).thenReturn(new Dependency("somethingDep"));
+        when(this.dependencyService.fetchDependency("Else")).thenReturn(new Dependency("elseDep"));
+        when(this.searchService.findClassesWithName("Something")).thenReturn(Lists.newArrayList("Something"));
+        when(this.searchService.findClassesWithName("Else")).thenReturn(Lists.newArrayList("Else"));
 
-        TypeDeclaration declaration = this.classUnderTest.convertToTypeDeclaration("Map  <List<String>, Integer>");
+        TypeDeclaration declaration = this.classUnderTest.convertToTypeDeclaration("something  <Else<String>, int>");
 
-        assertThat(declaration.getDeclaration(), equalTo("Map<List<String>, Integer>"));
+        assertThat(declaration.getDeclaration(), equalTo("Something<Else<String>, Integer>"));
 
         List<Type> types = declaration.getTypes();
         assertThat(types, hasSize(4));
 
         List<String> typeNames = types.stream().map(Type::getClassName).collect(Collectors.toList());
-        assertThat(typeNames, hasItems("Map", "List", "String", "Integer"));
+        assertThat(typeNames, hasItems("Something", "Else", "String", "Integer"));
 
         List<String> dependencyNames = types.stream().map(Type::getDependency).filter(Objects::nonNull).map(Dependency::getPath).collect(Collectors.toList());
         assertThat(dependencyNames, hasSize(2));
-        assertThat(dependencyNames, hasItems("mapDependency", "listDependency"));
+        assertThat(dependencyNames, hasItems("somethingDep", "elseDep"));
     }
 
     @Test(expected = PlasterException.class)
@@ -174,7 +176,7 @@ public class TypeServiceTest {
 
     @Test
     public void validateType_primitive_in_type() {
-        assertFalse(this.classUnderTest.validateType("List<boolean>"));
+        assertTrue(this.classUnderTest.validateType("List<boolean>"));
     }
 
 

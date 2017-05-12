@@ -1,12 +1,16 @@
 package github.jdrost1818.plaster.util;
 
 import com.google.common.collect.Lists;
+import github.jdrost1818.plaster.domain.Type;
+import github.jdrost1818.plaster.exception.PlasterException;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @UtilityClass
 public class TypeUtil {
@@ -30,13 +34,7 @@ public class TypeUtil {
             return "";
         }
 
-        String noSpacesString = typeString.replaceAll(" ", "");
-
-        return Arrays.stream(noSpacesString.split(String.format(WITH_DELIMITER, "<")))
-                .map(s -> s.split(String.format(WITH_DELIMITER, ",")))
-                .flatMap(Arrays::stream)
-                .map(s -> s.split(String.format(WITH_DELIMITER, ">")))
-                .flatMap(Arrays::stream)
+        return streamTypesWithSplitChars(typeString)
                 .map(TypeUtil::normalizeSingleType)
                 .collect(Collectors.joining()).replaceAll(",", ", ");
     }
@@ -91,6 +89,40 @@ public class TypeUtil {
                 .split(" "));
     }
 
+    /**
+     * Best way to describe this is by example:
+     *
+     * typeString = "Map<int, str>
+     * types = [Type("Map"), Type("Integer"), Type("String")]
+     * return = Map<Integer, String>
+     *
+     * @param typeString
+     *          string with potentially wrong names
+     * @param types
+     *          list of types containing proper type names
+     * @return correct type string
+     */
+    public static String mergeTypeStringAndListOfTypes(String typeString, List<Type> types) {
+        if (StringUtils.isBlank(typeString)) {
+            return "";
+        } else if (CollectionUtils.isEmpty(types)) {
+            throw new PlasterException(String.format("Cannot merge ['%s'} with empty list", typeString));
+        }
+
+        List<String> splitStrings = streamTypesWithSplitChars(typeString).collect(Collectors.toList());
+
+        int typeIndex = 0;
+        StringBuilder finalString = new StringBuilder();
+        for (String splitString : splitStrings) {
+            // if the string is a splitting character, we can't replace it with
+            // something from type, it is fine, just put it back into the final string
+            String strToAdd = splitString.matches("[<,>]") ? splitString : types.get(typeIndex++).getClassName();
+            finalString.append(strToAdd);
+        }
+
+        return normalizeTypeString(finalString.toString());
+    }
+
     private static String normalizeSingleType(String type) {
         if (StringUtils.isBlank(type)) {
             return "";
@@ -98,6 +130,16 @@ public class TypeUtil {
             return type;
         }
         return StringUtils.capitalize(normalizeVariableName(type));
+    }
+
+    private static Stream<String> streamTypesWithSplitChars(String typeString) {
+        String noSpacesString = typeString.replaceAll(" ", "");
+
+        return Arrays.stream(noSpacesString.split(String.format(WITH_DELIMITER, "<")))
+                .map(s -> s.split(String.format(WITH_DELIMITER, ",")))
+                .flatMap(Arrays::stream)
+                .map(s -> s.split(String.format(WITH_DELIMITER, ">")))
+                .flatMap(Arrays::stream);
     }
 
 }

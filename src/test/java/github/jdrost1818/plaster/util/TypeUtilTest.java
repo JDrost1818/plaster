@@ -1,6 +1,8 @@
 package github.jdrost1818.plaster.util;
 
 import com.google.common.collect.Lists;
+import github.jdrost1818.plaster.domain.Type;
+import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Test;
 
 import java.util.List;
@@ -88,5 +90,34 @@ public class TypeUtilTest {
         List<String> expected = Lists.newArrayList("Map", "List", "Integer", "String");
 
         assertThat(TypeUtil.splitToIndividualTypes("Map<List<Integer>, String>"), equalTo(expected));
+    }
+
+    @Test
+    public void mergeTypeStringAndListOfTypes_null_string() throws Exception {
+        assertThat(TypeUtil.mergeTypeStringAndListOfTypes(null, Lists.newArrayList()), equalTo(""));
+    }
+
+    @Test
+    public void mergeTypeStringAndListOfTypes_empty_string() throws Exception {
+        assertThat(TypeUtil.mergeTypeStringAndListOfTypes("", Lists.newArrayList()), equalTo(""));
+    }
+
+    @Test(expected = PlasterException.class)
+    public void mergeTypeStringAndListOfTypes_empty_list() throws Exception {
+        TypeUtil.mergeTypeStringAndListOfTypes("Type", Lists.newArrayList());
+    }
+
+    @Test
+    public void mergeTypeStringAndListOfTypes() throws Exception {
+        String start = "Map<Something, somewhere<example>>";
+        List<Type> types = Lists.newArrayList(
+                new Type("Map", null),
+                new Type("String", null),
+                new Type("List", null),
+                new Type("Integer", null));
+
+        String expected = "Map<String, List<Integer>>";
+
+        assertThat(TypeUtil.mergeTypeStringAndListOfTypes(start, types), equalTo(expected));
     }
 }
