@@ -21,7 +21,7 @@ public abstract class TemplateBuilder {
         JtwigModel model = JtwigModel.newModel()
                 .with("package", genTypeModel.getPackageName())
                 .with("className", genTypeModel.getClassName());
-        model = addCustomInformation(model, fileInformation);
+        model = addCustomInformation(model, fileInformation, genTypeModel);
 
         ByteArrayOutputStream inMemOut = new ByteArrayOutputStream();
         PrintStream inMemPrint = new PrintStream(inMemOut);
@@ -38,6 +38,6 @@ public abstract class TemplateBuilder {
         }
     }
 
-    public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation);
+    public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
 
 }

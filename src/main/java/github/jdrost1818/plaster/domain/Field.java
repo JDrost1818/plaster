@@ -15,4 +15,5 @@ public class Field implements PlasterTemplate {
     public String getTemplate() {
         return String.format("\tprivate %s %s;", this.typeDeclaration.getTemplate(), this.variableName);
     }
+
 }
