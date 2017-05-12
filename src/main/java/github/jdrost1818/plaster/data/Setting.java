@@ -124,7 +124,7 @@ public enum Setting {
 
     /**
      * boolean string which signifies whether or not to use primitive types when possible.
-     * If enabled, Integers will be generated as ints.
+     * If enabled, Integer
      *
      * This is determined by inspecting the plaster.yml file
      */

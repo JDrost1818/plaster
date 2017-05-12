@@ -30,6 +30,10 @@ public class PathUtil {
                 .replaceAll(" ", separator);
     }
 
+    public static String joinPath(String... paths) {
+        return normalize(StringUtils.join(paths, "/"), "/");
+    }
+
     /**
      * Converts a fully qualified path to a java package.
      *
@@ -53,7 +57,7 @@ public class PathUtil {
         // and converts it into the portion needed for an import
         //      ie "com/example/Something.java
         // also converts all paths to unix style
-        String unixSystemPath = FilenameUtils.separatorsToUnix(systemPath);
+        String unixSystemPath = FilenameUtils.removeExtension(FilenameUtils.separatorsToUnix(systemPath));
         String unixBasePath = FilenameUtils.separatorsToUnix(basePath);
         String[] parts = unixSystemPath.split(unixBasePath);
         if (parts.length == 1) {
@@ -65,7 +69,7 @@ public class PathUtil {
     }
 
     public static String pathToPackage(String systemPath) {
-        return FilenameUtils.removeExtension(normalize(systemPath, "."));
+        return normalize(systemPath, ".");
     }
 
 }

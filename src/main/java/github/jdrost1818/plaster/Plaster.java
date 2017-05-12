@@ -1,6 +1,5 @@
 package github.jdrost1818.plaster;
 
-import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Arg;
 import github.jdrost1818.plaster.data.Mode;
 import github.jdrost1818.plaster.data.Setting;
@@ -14,7 +13,6 @@ import lombok.Setter;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -69,15 +67,7 @@ public class Plaster {
          */
         String customSubDir = parsedArgs.get(Arg.DIR.key);
         String safeCustomSubDir = StringUtils.isBlank(customSubDir) ? "" : "/" + customSubDir;
-        List<Setting> directories = Lists.newArrayList(
-                Setting.REL_MODEL_PACKAGE, Setting.REL_CONTROLLER_PACKAGE, Setting.REL_SERVICE_PACKAGE, Setting.REL_REPOSITORY_PACKAGE);
-
-        for (Setting dir : directories) {
-            String currentDir = configurationService.get(dir);
-            String customDir = FilenameUtils.concat(currentDir, safeCustomSubDir);
-
-            configurationService.put(dir, customDir);
-        }
+        configurationService.put(Setting.SUB_DIR_PATH, safeCustomSubDir);
     }
 
     private static FileInformation buildFileInformation(Namespace parsedArgs) {

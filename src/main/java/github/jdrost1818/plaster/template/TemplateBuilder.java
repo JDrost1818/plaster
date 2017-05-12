@@ -12,7 +12,7 @@ public abstract class TemplateBuilder {
     public final void renderTemplate(String templateLocation, FileInformation fileInformation,
                                      GenTypeModel genTypeModel, OutputStream out) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(templateLocation);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/" + templateLocation);
 
         JtwigModel model = JtwigModel.newModel()
                 .with("package", genTypeModel.getPackageName())
