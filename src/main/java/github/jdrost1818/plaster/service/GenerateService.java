@@ -8,6 +8,7 @@ import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.template.TemplateBuilder;
 import github.jdrost1818.plaster.template.builder.ControllerTemplateBuilder;
 import github.jdrost1818.plaster.template.builder.ModelTemplateBuilder;
+import github.jdrost1818.plaster.template.builder.RepositoryTemplateBuilder;
 import github.jdrost1818.plaster.template.builder.ServiceTemplateBuilder;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AccessLevel;
@@ -38,7 +39,7 @@ public class GenerateService {
     }
     
     public void generateRepository(FileInformation fileInformation) {
-
+        this.generate(fileInformation, TemplateType.REPOSITORY, RepositoryTemplateBuilder.getInstance());
     }
     
     public void addFields(FileInformation fileInformation) {
