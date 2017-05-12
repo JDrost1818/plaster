@@ -18,9 +18,7 @@ public abstract class TemplateBuilder {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/" + templateLocation);
 
-        JtwigModel model = JtwigModel.newModel()
-                .with("package", genTypeModel.getPackageName())
-                .with("className", genTypeModel.getClassName());
+        JtwigModel model = JtwigModel.newModel();
         model = addCustomInformation(model, fileInformation, genTypeModel);
 
         ByteArrayOutputStream inMemOut = new ByteArrayOutputStream();

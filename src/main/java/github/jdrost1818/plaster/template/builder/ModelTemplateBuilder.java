@@ -1,5 +1,6 @@
 package github.jdrost1818.plaster.template.builder;
 
+import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
@@ -21,6 +22,7 @@ public class ModelTemplateBuilder extends TemplateBuilder {
 
     @Override
     public JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
+        model = TemplateUtil.addTypeField(model, genTypeModel, TemplateType.MODEL);
         model = TemplateUtil.addDependencies(model, fileInformation);
         model = TemplateUtil.addFields(model, fileInformation);
         model = TemplateUtil.addId(model, fileInformation);

@@ -1,6 +1,9 @@
 package github.jdrost1818.plaster.template;
 
+import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.*;
+import github.jdrost1818.plaster.domain.template.FlattenedField;
+import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.experimental.UtilityClass;
 import org.jtwig.JtwigModel;
 
@@ -35,6 +38,14 @@ public final class TemplateUtil {
                 .collect(Collectors.joining("\n\n"));
 
         return model.with("fields", fieldString);
+    }
+
+    public static JtwigModel addTypeField(JtwigModel model, GenTypeModel genTypeModel, TemplateType templateType) {
+        String packageName = genTypeModel.getPackageName();
+        String className = genTypeModel.getClassName() + templateType.suffix;
+        String varName = TypeUtil.normalizeVariableName(genTypeModel.getClassName()) + templateType.suffix;
+
+        return model.with(templateType.templateVarName, new FlattenedField(packageName, className, varName));
     }
 
     public static String formatFile(String file) {
