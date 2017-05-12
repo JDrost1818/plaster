@@ -7,6 +7,7 @@ import github.jdrost1818.plaster.domain.TypeDeclaration;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.util.List;
@@ -24,22 +25,17 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class TypeServiceTest {
 
     @Mock
-    ConfigurationService configurationService;
-
-    @Mock
     SearchService searchService;
 
     @Mock
     DependencyService dependencyService;
 
+    @InjectMocks
     TypeService classUnderTest = new TypeService();
 
     @Before
     public void setUp() {
         initMocks(this);
-
-        this.classUnderTest.setSearchService(searchService);
-        this.classUnderTest.setDependencyService(dependencyService);
     }
 
     @Test(expected = PlasterException.class)

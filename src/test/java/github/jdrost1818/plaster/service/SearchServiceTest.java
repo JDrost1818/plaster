@@ -3,6 +3,7 @@ package github.jdrost1818.plaster.service;
 import github.jdrost1818.plaster.data.Setting;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class SearchServiceTest {
     @Mock
     ConfigurationService configurationService;
 
+    @InjectMocks
     SearchService classUnderTest = new SearchService();
 
     String resourceDir;
@@ -28,8 +30,6 @@ public class SearchServiceTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-
-        this.classUnderTest.setConfigurationService(this.configurationService);
 
         File file = new File(getClass().getClassLoader().getResource("testProject").getFile());
         this.resourceDir = file.getAbsolutePath();

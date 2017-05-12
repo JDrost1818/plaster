@@ -6,6 +6,7 @@ import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -21,14 +22,12 @@ public class DependencyServiceTest {
     @Mock
     SearchService searchService;
 
+    @InjectMocks
     DependencyService classUnderTest = new DependencyService();
 
     @Before
     public void setUp() {
         initMocks(this);
-
-        this.classUnderTest.setConfigurationService(this.configurationService);
-        this.classUnderTest.setSearchService(this.searchService);
     }
 
     @Test

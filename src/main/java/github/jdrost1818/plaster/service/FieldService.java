@@ -12,6 +12,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class FieldService {
 
@@ -62,7 +64,7 @@ public class FieldService {
      * @throws PlasterException if not valid
      */
     public static void validateFieldPair(String fieldPair) {
-        if (fieldPair.split(":").length != 2) {
+        if (isNull(fieldPair) || fieldPair.split(":").length != 2) {
             throw new PlasterException("Invalid field declaration found: " + fieldPair);
         }
     }
