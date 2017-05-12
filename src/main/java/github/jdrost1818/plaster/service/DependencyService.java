@@ -19,10 +19,7 @@ import static java.util.Objects.nonNull;
 public class DependencyService {
 
     @Setter
-    private ConfigurationService configurationService = ServiceProvider.getConfigurationService();
-
-    @Setter
-    private SearchService searchService = new SearchService();
+    private SearchService searchService = ServiceProvider.getSearchService();
 
     /**
      * Fetches the dependency for the given class name, if one is required.

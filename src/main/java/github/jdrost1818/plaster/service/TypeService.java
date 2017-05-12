@@ -29,10 +29,10 @@ public class TypeService {
     private static final Pattern POP_PATTERN = Pattern.compile("[>,]");
 
     @Setter
-    private SearchService searchService = new SearchService();
+    private SearchService searchService = ServiceProvider.getSearchService();
 
     @Setter
-    private DependencyService dependencyService = new DependencyService();
+    private DependencyService dependencyService = ServiceProvider.getDependencyService();
 
     /**
      * Validates that the string is correctly formatted for a Java type
