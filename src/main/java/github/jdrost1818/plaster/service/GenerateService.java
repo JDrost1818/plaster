@@ -23,7 +23,6 @@ public class GenerateService {
 
     public void generateModel(FileInformation fileInformation) {
         GenTypeModel genTypeModel = new GenTypeModel(
-                this.getCustomPackage(Setting.REL_MODEL_PACKAGE),
                 fileInformation.getClassName(),
                 this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
 
@@ -65,16 +64,6 @@ public class GenerateService {
         } catch (IOException e) {
             throw new PlasterException("Error creating file. Ensure you have permissions to perform this action");
         }
-    }
-
-    private String getCustomPackage(Setting setting) {
-        String appPackage = this.configurationService.get(Setting.APP_PATH);
-        String relGenPackage = this.configurationService.get(setting);
-        String customGenPackage = this.configurationService.get(Setting.SUB_DIR_PATH);
-
-        String path = PathUtil.joinPath(appPackage, relGenPackage, customGenPackage);
-
-        return PathUtil.pathToPackage(path);
     }
 
     private String getRenderLocation(Setting setting, String className) {
