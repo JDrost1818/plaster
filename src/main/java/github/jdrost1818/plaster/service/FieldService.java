@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.TypeDeclaration;
 import github.jdrost1818.plaster.exception.PlasterException;
+import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,7 +50,7 @@ public class FieldService {
 
         String[] parts = fieldString.split(":");
         String name = parts[0];
-        String typeString = parts[1];
+        String typeString = TypeUtil.normalizeTypeString(parts[1]);
 
         TypeDeclaration typeDeclaration = this.typeService.convertToTypeDeclaration(typeString);
 

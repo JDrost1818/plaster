@@ -1,5 +1,6 @@
 package github.jdrost1818.plaster.util;
 
+import com.google.common.base.CaseFormat;
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
@@ -24,6 +25,10 @@ public class TypeUtil {
         return typeString
                 .replaceAll(" ", "")
                 .replaceAll(",", ", ");
+    }
+
+    public static String normalizeVariableName(String variableName) {
+        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, variableName.toLowerCase());
     }
 
     public static List<String> splitToIndividualTypes(String typeString) {
