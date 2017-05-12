@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
+import sun.reflect.misc.FieldUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,8 +50,8 @@ public class FieldService {
         validateFieldPair(fieldString);
 
         String[] parts = fieldString.split(":");
-        String name = parts[0];
-        String typeString = TypeUtil.normalizeTypeString(parts[1]);
+        String name = TypeUtil.normalizeVariableName(parts[0]);
+        String typeString = parts[1];
 
         TypeDeclaration typeDeclaration = this.typeService.convertToTypeDeclaration(typeString);
 

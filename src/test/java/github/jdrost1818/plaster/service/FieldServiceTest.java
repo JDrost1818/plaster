@@ -100,7 +100,7 @@ public class FieldServiceTest {
         when(this.typeService.convertToTypeDeclaration("List")).thenReturn(somethingTypeDeclaration);
         when(this.typeService.convertToTypeDeclaration("Map<Integer, String>")).thenReturn(elseTypeDeclaration);
 
-        List<Field> fields = this.classUnderTest.convertToFields(Lists.newArrayList("SomeVar:List", "other_var:map<integer, string>"));
+        List<Field> fields = this.classUnderTest.convertToFields(Lists.newArrayList("someVar:List", "otherVar:Map<Integer, String>"));
         List<Field> expectedFields = Lists.newArrayList(
                 new Field(somethingTypeDeclaration, "someVar"),
                 new Field(elseTypeDeclaration, "otherVar"));
