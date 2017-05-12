@@ -25,9 +25,13 @@ public class SearchService {
      * @return the java paths for all found class names
      */
     public List<String> findClassesWithName(String className) {
-        String basePath = this.configurationService.get(Setting.PROJECT_PATH);
+        String projectPath = this.configurationService.get(Setting.PROJECT_PATH);
+        String basePath = this.configurationService.get(Setting.BASE_PATH);
+        String appPath = this.configurationService.get(Setting.APP_PATH);
 
-        return this.findFilesWithName(new File(basePath), className + ".java").stream()
+        String startSearchPath = PathUtil.joinPath(projectPath, basePath, appPath);
+
+        return this.findFilesWithName(new File(startSearchPath), className + ".java").stream()
                 .map(File::getPath)
                 .map(p -> p.split(basePath)[1])
                 .map(p -> PathUtil.normalize(p, "/"))

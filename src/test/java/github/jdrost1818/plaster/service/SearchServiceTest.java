@@ -14,9 +14,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-/**
- * Created by jake on 5/9/17.
- */
 public class SearchServiceTest {
 
     @Mock
@@ -38,17 +35,19 @@ public class SearchServiceTest {
     @Test
     public void findClassesWithName_multiple() throws Exception {
         when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn(this.resourceDir);
+        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("src/main/java");
+        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("com/example/app");
 
         List<String> foundPaths = this.classUnderTest.findClassesWithName("duplicate");
 
         assertThat(foundPaths, hasSize(2));
-        assertThat("src/main/java/com/example/app/dir1/Duplicate.java", isIn(foundPaths));
-        assertThat("src/main/java/com/example/app/dir2/Duplicate.java", isIn(foundPaths));
+        assertThat("com/example/app/dir1/Duplicate.java", isIn(foundPaths));
+        assertThat("com/example/app/dir2/Duplicate.java", isIn(foundPaths));
     }
 
     @Test
     public void findClassesWithName_start_with_file() throws Exception {
-        when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn(this.resourceDir + "/testProject/root1/pom.xml");
+        when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn("/" + this.resourceDir + "/testProject/root1/pom.xml");
 
         List<String> foundPaths = this.classUnderTest.findClassesWithName("duplicate");
 

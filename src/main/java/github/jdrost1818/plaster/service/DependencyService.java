@@ -1,6 +1,5 @@
 package github.jdrost1818.plaster.service;
 
-import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.StoredJavaType;
 import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.exception.EnumSearchException;
@@ -9,6 +8,7 @@ import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class DependencyService {
     private ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
     @Setter
-    private SearchService searchService = ServiceProvider.getSearchService();
+    private SearchService searchService = new SearchService();
 
     /**
      * Fetches the dependency for the given class name, if one is required.
@@ -72,8 +72,8 @@ public class DependencyService {
             throw new PlasterException("Could not find custom type: " + className);
         }
 
-        String basePath = this.configurationService.get(Setting.BASE_PATH);
-        return new Dependency(PathUtil.pathToPackage(matchingClassPaths.get(0), basePath));
+        String extensionlessClassPath = FilenameUtils.removeExtension(matchingClassPaths.get(0));
+        return new Dependency(PathUtil.pathToPackage(extensionlessClassPath));
     }
 
 }
