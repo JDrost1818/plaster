@@ -1,9 +1,14 @@
 package github.jdrost1818.plaster.template;
 
+import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.*;
 import github.jdrost1818.plaster.domain.template.FlattenedField;
+import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.ServiceProvider;
+import github.jdrost1818.plaster.util.PathUtil;
 import github.jdrost1818.plaster.util.TypeUtil;
+import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import org.jtwig.JtwigModel;
 
@@ -13,6 +18,9 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public final class TemplateUtil {
+
+    @Setter
+    private static ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
     public static JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
         String dependencyString = fileInformation.getFields().stream()
@@ -41,7 +49,7 @@ public final class TemplateUtil {
     }
 
     public static JtwigModel addTypeField(JtwigModel model, GenTypeModel genTypeModel, TemplateType templateType) {
-        String packageName = genTypeModel.getPackageName();
+        String packageName = getCustomPackage(templateType.relPathSetting);
         String className = genTypeModel.getClassName() + templateType.suffix;
         String varName = TypeUtil.normalizeVariableName(genTypeModel.getClassName()) + templateType.suffix;
 
@@ -50,6 +58,16 @@ public final class TemplateUtil {
 
     public static String formatFile(String file) {
         return file.replaceAll("(\r?\n){3,}", "\r\n\r\n");
+    }
+
+    private String getCustomPackage(Setting setting) {
+        String appPackage = configurationService.get(Setting.APP_PATH);
+        String relGenPackage = configurationService.get(setting);
+        String customGenPackage = configurationService.get(Setting.SUB_DIR_PATH);
+
+        String path = PathUtil.joinPath(appPackage, relGenPackage, customGenPackage);
+
+        return PathUtil.pathToPackage(path);
     }
 
 }
