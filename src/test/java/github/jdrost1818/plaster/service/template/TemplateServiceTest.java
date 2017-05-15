@@ -26,15 +26,7 @@ public class TemplateServiceTest {
 
     private TemplateService templateService;
 
-    FileInformation fileInformation;
-
-    private Field id;
-
-    private Field mapField;
-
-    private Field listField;
-
-    private Field exampleField;
+    private FileInformation fileInformation;
 
     @Before
     public void setUp() throws Exception {
@@ -42,13 +34,13 @@ public class TemplateServiceTest {
 
         this.templateService = new TemplateServiceImpl(this.configurationService);
 
-        this.id = new Field(new TypeDeclaration("List", Lists.newArrayList(StoredJavaType.LIST.getType(false))), "id");
-        this.mapField = new Field(new TypeDeclaration("Map", Lists.newArrayList(StoredJavaType.MAP.getType(false))), "var1");
-        this.listField = new Field(new TypeDeclaration("List", Lists.newArrayList(StoredJavaType.LIST.getType(false))), "var2");
-        this.exampleField = new Field(new TypeDeclaration("Example", Lists.newArrayList(new Type("Example", new Dependency("com.example.app.Example")))), "var3");
+        Field id = new Field(new TypeDeclaration("List", Lists.newArrayList(StoredJavaType.LIST.getType(false))), "id");
+        Field mapField = new Field(new TypeDeclaration("Map", Lists.newArrayList(StoredJavaType.MAP.getType(false))), "var1");
+        Field listField = new Field(new TypeDeclaration("List", Lists.newArrayList(StoredJavaType.LIST.getType(false))), "var2");
+        Field exampleField = new Field(new TypeDeclaration("Example", Lists.newArrayList(new Type("Example", new Dependency("com.example.app.Example")))), "var3");
 
-        this.fileInformation = new FileInformation("example_class", this.id, Lists.newArrayList(
-                this.mapField, this.listField, this.exampleField
+        this.fileInformation = new FileInformation("example_class", id, Lists.newArrayList(
+                mapField, listField, exampleField
         ));
     }
 

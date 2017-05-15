@@ -36,14 +36,14 @@ public abstract class TemplateService {
      *          model store
      * @return the fully-customized model object
      */
-    public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
+    abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
 
     /**
      * Gets the appropriate template with which to perform the rendering
      *
      * @return the Jtwig template
      */
-    public abstract JtwigTemplate getTemplate();
+    abstract JtwigTemplate getTemplate();
 
     /**
      * The entry point to render a template.
