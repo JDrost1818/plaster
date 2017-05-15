@@ -7,6 +7,7 @@ import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.template.Template;
 import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 public class ModelTemplateService extends TemplateService {
 
@@ -28,6 +29,11 @@ public class ModelTemplateService extends TemplateService {
         }
 
         return model;
+    }
+
+    @Override
+    public JtwigTemplate getTemplate() {
+        return JtwigTemplate.classpathTemplate("template/model/model.twig");
     }
 
     private JtwigModel addGettersAndSetters(JtwigModel model, FileInformation fileInformation) {

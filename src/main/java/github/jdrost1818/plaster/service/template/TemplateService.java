@@ -13,8 +13,6 @@ import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -29,10 +27,16 @@ public abstract class TemplateService {
 
     public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
 
-    public final void renderTemplate(String templateLocation, FileInformation fileInformation,
-                                     GenTypeModel genTypeModel, OutputStream out) {
+    public abstract JtwigTemplate getTemplate();
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/" + templateLocation);
+    /**
+     * The entry point to render a template.
+     * @param fileInformation
+     * @param genTypeModel
+     * @return
+     */
+    public final String renderTemplate(FileInformation fileInformation, GenTypeModel genTypeModel) {
+        JtwigTemplate template = getTemplate();
 
         JtwigModel model = JtwigModel.newModel();
         model = addCustomInformation(model, fileInformation, genTypeModel);
@@ -43,15 +47,20 @@ public abstract class TemplateService {
         template.render(model, inMemPrint);
 
         String fileContent = new String(inMemOut.toByteArray(), StandardCharsets.UTF_8);
-        String formattedContent = formatFile(fileContent);
 
-        try {
-            out.write(formattedContent.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return formatFile(fileContent);
     }
 
+    /**
+     * Adds the unique {@link Dependency}s for the fields attached to
+     * the file information provided
+     *
+     * @param model
+     *          model to which to add the dependencies
+     * @param fileInformation
+     *          information about the file to generate
+     * @return the modified model
+     */
     JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
         List<Field> fields = new ArrayList<>(fileInformation.getFields());
         fields.add(fileInformation.getId());
@@ -59,10 +68,28 @@ public abstract class TemplateService {
         return addDependencies(model, fields);
     }
 
+    /**
+     * Adds the {@link Dependency} for the given field to the model provided
+     *
+     * @param model
+     *          model to which to add the dependency
+     * @param field
+     *          field which contains the dependency to add
+     * @return the modified model
+     */
     JtwigModel addDependencies(JtwigModel model, Field field) {
         return addDependencies(model, Lists.newArrayList(field));
     }
 
+    /**
+     * Adds the unique {@link Dependency}s for the given fields to the model provided
+     *
+     * @param model
+     *          model to which to add the dependencies
+     * @param fields
+     *          fields which contain the dependencies to add
+     * @return the modified model
+     */
     JtwigModel addDependencies(JtwigModel model, List<Field> fields) {
          List<Dependency> dependencies = fields.stream()
                  .map(Field::getTypeDeclaration)

@@ -5,6 +5,7 @@ import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 public class RepositoryTemplateService extends TemplateService {
 
@@ -20,6 +21,11 @@ public class RepositoryTemplateService extends TemplateService {
         model = super.addId(model, fileInformation);
 
         return model;
+    }
+
+    @Override
+    public JtwigTemplate getTemplate() {
+        return JtwigTemplate.classpathTemplate("template/repository/repository.twig");
     }
 
 }

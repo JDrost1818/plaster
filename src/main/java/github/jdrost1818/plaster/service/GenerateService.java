@@ -53,11 +53,15 @@ public class GenerateService {
                 this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
 
         String genFilePath = this.getRenderLocation(templateType.relPathSetting, fileInformation.getClassName() + templateType.suffix);
-        templateService.renderTemplate(
-                templateType.templateLocation,
+        String renderedFileString = templateService.renderTemplate(
                 fileInformation,
-                genTypeModel,
-                this.getOutputStream(genFilePath));
+                genTypeModel);
+
+        try {
+            this.getOutputStream(genFilePath).write(renderedFileString.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private OutputStream getOutputStream(String location) {

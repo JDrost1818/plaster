@@ -6,6 +6,7 @@ import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 public class ControllerTemplateService extends TemplateService {
 
@@ -23,6 +24,11 @@ public class ControllerTemplateService extends TemplateService {
         model = addBaseRoute(model, fileInformation);
 
         return model;
+    }
+
+    @Override
+    public JtwigTemplate getTemplate() {
+        return JtwigTemplate.classpathTemplate("template/controller/controller.twig");
     }
 
     private JtwigModel addBaseRoute(JtwigModel model, FileInformation fileInformation) {
