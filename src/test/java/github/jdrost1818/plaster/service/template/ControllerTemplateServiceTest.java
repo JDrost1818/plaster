@@ -87,6 +87,59 @@ public class ControllerTemplateServiceTest {
 
     @Test
     public void renderTemplate() {
+        String expected = "package com.example.app.controller.somewhere;\n" +
+                "\n" +
+                "import org.springframework.beans.factory.annotation.Autowired;\n" +
+                "import org.springframework.web.bind.annotation.*;\n" +
+                "\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "import com.example.app.service.somewhere.ExampleClassService;\n" +
+                "import com.example.app.model.somewhere.ExampleClass;\n" +
+                "\n" +
+                "@RestController\n" +
+                "@RequestMapping(\"/exampleClass\")\n" +
+                "public class ExampleClassController {\n" +
+                "\n" +
+                "    private final ExampleClassService exampleClassService;\n" +
+                "\n" +
+                "    @Autowired\n" +
+                "    public ExampleClassController(ExampleClassService exampleClassService) {\n" +
+                "            this.exampleClassService = exampleClassService;\n" +
+                "    }\n" +
+                "\n" +
+                "    @RequestMapping(value = \"/\", method = RequestMethod.POST)\n" +
+                "    public ExampleClass create(@RequestBody ExampleClass exampleClass) {\n" +
+                "            return this.exampleClassService.create(exampleClass);\n" +
+                "    }\n" +
+                "\n" +
+                "    @RequestMapping(value = \"/{id}\", method = RequestMethod.GET)\n" +
+                "    public ExampleClass read(@PathVariable List id) {\n" +
+                "            return this.exampleClassService.read(id);\n" +
+                "    }\n" +
+                "\n" +
+                "    @RequestMapping(value = \"/{id}\", method = RequestMethod.PUT)\n" +
+                "    public ExampleClass update(@PathVariable List id, @RequestBody ExampleClass exampleClass) {\n" +
+                "            return this.exampleClassService.update(exampleClass);\n" +
+                "    }\n" +
+                "\n" +
+                "    @RequestMapping(value = \"/{id}\", method = RequestMethod.DELETE)\n" +
+                "    public void delete(@PathVariable List id) {\n" +
+                "            this.exampleClassService.delete(id);\n" +
+                "    }\n" +
+                "\n" +
+                "}\n";
 
+        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", false);
+
+        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
+        when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
+        when(this.configurationService.get(Setting.REL_CONTROLLER_PACKAGE)).thenReturn("/controller");
+        when(this.configurationService.get(Setting.REL_SERVICE_PACKAGE)).thenReturn("/service");
+        when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
+
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+
+        assertThat(expected, equalTo(actual));
     }
 }

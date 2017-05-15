@@ -88,4 +88,59 @@ public class ServiceTemplateServiceTest {
         assertThat(modifiedModel.get("repoField").get().getValue(), equalTo(new FlattenedField("", "ExampleClassRepository", "exampleClassRepository")));
         assertThat(modifiedModel.get("idField").get().getValue(), equalTo(new FlattenedField("", "List", "id")));
     }
+
+    @Test
+    public void renderTemplate() {
+        String expected = "" +
+                "package com.example.app.service.somewhere;\n" +
+                "\n" +
+                "import org.springframework.beans.factory.annotation.Autowired;\n" +
+                "import org.springframework.stereotype.Service;\n" +
+                "\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "import com.example.app.model.somewhere.ExampleClass;\n" +
+                "import com.example.app.repository.somewhere.ExampleClassRepository;\n" +
+                "\n" +
+                "@Service\n" +
+                "public class ExampleClassService {\n" +
+                "\n" +
+                "    private final ExampleClassRepository exampleClassRepository;\n" +
+                "    \n" +
+                "    @Autowired\n" +
+                "    public ExampleClassService(ExampleClassRepository exampleClassRepository) {\n" +
+                "        this.exampleClassRepository = exampleClassRepository;\n" +
+                "    }\n" +
+                "    \n" +
+                "    public ExampleClass create(ExampleClass exampleClass) {\n" +
+                "        return this.exampleClassRepository.save(exampleClass);\n" +
+                "    }\n" +
+                "    \n" +
+                "    public ExampleClass read(List id) {\n" +
+                "        return this.exampleClassRepository.findOne(id);\n" +
+                "    }\n" +
+                "    \n" +
+                "    public ExampleClass update(ExampleClass exampleClass) {\n" +
+                "        return this.exampleClassRepository.save(exampleClass);\n" +
+                "    }\n" +
+                "    \n" +
+                "    public void delete(List id) {\n" +
+                "        this.exampleClassRepository.delete(id);\n" +
+                "    }\n" +
+                "\n" +
+                "}";
+
+        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", false);
+
+        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
+        when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
+        when(this.configurationService.get(Setting.REL_REPOSITORY_PACKAGE)).thenReturn("/repository");
+        when(this.configurationService.get(Setting.REL_CONTROLLER_PACKAGE)).thenReturn("/controller");
+        when(this.configurationService.get(Setting.REL_SERVICE_PACKAGE)).thenReturn("/service");
+        when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
+
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+
+        assertThat(expected, equalTo(actual));
+    }
 }

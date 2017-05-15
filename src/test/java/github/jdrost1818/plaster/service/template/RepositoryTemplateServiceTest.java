@@ -87,4 +87,40 @@ public class RepositoryTemplateServiceTest {
         assertThat(modifiedModel.get("repoField").get().getValue(), equalTo(new FlattenedField("", "ExampleClassRepository", "exampleClassRepository")));
         assertThat(modifiedModel.get("idField").get().getValue(), equalTo(new FlattenedField("", "List", "id")));
     }
+
+    @Test
+    public void renderTemplate() {
+        String expected = "" +
+                "package com.example.app.repository.somewhere;\n" +
+                "\n" +
+                "import org.springframework.data.domain.Page;\n" +
+                "import org.springframework.data.domain.Pageable;\n" +
+                "import org.springframework.data.jpa.domain.Specification;\n" +
+                "import org.springframework.data.repository.CrudRepository;\n" +
+                "\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "import com.example.app.model.somewhere.ExampleClass;\n" +
+                "\n" +
+                "public interface ExampleClassRepository extends CrudRepository<ExampleClass, List> {\n" +
+                "\n" +
+                "    Page<ExampleClass> findAll(Specification<ExampleClass> spec, Pageable pageInfo);\n" +
+                "\n" +
+                "    ExampleClass findOne(Specification<ExampleClass> spec);\n" +
+                "\n" +
+                "}";
+
+        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", false);
+
+        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
+        when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
+        when(this.configurationService.get(Setting.REL_REPOSITORY_PACKAGE)).thenReturn("/repository");
+        when(this.configurationService.get(Setting.REL_CONTROLLER_PACKAGE)).thenReturn("/controller");
+        when(this.configurationService.get(Setting.REL_SERVICE_PACKAGE)).thenReturn("/service");
+        when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
+
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+
+        assertThat(expected, equalTo(actual));
+    }
 }
