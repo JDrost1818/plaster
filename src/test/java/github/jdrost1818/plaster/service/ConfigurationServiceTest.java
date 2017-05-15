@@ -24,8 +24,6 @@ public class ConfigurationServiceTest {
         for (Setting curSetting : Setting.values()) {
             configurationService.put(curSetting, itConfigurationService.get(curSetting));
         }
-
-        String dir = System.getProperty("user.dir");
     }
 
     @Before

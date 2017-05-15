@@ -20,7 +20,6 @@ public class DependencyServiceTestIt {
         ConfigurationServiceTest.transformToItService(ServiceProvider.getConfigurationService());
     }
 
-
     @Test
     public void fetchDependency_stored_no_dep() {
         Dependency foundDependency = this.classUnderTest.fetchDependency("int");
