@@ -5,54 +5,55 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.exception.PlasterException;
-import github.jdrost1818.plaster.template.TemplateBuilder;
-import github.jdrost1818.plaster.template.builder.ControllerTemplateBuilder;
-import github.jdrost1818.plaster.template.builder.ModelTemplateBuilder;
-import github.jdrost1818.plaster.template.builder.RepositoryTemplateBuilder;
-import github.jdrost1818.plaster.template.builder.ServiceTemplateBuilder;
+import github.jdrost1818.plaster.service.template.*;
 import github.jdrost1818.plaster.util.PathUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
 public class GenerateService {
 
-    @Setter
-    private ConfigurationService configurationService = ServiceProvider.getConfigurationService();
+    private final ConfigurationService configurationService;
+
+    private final ModelTemplateService modelTemplateService;
+
+    private final ControllerTemplateService controllerTemplateService;
+
+    private final ServiceTemplateService serviceTemplateService;
+
+    private final RepositoryTemplateService repositoryTemplateService;
 
     public void generateModel(FileInformation fileInformation) {
-        this.generate(fileInformation, TemplateType.MODEL, ModelTemplateBuilder.getInstance());
+        this.generate(fileInformation, TemplateType.MODEL, this.modelTemplateService);
     }
 
     public void generateController(FileInformation fileInformation) {
-        this.generate(fileInformation, TemplateType.CONTROLLER, ControllerTemplateBuilder.getInstance());
+        this.generate(fileInformation, TemplateType.CONTROLLER, this.controllerTemplateService);
     }
     
     public void generateService(FileInformation fileInformation) {
-        this.generate(fileInformation, TemplateType.SERVICE, ServiceTemplateBuilder.getInstance());
+        this.generate(fileInformation, TemplateType.SERVICE, this.serviceTemplateService);
     }
     
     public void generateRepository(FileInformation fileInformation) {
-        this.generate(fileInformation, TemplateType.REPOSITORY, RepositoryTemplateBuilder.getInstance());
+        this.generate(fileInformation, TemplateType.REPOSITORY, this.repositoryTemplateService);
     }
     
     public void addFields(FileInformation fileInformation) {
         
     }
 
-    private void generate(FileInformation fileInformation, TemplateType templateType, TemplateBuilder templateBuilder) {
+    private void generate(FileInformation fileInformation, TemplateType templateType, TemplateService templateService) {
         GenTypeModel genTypeModel = new GenTypeModel(
                 fileInformation.getClassName(),
                 this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
 
         String genFilePath = this.getRenderLocation(templateType.relPathSetting, fileInformation.getClassName() + templateType.suffix);
-        templateBuilder.renderTemplate(
+        templateService.renderTemplate(
                 templateType.templateLocation,
                 fileInformation,
                 genTypeModel,

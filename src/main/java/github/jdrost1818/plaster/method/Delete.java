@@ -2,7 +2,9 @@ package github.jdrost1818.plaster.method;
 
 import github.jdrost1818.plaster.service.DeleteService;
 import github.jdrost1818.plaster.service.ServiceProvider;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class Delete {
 
     private static final DeleteService deleteService = ServiceProvider.getDeleteService();

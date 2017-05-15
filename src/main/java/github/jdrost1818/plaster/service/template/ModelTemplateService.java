@@ -1,31 +1,25 @@
-package github.jdrost1818.plaster.template.builder;
+package github.jdrost1818.plaster.service.template;
 
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
+import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.template.Template;
-import github.jdrost1818.plaster.template.TemplateBuilder;
-import github.jdrost1818.plaster.template.TemplateUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.jtwig.JtwigModel;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ModelTemplateBuilder extends TemplateBuilder {
+public class ModelTemplateService extends TemplateService {
 
-    private static ModelTemplateBuilder instance = new ModelTemplateBuilder();
-
-    public static ModelTemplateBuilder getInstance() {
-        return instance;
+    public ModelTemplateService(ConfigurationService configurationService) {
+        super(configurationService);
     }
 
     @Override
     public JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
-        model = TemplateUtil.addTypeField(model, genTypeModel, TemplateType.MODEL);
-        model = TemplateUtil.addDependencies(model, fileInformation);
-        model = TemplateUtil.addFields(model, fileInformation);
-        model = TemplateUtil.addId(model, fileInformation);
+        model = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
+        model = super.addDependencies(model, fileInformation);
+        model = super.addFields(model, fileInformation);
+        model = super.addId(model, fileInformation);
 
         if (genTypeModel.isLombokEnabled()) {
             model = addLombokHeader(model);

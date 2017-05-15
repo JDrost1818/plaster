@@ -1,5 +1,9 @@
 package github.jdrost1818.plaster.service;
 
+import github.jdrost1818.plaster.service.template.ControllerTemplateService;
+import github.jdrost1818.plaster.service.template.ModelTemplateService;
+import github.jdrost1818.plaster.service.template.RepositoryTemplateService;
+import github.jdrost1818.plaster.service.template.ServiceTemplateService;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
@@ -26,8 +30,26 @@ public class ServiceProvider {
     private static final FieldService fieldService = new FieldService(typeService);
 
     @Getter
-    private static final DeleteService deleteService = new DeleteService();
+    private static final ControllerTemplateService controllerTemplateService = new ControllerTemplateService(configurationService);
 
     @Getter
-    private static final GenerateService generateService = new GenerateService();
+    private static final ModelTemplateService modelTemplateService = new ModelTemplateService(configurationService);
+
+    @Getter
+    private static final RepositoryTemplateService repositoryTemplateService = new RepositoryTemplateService(configurationService);
+
+    @Getter
+    private static final ServiceTemplateService serviceTemplateService = new ServiceTemplateService(configurationService);
+
+    @Getter
+    private static final GenerateService generateService = new GenerateService(
+            configurationService,
+            modelTemplateService,
+            controllerTemplateService,
+            serviceTemplateService,
+            repositoryTemplateService
+    );
+
+    @Getter
+    private static final DeleteService deleteService = new DeleteService();
 }

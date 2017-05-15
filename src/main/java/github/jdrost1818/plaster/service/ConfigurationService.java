@@ -9,7 +9,6 @@ import github.jdrost1818.plaster.domain.customization.PlasterCustomization;
 import github.jdrost1818.plaster.domain.customization.PropertyCustomization;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.PathUtil;
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +28,7 @@ import java.util.Map;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
 public class ConfigurationService {
 
     private Map<Setting, String> configMap = new HashMap<>();
