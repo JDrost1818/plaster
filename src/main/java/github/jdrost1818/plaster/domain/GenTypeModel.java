@@ -10,10 +10,6 @@ public class GenTypeModel {
 
     private boolean lombokEnabled;
 
-    public GenTypeModel(@NonNull String className) {
-        this.className = className;
-    }
-
     public GenTypeModel(@NonNull String className, boolean lombokEnabled) {
         this.className = className;
         this.lombokEnabled = lombokEnabled;

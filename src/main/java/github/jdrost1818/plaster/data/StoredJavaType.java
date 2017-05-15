@@ -7,7 +7,6 @@ import github.jdrost1818.plaster.exception.EnumSearchException;
 
 import java.util.List;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 public enum StoredJavaType {
@@ -78,10 +77,6 @@ public enum StoredJavaType {
     }
 
     public static StoredJavaType getStoredJavaType(String searchTerm) throws EnumSearchException {
-        if (isNull(searchTerm)) {
-            throw new IllegalArgumentException("searchTerm cannot be null");
-        }
-
         String lowerSearch = searchTerm.toLowerCase();
         for (StoredJavaType storedJavaType : StoredJavaType.values()) {
             if (storedJavaType.searchTerms.contains(lowerSearch)) {

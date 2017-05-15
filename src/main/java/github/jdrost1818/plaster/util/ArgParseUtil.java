@@ -102,7 +102,7 @@ public class ArgParseUtil {
      */
     public static void validateParsedArgs(Namespace parsedArgs) {
         String className = parsedArgs.getString(Arg.CLASS_NAME.key);
-        if (!className.matches("[a-zA-Z]*")) {
+        if (!className.matches("[a-zA-Z_-]*")) {
             throw new PlasterException("Plaster doesn't support your weird class name. Use letters only");
         }
 

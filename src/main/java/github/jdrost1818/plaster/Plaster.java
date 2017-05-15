@@ -9,7 +9,7 @@ import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.FieldService;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.util.ArgParseUtil;
-import lombok.Setter;
+import lombok.experimental.UtilityClass;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -25,12 +25,11 @@ import java.util.List;
  * plaster MODE MODE_SCOPE CLASS_NAME [FIELD:TYPE...]
  * plaster g scaffold Something name:string
  */
+@UtilityClass
 public class Plaster {
 
-    @Setter
     private static ConfigurationService configurationService = ServiceProvider.getConfigurationService();
 
-    @Setter
     private static FieldService fieldService = ServiceProvider.getFieldService();
 
     public static void main(String[] args) {
