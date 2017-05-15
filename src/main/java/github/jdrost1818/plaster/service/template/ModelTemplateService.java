@@ -15,6 +15,9 @@ public class ModelTemplateService extends TemplateService {
         super(configurationService);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
         model = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
@@ -31,6 +34,9 @@ public class ModelTemplateService extends TemplateService {
         return model;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JtwigTemplate getTemplate() {
         return JtwigTemplate.classpathTemplate("template/model/model.twig");

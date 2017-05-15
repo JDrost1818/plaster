@@ -25,8 +25,24 @@ public abstract class TemplateService {
 
     private final ConfigurationService configurationService;
 
+    /**
+     * Adds information not applicable to all types of rendering being done.
+     *
+     * @param model
+     *          model to which to add information
+     * @param fileInformation
+     *          information about the file to generate
+     * @param genTypeModel
+     *          model store
+     * @return the fully-customized model object
+     */
     public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
 
+    /**
+     * Gets the appropriate template with which to perform the rendering
+     *
+     * @return the Jtwig template
+     */
     public abstract JtwigTemplate getTemplate();
 
     /**
