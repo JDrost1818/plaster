@@ -5,9 +5,7 @@ import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.exception.EnumSearchException;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.PathUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,11 +13,10 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
 public class DependencyService {
 
-    @Setter
-    private SearchService searchService = ServiceProvider.getSearchService();
+    private final SearchService searchService;
 
     /**
      * Fetches the dependency for the given class name, if one is required.

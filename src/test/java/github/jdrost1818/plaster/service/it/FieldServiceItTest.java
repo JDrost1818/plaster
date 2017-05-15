@@ -26,8 +26,6 @@ public class FieldServiceItTest {
         ConfigurationServiceTest.transformToItService(ServiceProvider.getConfigurationService());
 
         this.classUnderTest.setTypeService(ServiceProvider.getTypeService());
-        ServiceProvider.getTypeService().setSearchService(ServiceProvider.getSearchService());
-        ServiceProvider.getTypeService().setDependencyService(ServiceProvider.getDependencyService());
     }
 
     @Test

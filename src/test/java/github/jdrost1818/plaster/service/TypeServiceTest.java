@@ -31,11 +31,13 @@ public class TypeServiceTest {
     private DependencyService dependencyService;
 
     @InjectMocks
-    private TypeService classUnderTest = new TypeService();
+    private TypeService classUnderTest;
 
     @Before
     public void setUp() {
         initMocks(this);
+
+        this.classUnderTest = new TypeService(searchService, dependencyService);
     }
 
     @Test(expected = PlasterException.class)

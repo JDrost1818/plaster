@@ -2,20 +2,17 @@ package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.util.PathUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
 public class SearchService {
 
-    @Setter
-    private ConfigurationService configurationService = ServiceProvider.getConfigurationService();
+    private final ConfigurationService configurationService;
 
     /**
      * Finds the system path for classes with the given name, ignoring case

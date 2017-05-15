@@ -5,8 +5,7 @@ import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.TypeDeclaration;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.TypeUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
 public class FieldService {
 
     @Setter

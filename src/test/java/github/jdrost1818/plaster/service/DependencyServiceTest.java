@@ -16,17 +16,16 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class DependencyServiceTest {
 
     @Mock
-    ConfigurationService configurationService;
-
-    @Mock
-    SearchService searchService;
+    private SearchService searchService;
 
     @InjectMocks
-    DependencyService classUnderTest = new DependencyService();
+    private DependencyService classUnderTest;
 
     @Before
     public void setUp() {
         initMocks(this);
+
+        this.classUnderTest = new DependencyService(searchService);
     }
 
     @Test

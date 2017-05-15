@@ -7,9 +7,7 @@ import github.jdrost1818.plaster.domain.TypeDeclaration;
 import github.jdrost1818.plaster.exception.EnumSearchException;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.TypeUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,16 +21,14 @@ import static java.util.Objects.nonNull;
 /**
  * Service for converting strings into full fledged {@link Type}s
  */
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
 public class TypeService {
 
     private static final Pattern POP_PATTERN = Pattern.compile("[>,]");
 
-    @Setter
-    private SearchService searchService = ServiceProvider.getSearchService();
+    private final SearchService searchService;
 
-    @Setter
-    private DependencyService dependencyService = ServiceProvider.getDependencyService();
+    private final DependencyService dependencyService;
 
     /**
      * Validates that the string is correctly formatted for a Java type

@@ -20,13 +20,15 @@ public class SearchServiceTest {
     ConfigurationService configurationService;
 
     @InjectMocks
-    SearchService classUnderTest = new SearchService();
+    SearchService classUnderTest;
 
     String resourceDir;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
+
+        this.classUnderTest = new SearchService(configurationService);
 
         File file = new File(getClass().getClassLoader().getResource("testProject").getFile());
         this.resourceDir = file.getAbsolutePath();

@@ -14,16 +14,16 @@ public class ServiceProvider {
     private static final ConfigurationService configurationService = new ConfigurationService().load("");
 
     @Getter
-    private static final SearchService searchService = new SearchService();
+    private static final SearchService searchService = new SearchService(configurationService);
 
     @Getter
-    private static final TypeService typeService = new TypeService();
+    private static final DependencyService dependencyService = new DependencyService(searchService);
 
     @Getter
-    private static final DependencyService dependencyService = new DependencyService();
+    private static final TypeService typeService = new TypeService(searchService, dependencyService);
 
     @Getter
-    private static final FieldService fieldService = new FieldService();
+    private static final FieldService fieldService = new FieldService(typeService);
 
     @Getter
     private static final DeleteService deleteService = new DeleteService();

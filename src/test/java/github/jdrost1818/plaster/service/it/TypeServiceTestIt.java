@@ -23,9 +23,6 @@ public class TypeServiceTestIt {
     @Before
     public void setUp() {
         ConfigurationServiceTest.transformToItService(ServiceProvider.getConfigurationService());
-
-        this.classUnderTest.setSearchService(ServiceProvider.getSearchService());
-        this.classUnderTest.setDependencyService(ServiceProvider.getDependencyService());
     }
 
     @Test
