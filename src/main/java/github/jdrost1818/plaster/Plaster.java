@@ -34,12 +34,12 @@ public class Plaster {
 
     public static void main(String[] args) {
         ArgumentParser parser = ArgParseUtil.getArgParser();
-        Namespace parsedArgs = null;
+        Namespace parsedArgs;
         try {
             parsedArgs = parser.parseArgs(args);
         } catch (ArgumentParserException e) {
             parser.handleError(e);
-            System.exit(1);
+            return;
         }
 
         ArgParseUtil.validateParsedArgs(parsedArgs);
