@@ -2,7 +2,7 @@ package {{ modelField.packagePath }};
 
 import javax.persistence.*;
 
-{{ dependencies }}
+{% include '/template/util/imports.twig' with dependencies %}
 
 {{ header }}
 @Entity

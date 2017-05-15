@@ -1,5 +1,6 @@
 package github.jdrost1818.plaster.service.template;
 
+import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.*;
@@ -55,32 +56,24 @@ public abstract class TemplateService {
         List<Field> fields = new ArrayList<>(fileInformation.getFields());
         fields.add(fileInformation.getId());
 
-        List<Dependency> dependencies = fields.stream()
-                .map(Field::getTypeDeclaration)
-                .map(TypeDeclaration::getTypes)
-                .flatMap(List::stream)
-                .map(Type::getDependency)
-                .collect(Collectors.toList());
-
-        return addDependencies(model, dependencies);
+        return addDependencies(model, fields);
     }
 
     JtwigModel addDependencies(JtwigModel model, Field field) {
-        List<Dependency> dependencies = field.getTypeDeclaration().getTypes().stream()
-                .map(Type::getDependency)
-                .collect(Collectors.toList());
-
-        return addDependencies(model, dependencies);
+        return addDependencies(model, Lists.newArrayList(field));
     }
 
-    JtwigModel addDependencies(JtwigModel model, List<Dependency> dependencies) {
-         String dependencyString = dependencies.stream()
-                .filter(Objects::nonNull)
-                .map(Dependency::getTemplate)
-                .distinct()
-                .collect(Collectors.joining("\n"));
+    JtwigModel addDependencies(JtwigModel model, List<Field> fields) {
+         List<Dependency> dependencies = fields.stream()
+                 .map(Field::getTypeDeclaration)
+                 .map(TypeDeclaration::getTypes)
+                 .flatMap(List::stream)
+                 .map(Type::getDependency)
+                 .filter(Objects::nonNull)
+                 .distinct()
+                 .collect(Collectors.toList());
 
-        return model.with("dependencies", dependencyString);
+        return model.with("dependencies", dependencies);
     }
 
     /**

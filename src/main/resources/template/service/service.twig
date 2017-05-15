@@ -3,7 +3,7 @@ package {{ serviceField.packagePath }};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-{{ dependencies }}
+{% include '/template/util/imports.twig' with dependencies %}
 
 import {{ modelField.packagePath }}.{{ modelField.className }};
 import {{ repoField.packagePath }}.{{ repoField.className }};

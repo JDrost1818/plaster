@@ -3,7 +3,8 @@ package {{ controllerField.packagePath }};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-{{ dependencies }}
+{% include '/template/util/imports.twig' with dependencies %}
+
 import {{ serviceField.packagePath }}.{{ serviceField.className }};
 import {{ modelField.packagePath }}.{{ modelField.className }};
 
