@@ -84,4 +84,9 @@ public class ControllerTemplateServiceTest {
         assertThat(modifiedModel.get("idField").get().getValue(), equalTo(new FlattenedField("", "List", "id")));
         assertThat(modifiedModel.get("baseRoute").get().getValue(), equalTo("exampleClass"));
     }
+
+    @Test
+    public void renderTemplate() {
+
+    }
 }

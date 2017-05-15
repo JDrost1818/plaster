@@ -120,4 +120,119 @@ public class ModelTemplateServiceTest {
         ));
     }
 
+    @Test
+    public void renderTemplate_lombok_enabled() throws Exception {
+        String expected = "" +
+                "package com.example.app.model.somewhere;\n" +
+                "\n" +
+                "import javax.persistence.*;\n" +
+                "\n" +
+                "import java.util.Map;\n" +
+                "import java.util.List;\n" +
+                "import com.example.app.Example;\n" +
+                "\n" +
+                "import lombok.AllArgsConstructor;\n" +
+                "import lombok.Builder;\n" +
+                "import lombok.Data;\n" +
+                "import lombok.NoArgsConstructor;\n" +
+                "\n" +
+                "@AllArgsConstructor\n" +
+                "@Builder\n" +
+                "@Data\n" +
+                "@NoArgsConstructor\n" +
+                "@Entity\n" +
+                "public class ExampleClass {\n" +
+                "\n" +
+                "    @Id\n" +
+                "    @GeneratedValue(strategy = GenerationType.AUTO)\n" +
+                "    private List id;\n" +
+                "\n" +
+                "    private Map var1;\n" +
+                "\n" +
+                "    private List var2;\n" +
+                "\n" +
+                "    private Example var3;\n" +
+                "\n" +
+                "}\n";
+
+        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", true);
+
+        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
+        when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
+        when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
+
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+
+        assertThat(expected, equalTo(actual));
+    }
+
+    @Test
+    public void renderTemplate_lombok_not_enabled() throws Exception {
+        String expected = "" +
+                "package com.example.app.model.somewhere;\n" +
+                "\n" +
+                "import javax.persistence.*;\n" +
+                "\n" +
+                "import java.util.Map;\n" +
+                "import java.util.List;\n" +
+                "import com.example.app.Example;\n" +
+                "\n" +
+                "@Entity\n" +
+                "public class ExampleClass {\n" +
+                "\n" +
+                "    @Id\n" +
+                "    @GeneratedValue(strategy = GenerationType.AUTO)\n" +
+                "    private List id;\n" +
+                "\n" +
+                "    private Map var1;\n" +
+                "\n" +
+                "    private List var2;\n" +
+                "\n" +
+                "    private Example var3;\n" +
+                "\n" +
+                "    public List getId() {\n" +
+                "        return this.id;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void setId(List id) {\n" +
+                "        this.id = id;\n" +
+                "    }\n" +
+                "\n" +
+                "    public Map getVar1() {\n" +
+                "        return this.var1;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void setVar1(Map var1) {\n" +
+                "        this.var1 = var1;\n" +
+                "    }\n" +
+                "\n" +
+                "    public List getVar2() {\n" +
+                "        return this.var2;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void setVar2(List var2) {\n" +
+                "        this.var2 = var2;\n" +
+                "    }\n" +
+                "\n" +
+                "    public Example getVar3() {\n" +
+                "        return this.var3;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void setVar3(Example var3) {\n" +
+                "        this.var3 = var3;\n" +
+                "    }\n" +
+                "\n" +
+                "}\n";
+
+        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", false);
+
+        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
+        when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
+        when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
+
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+
+        assertThat(expected, equalTo(actual));
+    }
+
 }

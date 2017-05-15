@@ -179,7 +179,7 @@ public abstract class TemplateService {
      * @return the formatted file content
      */
     String formatFile(String fileString) {
-        return fileString.replaceAll("(\r?\n){3,}", "\r\n\r\n");
+        return fileString.replaceAll("(\r?\n){3,}", "\n\n").replaceAll("\t", "    ");
     }
 
     /**

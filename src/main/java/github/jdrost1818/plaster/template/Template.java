@@ -12,7 +12,7 @@ public class Template {
                     "\t}\n";
 
     private static final String SETTER_TEMPLATE =
-                    "\tpublic %s set%s(%s %s) {\n" +
+                    "\tpublic void set%s(%s %s) {\n" +
                     "\t\tthis.%s = %s;\n" +
                     "\t}\n";
 
@@ -21,6 +21,6 @@ public class Template {
     }
 
     public static String getSetterTemplate(String className, String varName) {
-        return String.format(SETTER_TEMPLATE, className, StringUtils.capitalize(varName), className, varName, varName, varName);
+        return String.format(SETTER_TEMPLATE, StringUtils.capitalize(varName), className, varName, varName, varName);
     }
 }

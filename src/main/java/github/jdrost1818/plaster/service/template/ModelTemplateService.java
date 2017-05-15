@@ -1,5 +1,6 @@
 package github.jdrost1818.plaster.service.template;
 
+import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
@@ -8,6 +9,8 @@ import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.template.Template;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+
+import java.util.List;
 
 public class ModelTemplateService extends TemplateService {
 
@@ -44,8 +47,10 @@ public class ModelTemplateService extends TemplateService {
 
     private JtwigModel addGettersAndSetters(JtwigModel model, FileInformation fileInformation) {
         StringBuilder methodString = new StringBuilder();
+        List<Field> fields = Lists.newArrayList(fileInformation.getId());
+        fields.addAll(fileInformation.getFields());
 
-        for (Field field : fileInformation.getFields()) {
+        for (Field field : fields) {
             String className = field.getTypeDeclaration().getDeclaration();
             String varName = field.getVariableName();
 
