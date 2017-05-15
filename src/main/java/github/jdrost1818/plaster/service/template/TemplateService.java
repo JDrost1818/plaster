@@ -26,6 +26,8 @@ public abstract class TemplateService {
 
     private final ConfigurationService configurationService;
 
+    public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
+
     public final void renderTemplate(String templateLocation, FileInformation fileInformation,
                                      GenTypeModel genTypeModel, OutputStream out) {
 
@@ -48,8 +50,6 @@ public abstract class TemplateService {
             e.printStackTrace();
         }
     }
-
-    public abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
 
     JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
         List<Field> fields = new ArrayList<>(fileInformation.getFields());
@@ -83,17 +83,36 @@ public abstract class TemplateService {
         return model.with("dependencies", dependencyString);
     }
 
+    /**
+     * Adds the id field attached to the {@link FileInformation} as a {@link FlattenedField}
+     * to the provided model.
+     *
+     * @param model
+     *          model to which to add the id field
+     * @param fileInformation
+     *          information about the file to generate
+     * @return the modified model
+     */
     JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
-        Field id = fileInformation.getId();
-        return model.with("idField", new FlattenedField("", id.getTypeDeclaration().getDeclaration(), id.getVariableName()));
+        return model.with("idField", new FlattenedField(fileInformation.getId()));
     }
 
+    /**
+     * Adds the fields attached to the {@link FileInformation} as {@link FlattenedField}s
+     * to the provided model.
+     *
+     * @param model
+     *          model to which to add the fields
+     * @param fileInformation
+     *          information about the file to generate
+     * @return the modified model
+     */
     JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {
-        String fieldString = fileInformation.getFields().stream()
-                .map(Field::getTemplate)
-                .collect(Collectors.joining("\n\n"));
+        List<FlattenedField> fields = fileInformation.getFields().stream()
+                .map(FlattenedField::new)
+                .collect(Collectors.toList());
 
-        return model.with("fields", fieldString);
+        return model.with("fields", fields);
     }
 
     /**

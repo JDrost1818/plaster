@@ -12,7 +12,10 @@ public class {{ modelField.className }} {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private {{ idField.className }} {{ idField.varName }};
 
-{{ fields }}
+{% for field in fields %}
+    private {{ field.className }} {{ field.varName }};
+
+{% endfor %}
 
 {{ methods }}
 
