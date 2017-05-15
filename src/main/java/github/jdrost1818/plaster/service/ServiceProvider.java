@@ -30,10 +30,10 @@ public class ServiceProvider {
     private static final FieldService fieldService = new FieldService(typeService);
 
     @Getter
-    private static final ControllerTemplateService controllerTemplateService = new ControllerTemplateService(configurationService);
+    private static final ModelTemplateService modelTemplateService = new ModelTemplateService(configurationService);
 
     @Getter
-    private static final ModelTemplateService modelTemplateService = new ModelTemplateService(configurationService);
+    private static final ControllerTemplateService controllerTemplateService = new ControllerTemplateService(configurationService);
 
     @Getter
     private static final RepositoryTemplateService repositoryTemplateService = new RepositoryTemplateService(configurationService);
