@@ -33,6 +33,7 @@ public class Plaster {
     private static FieldService fieldService = ServiceProvider.getFieldService();
 
     public static void main(String[] args) {
+        System.out.println("Current working directory: " + System.getProperty("user.dir"));
         ArgumentParser parser = ArgParseUtil.getArgParser();
         Namespace parsedArgs;
         try {
