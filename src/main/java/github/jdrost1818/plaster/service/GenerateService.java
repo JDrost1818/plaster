@@ -44,7 +44,7 @@ public class GenerateService {
     }
     
     public void addFields(FileInformation fileInformation) {
-        
+        throw new UnsupportedOperationException("Adding fields to already existing fields is not supported. Sorry.");
     }
 
     private void generate(FileInformation fileInformation, TemplateType templateType, TemplateService templateService) {
