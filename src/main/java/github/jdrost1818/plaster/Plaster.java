@@ -5,6 +5,7 @@ import github.jdrost1818.plaster.data.Mode;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
+import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.FieldService;
 import github.jdrost1818.plaster.service.ServiceProvider;
@@ -50,7 +51,11 @@ public class Plaster {
         Mode mode = Mode.getMode(parsedArgs.getString(Arg.MODE.key));
         String modeScope = parsedArgs.getString(Arg.MODE_SCOPE.key);
 
-        mode.perform(modeScope, fileInformation);
+        try {
+            mode.perform(modeScope, fileInformation);
+        } catch (PlasterException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void setCommandLineArgs(Namespace parsedArgs) {

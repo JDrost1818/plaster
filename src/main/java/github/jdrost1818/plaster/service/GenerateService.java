@@ -70,13 +70,14 @@ public class GenerateService {
             throw new PlasterException("Cannot generate. Already exists: " + location);
         }
         try {
-            if (file.getParentFile().mkdirs() && file.createNewFile()) {
+            File dir = file.getParentFile();
+            if ((dir.exists() || dir.mkdirs()) && file.createNewFile()) {
                 return new FileOutputStream(new File(location));
             } else {
-                throw new PlasterException("Error creating file. Ensure you have permissions to perform this action");
+                throw new PlasterException("Error creating file. Ensure you have permissions to perform this action: " + location);
             }
         } catch (IOException e) {
-            throw new PlasterException("Error creating file. Ensure you have permissions to perform this action");
+            throw new PlasterException("Error creating file. Ensure you have permissions to perform this action: " + location);
         }
     }
 
