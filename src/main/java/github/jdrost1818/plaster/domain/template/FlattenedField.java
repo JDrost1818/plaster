@@ -8,16 +8,16 @@ import lombok.Data;
 @AllArgsConstructor
 public class FlattenedField {
 
-    public FlattenedField(Field field) {
-        this.packagePath = "";
-        this.className = field.getTypeDeclaration().getDeclaration();
-        this.varName = field.getVariableName();
-    }
-
     private String packagePath;
 
     private String className;
 
     private String varName;
+
+    public FlattenedField(Field field) {
+        this.packagePath = "";
+        this.className = field.getTypeDeclaration().getDeclaration();
+        this.varName = field.getVariableName();
+    }
 
 }
