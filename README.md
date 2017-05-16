@@ -55,7 +55,6 @@ Usage
 
     optional arguments:
       -h, --help            show this help message and exit
-      -v, --version         fetches the current version of the tool
       -k [KEY], --key [KEY]
                             indicates the following field:type pair should define the key
                             NOTE: should be a trailing param
@@ -69,78 +68,118 @@ Usage
   
   Per default, Plaster will auto-discover necessary configurations and then use best-practices to decide where and how to generate files. However, if you would like to customize the generation of the files, Plater gives you the ability to alter defaults by placing plaster.yml in the root of the project. The following configurations are supported:
   
-  Property dir
+  Property property
   ------------
   
   <table style="width:100%;">
-  <colgroup>
-  <col width="16%" />
-  <col width="53%" />
-  <col width="12%" />
-  <col width="16%" />
-  </colgroup>
-  <thead>
-  <tr class="header">
-  <th>Property</th>
-  <th>Description</th>
-  <th>Type</th>
-  <th>Default</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr class="odd">
-  <td>model</td>
-  <td>Directory in which to generate models</td>
-  <td>String</td>
-  <td>model</td>
-  </tr>
-  <tr class="even">
-  <td>repository</td>
-  <td>Directory in which to generate repositories</td>
-  <td>String</td>
-  <td>repository</td>
-  </tr>
-  <tr class="odd">
-  <td>controller</td>
-  <td>Directory in which to generate controllers</td>
-  <td>String</td>
-  <td>controller</td>
-  </tr>
-  <tr class="even">
-  <td>service</td>
-  <td>Directory in which to generate services</td>
-  <td>String</td>
-  <td>service</td>
-  </tr>
-  </tbody>
+      <colgroup>
+          <col width="16%" />
+          <col width="53%" />
+          <col width="12%" />
+          <col width="16%" />
+      </colgroup>
+      <thead>
+          <tr class="header">
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="even">
+              <td>enablePrimitives</td>
+              <td>If true, Integer -> int where possible</td>
+              <td>Boolean</td>
+              <td>false</td>
+          </tr>
+          <tr class="odd">
+              <td>key</td>
+              <td>name:type definition for ids in models</td>
+              <td>String</td>
+              <td>id:string</td>
+          </tr>
+      </tbody>
+  </table>
+  
+  Property directory
+  ------------
+  
+  <table style="width:100%;">
+      <colgroup>
+          <col width="16%" />
+          <col width="53%" />
+          <col width="12%" />
+          <col width="16%" />
+      </colgroup>
+      <thead>
+          <tr class="header">
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="even">
+              <td>base</td>
+              <td>Path to project in which to generate</td>
+              <td>String</td>
+              <td></td>
+          </tr>
+          <tr class="odd">
+              <td>model</td>
+              <td>Directory in which to generate models</td>
+              <td>String</td>
+              <td>model</td>
+          </tr>
+          <tr class="even">
+              <td>repository</td>
+              <td>Directory in which to generate repositories</td>
+              <td>String</td>
+              <td>repository</td>
+          </tr>
+          <tr class="odd">
+              <td>controller</td>
+              <td>Directory in which to generate controllers</td>
+              <td>String</td>
+              <td>controller</td>
+          </tr>
+          <tr class="even">
+              <td>service</td>
+              <td>Directory in which to generate services</td>
+              <td>String</td>
+              <td>service</td>
+          </tr>
+      </tbody>
   </table>
   
   Property lombok
   ---------------
   
   <table style="width:100%;">
-  <colgroup>
-  <col width="20%" />
-  <col width="51%" />
-  <col width="12%" />
-  <col width="14%" />
-  </colgroup>
-  <thead>
-  <tr class="header">
-  <th>Property</th>
-  <th>Description</th>
-  <th>Type</th>
-  <th>Default</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr class="odd">
-  <td>enabled</td>
-  <td>Should we enable generation in lombok mode</td>
-  <td>Boolean</td>
-  <td>Is lombok a dependency in pom.xml ?</td>
-  </tr>
-  </tbody>
+      <colgroup>
+          <col width="20%" />
+          <col width="51%" />
+          <col width="12%" />
+          <col width="14%" />
+      </colgroup>
+      <thead>
+          <tr class="header">
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="odd">
+              <td>enable</td>
+              <td>Should we enable generation in lombok mode</td>
+              <td>Boolean</td>
+              <td>Is lombok a dependency in pom.xml?</td>
+          </tr>
+      </tbody>
   </table>
   
   Lombok Support
