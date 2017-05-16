@@ -13,11 +13,6 @@ public class ServiceProviderTest {
     }
 
     @Test
-    public void getDeleteService() throws Exception {
-        assertThat(ServiceProvider.getDeleteService(), sameInstance(ServiceProvider.getDeleteService()));
-    }
-
-    @Test
     public void getGenerateService() throws Exception {
         assertThat(ServiceProvider.getGenerateService(), sameInstance(ServiceProvider.getGenerateService()));
     }

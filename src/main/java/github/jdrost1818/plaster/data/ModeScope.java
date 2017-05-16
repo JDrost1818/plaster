@@ -2,7 +2,6 @@ package github.jdrost1818.plaster.data;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.domain.FileInformation;
-import github.jdrost1818.plaster.method.Delete;
 import github.jdrost1818.plaster.method.Generate;
 import github.jdrost1818.plaster.method.PlasterMethod;
 
@@ -12,19 +11,19 @@ public enum ModeScope {
 
     SCAFFOLD(
             Lists.newArrayList(Generate.MODEL, Generate.CONTROLLER, Generate.SERVICE, Generate.REPOSITORY),
-            Lists.newArrayList(Delete.MODEL, Delete.CONTROLLER, Delete.SERVICE, Delete.REPOSITORY)),
+            Lists.newArrayList()),
     MODEL(
             Lists.newArrayList(Generate.MODEL),
-            Lists.newArrayList(Delete.MODEL)),
+            Lists.newArrayList()),
     CONTROLLER(
             Lists.newArrayList(Generate.CONTROLLER),
-            Lists.newArrayList(Delete.CONTROLLER)),
+            Lists.newArrayList()),
     SERVICE(
             Lists.newArrayList(Generate.SERVICE),
-            Lists.newArrayList(Delete.SERVICE)),
+            Lists.newArrayList()),
     REPOSITORY(
             Lists.newArrayList(Generate.REPOSITORY),
-            Lists.newArrayList(Delete.REPOSITORY)),
+            Lists.newArrayList()),
     FIELDS(
             Lists.newArrayList(Generate.FIELDS),
             Lists.newArrayList());

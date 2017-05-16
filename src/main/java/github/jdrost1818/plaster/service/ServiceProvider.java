@@ -50,6 +50,4 @@ public class ServiceProvider {
             repositoryTemplateService
     );
 
-    @Getter
-    private static final DeleteService deleteService = new DeleteService();
 }
