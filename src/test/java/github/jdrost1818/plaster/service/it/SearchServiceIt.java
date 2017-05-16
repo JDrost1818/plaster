@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isIn;
 
-public class SearchTestIT {
+public class SearchServiceIt {
 
     private SearchService classUnderTest = ServiceProvider.getSearchService();
 
