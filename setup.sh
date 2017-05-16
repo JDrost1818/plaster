@@ -1,6 +1,7 @@
 #!/bin/sh
 
 uninstall_plaster() {
+    echo "Uninstalling current installation of plaster"
     sudo rm /usr/bin/plaster;
     sudo rm -rf /usr/share/plaster;
 }
@@ -9,6 +10,7 @@ install_plaster() {
     echo "Building project"
     mvn clean install -DskipTests=true -q;
 
+    echo "Installing plaster"
     sudo mkdir /usr/share/plaster;
     sudo mkdir /usr/share/plaster/lib;
 
@@ -32,14 +34,19 @@ install_plaster() {
     sudo echo "java -jar /usr/share/plaster/${plaster_file_name} \$@" >> /usr/bin/plaster
 
     cd ..
+
+    echo "Successfully installed plaster"
 }
 
-uninstall="n"
-install="y"
+reinstall="n"
 if test -e /usr/bin/plaster
 then
-    read -p "Plaster already installed, would you like to reinstall (y/n) " uninstall
+    read -p "Plaster already installed, would you like to reinstall (y/n) " reinstall
 fi
 
-uninstall_plaster
+case ${reinstall} in
+    [Yy]* ) uninstall_plaster; break;;
+    * ) exit;;
+esac
+
 install_plaster
