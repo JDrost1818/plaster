@@ -1,7 +1,8 @@
 Plaster
 =======
 
-Project to bring similar functionality found in Rails to the Spring Boot platform. Currently only supports maven-enabled projects.
+Project to bring similar functionality found in Rails to the Spring Boot platform. Currently only supports 
+maven-enabled projects.
 
 For Example:
 
@@ -60,13 +61,14 @@ Usage
                             NOTE: should be a trailing param
       -d DIR, --dir DIR     defines a sub path in which to perform actions
                             NOTE: should be a trailing param
-
-  [maven]: https://maven.apache.org/install.html
   
   Customization
   =============
   
-  Per default, Plaster will auto-discover necessary configurations and then use best-practices to decide where and how to generate files. However, if you would like to customize the generation of the files, Plater gives you the ability to alter defaults by placing plaster.yml in the root of the project. The following configurations are supported:
+  Per default, Plaster will auto-discover necessary configurations and then use best-practices to decide where and 
+  how to generate files. However, if you would like to customize the generation of the files, Plaster gives you the 
+  ability to alter defaults by placing [plaster.yml] in the root of the project. The following configurations are 
+  supported:
   
   Property property
   ------------
@@ -228,6 +230,8 @@ Usage
   
   For lombok information, visit the project’s [homepage].
   
-    [homepage]: https://projectlombok.org/
+[maven]: https://maven.apache.org/install.html
+[homepage]: https://projectlombok.org/
+[plaster.yml]: https://github.com/JDrost1818/plaster-java/blob/master/src/test/resources/testProject/root2/plaster.yml
 
   
