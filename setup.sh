@@ -29,7 +29,7 @@ install_plaster() {
 
     sudo echo "#!/bin/sh" >> /usr/bin/plaster
     sudo echo "" >> /usr/bin/plaster
-    sudo echo "java -jar /usr/share/plaster/${plaster_file_name}" >> /usr/bin/plaster
+    sudo echo "java -jar /usr/share/plaster/${plaster_file_name} \$@" >> /usr/bin/plaster
 
     cd ..
 }
