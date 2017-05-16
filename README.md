@@ -138,7 +138,7 @@ Usage
   <td>enabled</td>
   <td>Should we enable generation in lombok mode</td>
   <td>Boolean</td>
-  <td>Is lombok a dependenc y in pom.xml ?</td>
+  <td>Is lombok a dependency in pom.xml ?</td>
   </tr>
   </tbody>
   </table>
@@ -148,42 +148,44 @@ Usage
   
   Generation of models will change if a lombok dependency is found in pom.xml. This will import lombok and annotate the model differently. For example:
   
-      //NO LOMBOK
-      @Entity
-      public class Example {
-  
-          @Id
-          @GeneratedValue(strategy = GenerationType.AUTO)
-          private Integer id;
-  
-          public Integer getId() {
-              return this.id;
-          }
-  
-          public void setId(Integer id) {
-              this.id = id;
-          }
-  
+  ```Java
+  //NO LOMBOK
+  @Entity
+  public class Example {
+
+      @Id
+      @GeneratedValue(strategy = GenerationType.AUTO)
+      private Integer id;
+
+      public Integer getId() {
+          return this.id;
       }
-  
- -
-      // Lombok
-      import lombok.AllArgsConstructor;
-      import lombok.Builder;
-      import lombok.Data;
-      import lombok.NoArgsConstructor;
-  
-      @AllArgsConstructor
-      @Builder
-      @Data
-      @NoArgsConstructor
-      public class Example {
-  
-          @Id
-          @GeneratedValue(strategy = GenerationType.AUTO)
-          private Integer id;
-  
+
+      public void setId(Integer id) {
+          this.id = id;
       }
+
+  }
+  ```
+  ```Java
+  // Lombok
+  import lombok.AllArgsConstructor;
+  import lombok.Builder;
+  import lombok.Data;
+  import lombok.NoArgsConstructor;
+
+  @AllArgsConstructor
+  @Builder
+  @Data
+  @NoArgsConstructor
+  public class Example {
+
+      @Id
+      @GeneratedValue(strategy = GenerationType.AUTO)
+      private Integer id;
+
+  }
+  ```
   
   For lombok information, visit the project’s [homepage].
   
