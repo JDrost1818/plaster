@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.isIn;
 
 public class SearchTestIT {
 
@@ -25,6 +26,9 @@ public class SearchTestIT {
         List<String> filesFound = this.classUnderTest.findClassesWithName("duplicate");
 
         assertThat(filesFound, hasSize(2));
+
+        assertThat("com/example/app/dir1/Duplicate.java", isIn(filesFound));
+        assertThat("com/example/app/dir2/Duplicate.java", isIn(filesFound));
     }
 
 }

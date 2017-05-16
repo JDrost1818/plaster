@@ -35,19 +35,6 @@ public class SearchServiceTest {
     }
 
     @Test
-    public void findClassesWithName_multiple_2_point_oh() throws Exception {
-        when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn(this.resourceDir);
-        when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("src/main/java");
-        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("com/example/app");
-
-        List<String> foundPaths = this.classUnderTest.findClassesWithName("duplicate");
-
-        assertThat(foundPaths, hasSize(2));
-        assertThat("com/example/app/dir1/Duplicate.java", isIn(foundPaths));
-        assertThat("com/example/app/dir2/Duplicate.java", isIn(foundPaths));
-    }
-
-    @Test
     public void findClassesWithName_start_with_file() throws Exception {
         when(this.configurationService.get(Setting.PROJECT_PATH)).thenReturn("/" + this.resourceDir + "/testProject/root1/pom.xml");
 
