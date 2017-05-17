@@ -9,8 +9,14 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class TypeUtilTest {
+
+    @Test
+    public void testCannotInstantiate() throws Exception {
+        assertTrue(TestUtil.testUtilClass(TypeUtil.class));
+    }
 
     @Test
     public void normalizeTypeString_null() throws Exception {

@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @UtilityClass
-public class ArgParseUtil {
+public final class ArgParseUtil {
 
     /**
      * Fetches the parser to be used to parse the command line arguments.

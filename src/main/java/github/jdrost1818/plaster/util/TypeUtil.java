@@ -124,9 +124,7 @@ public class TypeUtil {
     }
 
     private static String normalizeSingleType(String type) {
-        if (StringUtils.isBlank(type)) {
-            return "";
-        } else if (type.matches("[<,>]")) {
+        if (type.matches("[<,>]")) {
             return type;
         }
         return StringUtils.capitalize(normalizeVariableName(type));

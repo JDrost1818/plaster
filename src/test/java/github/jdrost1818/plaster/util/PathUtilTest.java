@@ -6,8 +6,14 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class PathUtilTest {
+
+    @Test
+    public void testCannotInstantiate() throws Exception {
+        assertTrue(TestUtil.testUtilClass(PathUtil.class));
+    }
 
     @Test
     public void normalize_path_with_file() throws Exception {
