@@ -27,11 +27,13 @@ public enum StoredJavaType {
             new Type("Double"),
             new Type("double"),
             Lists.newArrayList("double", "dbl")),
-
+    BOOLEAN(
+            new Type("Boolean"),
+            new Type("boolean"),
+            Lists.newArrayList("bool", "boolean")),
     STRING(
             new Type("String"),
             Lists.newArrayList("string", "str")),
-
     DATE(
             new Type("Date", new Dependency("java.util.Date")),
             Lists.newArrayList("date")),
