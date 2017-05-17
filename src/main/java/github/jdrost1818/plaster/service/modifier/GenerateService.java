@@ -1,11 +1,13 @@
-package github.jdrost1818.plaster.service;
+package github.jdrost1818.plaster.service.modifier;
 
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.exception.PlasterException;
+import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.template.*;
+import github.jdrost1818.plaster.service.type.*;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AllArgsConstructor;
 
@@ -15,7 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @AllArgsConstructor
-public class GenerateService {
+public class GenerateService implements ModelModifier, ControllerModifier, ServiceModifier, RepositoryModifier, FieldModifier {
 
     private final ConfigurationService configurationService;
 
@@ -27,23 +29,28 @@ public class GenerateService {
 
     private final RepositoryTemplateService repositoryTemplateService;
 
-    public void generateModel(FileInformation fileInformation) {
+    @Override
+    public void modifyModel(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.MODEL, this.modelTemplateService);
     }
 
-    public void generateController(FileInformation fileInformation) {
+    @Override
+    public void modifyController(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.CONTROLLER, this.controllerTemplateService);
     }
-    
-    public void generateService(FileInformation fileInformation) {
+
+    @Override
+    public void modifyService(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.SERVICE, this.serviceTemplateService);
     }
-    
-    public void generateRepository(FileInformation fileInformation) {
+
+    @Override
+    public void modifyRepository(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.REPOSITORY, this.repositoryTemplateService);
     }
-    
-    public void addFields(FileInformation fileInformation) {
+
+    @Override
+    public void modifyField(FileInformation fileInformation) {
         throw new UnsupportedOperationException("Adding fields to already existing fields is not supported. Sorry.");
     }
 

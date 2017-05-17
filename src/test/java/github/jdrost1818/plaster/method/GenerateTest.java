@@ -9,7 +9,7 @@ public class GenerateTest {
 
     @Test
     public void testCannotInstantiate() throws Exception {
-        assertTrue(TestUtil.testUtilClass(Generate.class));
+        assertTrue(TestUtil.testUtilClass(Modify.class));
     }
 
 }

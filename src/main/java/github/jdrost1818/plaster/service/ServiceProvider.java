@@ -1,5 +1,7 @@
 package github.jdrost1818.plaster.service;
 
+import github.jdrost1818.plaster.service.modifier.EditService;
+import github.jdrost1818.plaster.service.modifier.GenerateService;
 import github.jdrost1818.plaster.service.template.ControllerTemplateService;
 import github.jdrost1818.plaster.service.template.ModelTemplateService;
 import github.jdrost1818.plaster.service.template.RepositoryTemplateService;
@@ -49,5 +51,8 @@ public class ServiceProvider {
             serviceTemplateService,
             repositoryTemplateService
     );
+
+    @Getter
+    private static final EditService editService = new EditService();
 
 }

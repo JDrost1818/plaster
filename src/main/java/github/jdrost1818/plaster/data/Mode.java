@@ -3,6 +3,7 @@ package github.jdrost1818.plaster.data;
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.exception.PlasterException;
+import github.jdrost1818.plaster.service.ServiceProvider;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -15,17 +16,21 @@ public enum Mode {
 
     GENERATE(
             Lists.newArrayList("g", "gen", "generate"),
-            Lists.newArrayList(SCAFFOLD, CONTROLLER, SERVICE, REPOSITORY, FIELDS)),
+            Lists.newArrayList(SCAFFOLD, CONTROLLER, SERVICE, REPOSITORY, FIELDS),
+            (s, f) -> s.modify(ServiceProvider.getGenerateService(), f)),
 
-    DELETE(
-            Lists.newArrayList("r", "rm", "remove", "d", "del", "delete"),
-            Lists.newArrayList(SCAFFOLD, CONTROLLER, SERVICE, REPOSITORY));
+    MODIFY(
+            Lists.newArrayList("m", "mod", "modify"),
+            Lists.newArrayList(FIELDS),
+            (s, f) -> s.modify(ServiceProvider.getEditService(), f));
 
     private final List<String> searchTerms;
     private final List<ModeScope> scopes;
-    Mode(List<String> searchTerms, List<ModeScope> scopes) {
+    private final Perform performFunction;
+    Mode(List<String> searchTerms, List<ModeScope> scopes, Perform performFunction) {
         this.searchTerms = searchTerms;
         this.scopes = scopes;
+        this.performFunction = performFunction;
     }
 
     /**
@@ -64,14 +69,13 @@ public enum Mode {
             throw new PlasterException(this.name() + " does not support: " + scope.name());
         }
 
-        // Todo: I don't like this. Make this better
-        if (this == GENERATE) {
-            scope.generate(fileInformation);
-        } else if (this == DELETE) {
-            scope.delete(fileInformation);
-        } else {
-            throw new PlasterException("I don't know how you got here and frankly, I'm impressed");
-        }
+        this.performFunction.execute(scope, fileInformation);
+    }
+
+    private interface Perform {
+
+        void execute(ModeScope scope, FileInformation fileInformation);
+
     }
 
 }

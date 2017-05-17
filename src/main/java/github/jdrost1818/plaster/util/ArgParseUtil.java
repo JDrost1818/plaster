@@ -45,7 +45,7 @@ public final class ArgParseUtil {
          */
         parser
                 .addArgument(Arg.MODE.key)
-                .choices("g", "gen", "generate", "d", "del", "delete")
+                .choices("g", "gen", "generate", "d", "del", "delete", "m")
                 .help("Whether to generate or remove code");
 
         /*

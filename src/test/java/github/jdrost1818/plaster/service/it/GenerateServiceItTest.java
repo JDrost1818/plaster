@@ -5,7 +5,7 @@ import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.StoredJavaType;
 import github.jdrost1818.plaster.domain.*;
 import github.jdrost1818.plaster.service.ConfigurationServiceTest;
-import github.jdrost1818.plaster.service.GenerateService;
+import github.jdrost1818.plaster.service.modifier.GenerateService;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -43,7 +43,7 @@ public class GenerateServiceItTest {
     public void generateModel_lombok_enabled() throws IOException {
         String expected = GeneratedContent.MODEL_CLASS_LOMBOK_IT;
 
-        this.classUnderTest.generateModel(this.fileInformation);
+        this.classUnderTest.modifyModel(this.fileInformation);
         File generatedFile = new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/model/ExampleClass.java");
 
         assertTrue(generatedFile.exists());
@@ -60,7 +60,7 @@ public class GenerateServiceItTest {
         String expected = GeneratedContent.MODEL_CLASS_NO_LOMBOK_IT;
         ServiceProvider.getConfigurationService().put(Setting.IS_LOMBOK_ENABLED, "false");
 
-        this.classUnderTest.generateModel(this.fileInformation);
+        this.classUnderTest.modifyModel(this.fileInformation);
         File generatedFile = new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/model/ExampleClass.java");
 
         assertTrue(generatedFile.exists());
@@ -77,7 +77,7 @@ public class GenerateServiceItTest {
     public void generateController() throws Exception {
         String expected = GeneratedContent.CONTROLLER_CLASS_IT;
 
-        this.classUnderTest.generateController(this.fileInformation);
+        this.classUnderTest.modifyController(this.fileInformation);
         File generatedFile = new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/controller/ExampleClassController.java");
 
         assertTrue(generatedFile.exists());
@@ -93,7 +93,7 @@ public class GenerateServiceItTest {
     public void generateService() throws Exception {
         String expected = GeneratedContent.SERVICE_CLASS_IT;
 
-        this.classUnderTest.generateService(this.fileInformation);
+        this.classUnderTest.modifyService(this.fileInformation);
         File generatedFile = new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/service/ExampleClassService.java");
 
         assertTrue(generatedFile.exists());
@@ -109,7 +109,7 @@ public class GenerateServiceItTest {
     public void generateRepository() throws Exception {
         String expected = GeneratedContent.REPOSITORY_CLASS_IT;
 
-        this.classUnderTest.generateRepository(this.fileInformation);
+        this.classUnderTest.modifyRepository(this.fileInformation);
         File generatedFile = new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/repository/ExampleClassRepository.java");
 
         assertTrue(generatedFile.exists());
