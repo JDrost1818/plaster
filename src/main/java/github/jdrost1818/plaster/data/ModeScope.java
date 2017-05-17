@@ -2,6 +2,7 @@ package github.jdrost1818.plaster.data;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.domain.FileInformation;
+import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.method.Modify;
 import github.jdrost1818.plaster.method.PlasterMethod;
 
@@ -27,9 +28,14 @@ public enum ModeScope {
         this.modActions = modActions;
     }
 
+    @SuppressWarnings("unchecked")
     public void modify(Object service, FileInformation fileInformation) {
         for (PlasterMethod modAction : modActions) {
-            modAction.perform(service, fileInformation);
+            try{
+                modAction.perform(service, fileInformation);
+            } catch (ClassCastException e) {
+                throw new PlasterException("A developer messed up. Please contact them, yell at them, and make them buy you things");
+            }
         }
     }
 }
