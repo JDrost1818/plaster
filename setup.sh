@@ -29,16 +29,15 @@ install_plaster() {
     sudo chmod 777 /usr/share/plaster;
     sudo chmod 777 /usr/share/plaster/${plaster_file_name};
 
-    sudo echo "#!/bin/sh" >> /usr/bin/plaster
-    sudo echo "" >> /usr/bin/plaster
-    sudo echo "java -jar /usr/share/plaster/${plaster_file_name} \$@" >> /usr/bin/plaster
+    echo "#!/bin/sh" >> /usr/bin/plaster
+    echo "" >> /usr/bin/plaster
+    echo "java -jar /usr/share/plaster/${plaster_file_name} \$@" >> /usr/bin/plaster
 
     cd ..
 
     echo "Successfully installed plaster"
 }
-
-reinstall="n"
+reinstall="first_install"
 if test -e /usr/bin/plaster
 then
     read -p "Plaster already installed, would you like to reinstall (y/n) " reinstall
@@ -46,6 +45,7 @@ fi
 
 case ${reinstall} in
     [Yy]* ) uninstall_plaster; break;;
+    first_install ) break;;
     * ) exit;;
 esac
 
