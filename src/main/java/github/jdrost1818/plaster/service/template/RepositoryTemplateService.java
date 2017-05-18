@@ -18,12 +18,14 @@ public class RepositoryTemplateService extends TemplateService {
      */
     @Override
     JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
-        model = super.addTypeField(model, genTypeModel, TemplateType.REPOSITORY);
-        model = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
-        model = super.addDependencies(model, fileInformation.getId());
-        model = super.addId(model, fileInformation);
+        JtwigModel repoModel;
 
-        return model;
+        repoModel = super.addTypeField(model, genTypeModel, TemplateType.REPOSITORY);
+        repoModel = super.addTypeField(repoModel, genTypeModel, TemplateType.MODEL);
+        repoModel = super.addDependencies(repoModel, fileInformation.getId());
+        repoModel = super.addId(repoModel, fileInformation);
+
+        return repoModel;
     }
 
     /**

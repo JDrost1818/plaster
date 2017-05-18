@@ -19,14 +19,16 @@ public class ControllerTemplateService extends TemplateService {
      */
     @Override
     JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
-        model = super.addTypeField(model, genTypeModel, TemplateType.CONTROLLER);
-        model = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
-        model = super.addTypeField(model, genTypeModel, TemplateType.SERVICE);
-        model = super.addDependencies(model, fileInformation.getId());
-        model = super.addId(model, fileInformation);
-        model = addBaseRoute(model, fileInformation);
+        JtwigModel controllerModel;
 
-        return model;
+        controllerModel = super.addTypeField(model, genTypeModel, TemplateType.CONTROLLER);
+        controllerModel = super.addTypeField(controllerModel, genTypeModel, TemplateType.MODEL);
+        controllerModel = super.addTypeField(controllerModel, genTypeModel, TemplateType.SERVICE);
+        controllerModel = super.addDependencies(controllerModel, fileInformation.getId());
+        controllerModel = super.addId(controllerModel, fileInformation);
+        controllerModel = addBaseRoute(controllerModel, fileInformation);
+
+        return controllerModel;
     }
 
     /**

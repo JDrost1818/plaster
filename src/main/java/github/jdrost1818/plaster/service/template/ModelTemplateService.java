@@ -23,18 +23,20 @@ public class ModelTemplateService extends TemplateService {
      */
     @Override
     JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
-        model = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
-        model = super.addDependencies(model, fileInformation);
-        model = super.addFields(model, fileInformation);
-        model = super.addId(model, fileInformation);
+        JtwigModel modelModel;
+
+        modelModel = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
+        modelModel = super.addDependencies(modelModel, fileInformation);
+        modelModel = super.addFields(modelModel, fileInformation);
+        modelModel = super.addId(modelModel, fileInformation);
 
         if (genTypeModel.isLombokEnabled()) {
-            model = addLombokHeader(model);
+            modelModel = addLombokHeader(modelModel);
         } else {
-            model = addGettersAndSetters(model, fileInformation);
+            modelModel = addGettersAndSetters(modelModel, fileInformation);
         }
 
-        return model;
+        return modelModel;
     }
 
     /**

@@ -18,13 +18,15 @@ public class ServiceTemplateService extends TemplateService {
      */
     @Override
     JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
-        model = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
-        model = super.addTypeField(model, genTypeModel, TemplateType.SERVICE);
-        model = super.addTypeField(model, genTypeModel, TemplateType.REPOSITORY);
-        model = super.addDependencies(model, fileInformation.getId());
-        model = super.addId(model, fileInformation);
+        JtwigModel serviceModel;
 
-        return model;
+        serviceModel = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
+        serviceModel = super.addTypeField(serviceModel, genTypeModel, TemplateType.SERVICE);
+        serviceModel = super.addTypeField(serviceModel, genTypeModel, TemplateType.REPOSITORY);
+        serviceModel = super.addDependencies(serviceModel, fileInformation.getId());
+        serviceModel = super.addId(serviceModel, fileInformation);
+
+        return serviceModel;
     }
 
     /**
