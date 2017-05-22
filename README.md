@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/JDrost1818/plaster.png?label=ready&title=Ready)](https://waffle.io/JDrost1818/plaster?utm_source=badge)
 Plaster v1.0.0
 =======
 [ ![Codeship Status for JDrost1818/plaster](https://app.codeship.com/projects/184069b0-1c9a-0135-6e0f-0e8dc4a678fe/status?branch=master)](https://app.codeship.com/projects/220058)
