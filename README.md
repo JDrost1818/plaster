@@ -26,7 +26,7 @@ the root will be src/main/com/example/
 
 Coming Features
 ---------------
-Plaster is integrated with [waffle.io] and you can track new feature progress [here]. Below is the up-to-date snapshot of 
+Plaster is integrated with [waffle.io] and new features are tracked [here]. Below is the up-to-date snapshot of 
 feature development.
 
 [![Stories in Backlog](https://badge.waffle.io/JDrost1818/plaster.png?label=backlog&title=Backlog)](https://waffle.io/JDrost1818/plaster?utm_source=badge)
