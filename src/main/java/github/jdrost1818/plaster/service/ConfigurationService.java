@@ -3,10 +3,8 @@ package github.jdrost1818.plaster.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import github.jdrost1818.plaster.data.Setting;
-import github.jdrost1818.plaster.domain.customization.DirectoryCustomization;
-import github.jdrost1818.plaster.domain.customization.LombokCustomization;
-import github.jdrost1818.plaster.domain.customization.PlasterCustomization;
-import github.jdrost1818.plaster.domain.customization.PropertyCustomization;
+import github.jdrost1818.plaster.domain.customization.JSONMap;
+import github.jdrost1818.plaster.exception.DeveloperException;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.NoArgsConstructor;
@@ -24,9 +22,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 @NoArgsConstructor
 public class ConfigurationService {
@@ -160,6 +155,9 @@ public class ConfigurationService {
 
     }
 
+    /**
+     * Loads all the custom settings found in the plaster.yml file in the root of the project.
+     */
     private void loadFromSettingsFile() {
         File plasterYaml = new File(FilenameUtils.concat(this.applicationRoot, "plaster.yml"));
         if (!plasterYaml.exists()) {
@@ -168,11 +166,10 @@ public class ConfigurationService {
 
         ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
         try {
-            PlasterCustomization customization = yamlMapper.readValue(plasterYaml, PlasterCustomization.class);
+            JSONMap customization = yamlMapper.readValue(plasterYaml, JSONMap.class);
 
-            loadProperties(customization.getProperty());
-            loadDirectories(customization.getDirectory());
-            loadLombok(customization.getLombok());
+            Setting.getConfigurableSettings()
+                    .forEach((setting -> loadSetting(setting, customization)));
         } catch (IOException e) {
             // This just means the file is empty and isn't really an error
             // Todo: make this more reliable
@@ -184,96 +181,45 @@ public class ConfigurationService {
     }
 
     /**
-     * Loads the customizations from the property tag
+     * Gets the setting from the customization object passed in. If the setting is not
+     * found in the map or is null (not acceptable), it will not overwrite what is already there.
      *
-     * Supported configurations:
+     * This also verifies that types are being properly passed. IE boolean fields are in fact
+     * booleans, etc.
      *
-     *      allowPrimitives:boolean ->  should int be used in place of Integer, etc
-     *      key:string ->               the name:type pair to be used instead of id:int
-     *
-     * @param customization
-     *          object containing the customizations allowed in the property tag
+     * @param setting
+     *          setting to load
+     * @param customizationMap
+     *          object containing customizations
      */
-    private void loadProperties(PropertyCustomization customization) {
-        if (isNull(customization)) {
-            return;
-        }
-
-        // Set a custom key
-        if (StringUtils.isNotBlank(customization.getKey())) {
-            this.configMap.put(Setting.KEY , customization.getKey());
-        }
-
-        // Set custom primitive config
-        if (nonNull(customization.getEnablePrimitives())) {
-            this.configMap.put(Setting.SHOULD_USE_PRIMITIVES, customization.getEnablePrimitives().toString());
-        }
-
-    }
-
-    /**
-     * Loads the customizations from the directory tag
-     *
-     * Supported configurations:
-     *
-     *      base:string ->              what to use instead of src/main/java
-     *      model:string ->             defines base model package location
-     *      repository:string ->        defines base repository package location
-     *      controller:string ->        defines base controller package location
-     *      service:string ->           defines base service package location
-     *
-     * @param customization
-     *          object containing the customizations from the directory tag
-     */
-    private void loadDirectories(DirectoryCustomization customization) {
-        if (isNull(customization)) {
-            return;
-        }
-
-        if (nonNull(customization.getBase())) {
-            String mavenGroupId = this.get(Setting.MAVEN_GROUP_ID);
-
-            this.configMap.put(Setting.BASE_PATH,
-                    StringUtils.isNotBlank(customization.getBase()) ? customization.getBase() : "");
-
-            this.configMap.put(Setting.APP_PATH, PathUtil.
-                    normalize(mavenGroupId.replace(".", "/"), "/"));
-        }
-
-        Map<Setting, String> dirMap = new HashMap<>();
-        dirMap.put(Setting.REL_MODEL_PACKAGE, customization.getModel());
-        dirMap.put(Setting.REL_REPOSITORY_PACKAGE, customization.getRepository());
-        dirMap.put(Setting.REL_CONTROLLER_PACKAGE, customization.getController());
-        dirMap.put(Setting.REL_SERVICE_PACKAGE, customization.getService());
-
-        // Safely put in all the paths into the settings
-        for (Map.Entry<Setting, String> curEntry : dirMap.entrySet()) {
-            if (StringUtils.isNotBlank(curEntry.getValue())) {
-                String unixPath = FilenameUtils.separatorsToUnix(curEntry.getValue());
-                this.configMap.put(curEntry.getKey(), unixPath);
+    private void loadSetting(Setting setting, JSONMap customizationMap) {
+        String foundObj = customizationMap.getEndValue(setting.compositePath);
+        if (StringUtils.isNotEmpty(foundObj)) {
+            if (verifyType(foundObj, setting.type)) {
+                this.configMap.put(setting, foundObj);
+            } else {
+                throw new PlasterException("Could not parse " + foundObj + " to the required type " + setting.type.getName());
             }
         }
-
     }
 
     /**
-     * Loads the customizations from the lombok tag
+     * Verifies that the passed in string is/can be the given type.
      *
-     * Supported configurations:
-     *
-     *      enable:boolean ->           whether to use lombok annotations or getters and setters
-     *
-     * @param customization
-     *          object containing the customizations from the lombok tag
+     * @param obj
+     *          the string to determine if it can be parsed into the given type
+     * @param type
+     *          the type to use to determine if the string is valid
+     * @return whether or not the string passed can be parsed into the type
      */
-    private void loadLombok(LombokCustomization customization) {
-        if (isNull(customization)) {
-            return;
+    private boolean verifyType(String obj, Class<?> type) {
+        if (type == String.class) {
+            return true;
+        } else if (type == Boolean.class) {
+            return "true".equalsIgnoreCase(obj) || "false".equalsIgnoreCase(obj);
         }
 
-        if (nonNull(customization.getEnable())) {
-            this.configMap.put(Setting.IS_LOMBOK_ENABLED, customization.getEnable().toString());
-        }
+        throw new DeveloperException();
     }
 
 }
