@@ -9,7 +9,7 @@ import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.NoArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.parboiled.common.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -155,6 +155,9 @@ public class ConfigurationService {
 
     }
 
+    /**
+     * Loads all the custom settings found in the plaster.yml file in the root of the project.
+     */
     private void loadFromSettingsFile() {
         File plasterYaml = new File(FilenameUtils.concat(this.applicationRoot, "plaster.yml"));
         if (!plasterYaml.exists()) {
@@ -165,9 +168,8 @@ public class ConfigurationService {
         try {
             JSONMap customization = yamlMapper.readValue(plasterYaml, JSONMap.class);
 
-            for (Setting setting : Setting.getConfigurableSettings()) {
-                loadSetting(setting, customization);
-            }
+            Setting.getConfigurableSettings()
+                    .forEach((setting -> loadSetting(setting, customization)));
         } catch (IOException e) {
             // This just means the file is empty and isn't really an error
             // Todo: make this more reliable
@@ -178,6 +180,18 @@ public class ConfigurationService {
 
     }
 
+    /**
+     * Gets the setting from the customization object passed in. If the setting is not
+     * found in the map or is null (not acceptable), it will not overwrite what is already there.
+     *
+     * This also verifies that types are being properly passed. IE boolean fields are in fact
+     * booleans, etc.
+     *
+     * @param setting
+     *          setting to load
+     * @param customizationMap
+     *          object containing customizations
+     */
     private void loadSetting(Setting setting, JSONMap customizationMap) {
         String foundObj = customizationMap.getEndValue(setting.compositePath);
         if (StringUtils.isNotEmpty(foundObj)) {
@@ -189,11 +203,20 @@ public class ConfigurationService {
         }
     }
 
-    private boolean verifyType(String foundObj, Class<?> type) {
+    /**
+     * Verifies that the passed in string is/can be the given type.
+     *
+     * @param obj
+     *          the string to determine if it can be parsed into the given type
+     * @param type
+     *          the type to use to determine if the string is valid
+     * @return whether or not the string passed can be parsed into the type
+     */
+    private boolean verifyType(String obj, Class<?> type) {
         if (type == String.class) {
             return true;
         } else if (type == Boolean.class) {
-            return "true".equalsIgnoreCase(foundObj) || "false".equalsIgnoreCase(foundObj);
+            return "true".equalsIgnoreCase(obj) || "false".equalsIgnoreCase(obj);
         }
 
         throw new DeveloperException();
