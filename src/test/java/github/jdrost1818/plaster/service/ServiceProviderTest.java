@@ -60,4 +60,9 @@ public class ServiceProviderTest {
         assertThat(ServiceProvider.getServiceTemplateService(), sameInstance(ServiceProvider.getServiceTemplateService()));
     }
 
+    @Test
+    public void getEditService() throws Exception {
+        assertThat(ServiceProvider.getEditService(), sameInstance(ServiceProvider.getEditService()));
+    }
+
 }
