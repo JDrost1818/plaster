@@ -101,5 +101,13 @@ public class ConfigurationServiceTest {
         assertThat(configurationService.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("false"));
     }
 
+    /**
+     * Root4 has an invalid type. A string where there should be a boolean
+     */
+    @Test(expected = PlasterException.class)
+    public void load_root4() throws Exception {
+        getTestConfigurationService("/root4");
+    }
+
 
 }

@@ -1,9 +1,18 @@
 package github.jdrost1818.plaster.data;
 
+import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
+
 /**
  * Defines all the keys for the settings that
  * can be configured for this application
  */
+@AllArgsConstructor
 public enum Setting {
 
     /**
@@ -15,7 +24,15 @@ public enum Setting {
      *
      *      id:string
      */
-    KEY,
+    KEY("property.key", String.class),
+
+    /**
+     * boolean string which signifies whether or not to use primitive types when possible.
+     * If enabled, Integer
+     *
+     * This is determined by inspecting the plaster.yml file
+     */
+    SHOULD_USE_PRIMITIVES("property.enablePrimitives", Boolean.class),
 
     /**
      * boolean string. If true, will not generate getters and setters, and will rather
@@ -23,7 +40,7 @@ public enum Setting {
      *
      * This is determined via inspecting the pom and the plaster.yml file
      */
-    IS_LOMBOK_ENABLED,
+    IS_LOMBOK_ENABLED("lombok.enable", Boolean.class),
 
     /**
      * string defining where the src directory is from the root of the repository.
@@ -31,7 +48,7 @@ public enum Setting {
      *
      * This is not configurable yet.
      */
-    PROJECT_PATH,
+    PROJECT_PATH(null, String.class),
 
     /**
      * string defining the path to get to the app's code.
@@ -42,7 +59,7 @@ public enum Setting {
      *
      *      src/main/java
      */
-    BASE_PATH,
+    BASE_PATH("directory.base", String.class),
 
     /**
      * string defining the qualified app path. Will be the maven group id in most cases
@@ -53,7 +70,7 @@ public enum Setting {
      *
      *      com/example/app
      */
-    APP_PATH,
+    APP_PATH(null, String.class),
 
     /**
      * string defining a path to append to the generation relative paths for the current generation.
@@ -65,7 +82,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    SUB_DIR_PATH,
+    SUB_DIR_PATH(null, String.class),
 
     /**
      * string defining the maven group id for the project.
@@ -76,7 +93,7 @@ public enum Setting {
      *
      *      com.example.app
      */
-    MAVEN_GROUP_ID,
+    MAVEN_GROUP_ID(null, String.class),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate models
@@ -87,7 +104,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_MODEL_PACKAGE,
+    REL_MODEL_PACKAGE("directory.model", String.class),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate repositories
@@ -98,7 +115,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_REPOSITORY_PACKAGE,
+    REL_REPOSITORY_PACKAGE("directory.repository", String.class),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate services
@@ -109,7 +126,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_SERVICE_PACKAGE,
+    REL_SERVICE_PACKAGE("directory.service", String.class),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate controllers
@@ -120,14 +137,19 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_CONTROLLER_PACKAGE,
+    REL_CONTROLLER_PACKAGE("directory.controller", String.class);
+
+    public final String compositePath;
+    public final Class<?> type;
 
     /**
-     * boolean string which signifies whether or not to use primitive types when possible.
-     * If enabled, Integer
+     * Gets all the settings that are configurable through the plaster.yml file
      *
-     * This is determined by inspecting the plaster.yml file
+     * @return the configurable settings
      */
-    SHOULD_USE_PRIMITIVES,
-
+    public static List<Setting> getConfigurableSettings() {
+        return Arrays.stream(Setting.values())
+                .filter(v -> nonNull(v.compositePath))
+                .collect(Collectors.toList());
+    }
 }
