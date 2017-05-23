@@ -47,7 +47,7 @@ public class JSONMap extends LinkedHashMap {
 
         Object lastObject = mapToIterate.get(finalKey);
         if (lastObject instanceof LinkedHashMap) {
-            throw new IllegalArgumentException("This is wrong");
+            throw new IllegalArgumentException("Given composite key did not resolve to the end of a path");
         }
 
         return nonNull(lastObject) ? lastObject.toString() : null;
