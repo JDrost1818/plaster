@@ -77,7 +77,7 @@ public class ConfigurationService {
      *  REL_CONTROLLER_PACKAGE  = controller
      *  SHOULD_USE_PRIMITIVES   = false
      *
-     * *  = This can only be configured at invocation as a command-line argumnet
+     * *  = This can only be configured at invocation as a command-line argument
      *
      * ** = These are not set, but will be set during inspection of the pom. If the
      *      pom cannot be read, the generation will fail, therefore, they do not
@@ -86,16 +86,8 @@ public class ConfigurationService {
     private void loadDefaultSettings(String applicationRoot) {
         this.applicationRoot = applicationRoot;
 
-        this.configMap.put(Setting.KEY, "id:int");
-        this.configMap.put(Setting.IS_LOMBOK_ENABLED, "false");
-        this.configMap.put(Setting.PROJECT_PATH, "");
-        this.configMap.put(Setting.BASE_PATH, "src/main/java");
-        this.configMap.put(Setting.SUB_DIR_PATH, "");
-        this.configMap.put(Setting.REL_MODEL_PACKAGE, "model");
-        this.configMap.put(Setting.REL_REPOSITORY_PACKAGE, "repository");
-        this.configMap.put(Setting.REL_SERVICE_PACKAGE, "service");
-        this.configMap.put(Setting.REL_CONTROLLER_PACKAGE, "controller");
-        this.configMap.put(Setting.SHOULD_USE_PRIMITIVES, "false");
+        Setting.getDefaultedSettings()
+                .forEach(s -> this.configMap.put(s, s.defaultVal));
     }
 
     /**

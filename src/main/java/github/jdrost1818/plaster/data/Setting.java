@@ -1,7 +1,5 @@
 package github.jdrost1818.plaster.data;
 
-import lombok.AllArgsConstructor;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +10,6 @@ import static java.util.Objects.nonNull;
  * Defines all the keys for the settings that
  * can be configured for this application
  */
-@AllArgsConstructor
 public enum Setting {
 
     /**
@@ -24,7 +21,7 @@ public enum Setting {
      *
      *      id:string
      */
-    KEY("property.key", String.class),
+    KEY("property.key", String.class, "id:int"),
 
     /**
      * boolean string which signifies whether or not to use primitive types when possible.
@@ -32,7 +29,7 @@ public enum Setting {
      *
      * This is determined by inspecting the plaster.yml file
      */
-    SHOULD_USE_PRIMITIVES("property.enablePrimitives", Boolean.class),
+    SHOULD_USE_PRIMITIVES("property.enablePrimitives", Boolean.class, false),
 
     /**
      * boolean string. If true, will not generate getters and setters, and will rather
@@ -40,7 +37,7 @@ public enum Setting {
      *
      * This is determined via inspecting the pom and the plaster.yml file
      */
-    IS_LOMBOK_ENABLED("lombok.enable", Boolean.class),
+    IS_LOMBOK_ENABLED("lombok.enable", Boolean.class, false),
 
     /**
      * string defining where the src directory is from the root of the repository.
@@ -48,7 +45,7 @@ public enum Setting {
      *
      * This is not configurable yet.
      */
-    PROJECT_PATH(null, String.class),
+    PROJECT_PATH(null, String.class, ""),
 
     /**
      * string defining the path to get to the app's code.
@@ -59,7 +56,7 @@ public enum Setting {
      *
      *      src/main/java
      */
-    BASE_PATH("directory.base", String.class),
+    BASE_PATH("directory.base", String.class, "src/main/java"),
 
     /**
      * string defining the qualified app path. Will be the maven group id in most cases
@@ -70,7 +67,7 @@ public enum Setting {
      *
      *      com/example/app
      */
-    APP_PATH(null, String.class),
+    APP_PATH(null, String.class, null),
 
     /**
      * string defining a path to append to the generation relative paths for the current generation.
@@ -82,7 +79,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    SUB_DIR_PATH(null, String.class),
+    SUB_DIR_PATH(null, String.class, ""),
 
     /**
      * string defining the maven group id for the project.
@@ -93,7 +90,7 @@ public enum Setting {
      *
      *      com.example.app
      */
-    MAVEN_GROUP_ID(null, String.class),
+    MAVEN_GROUP_ID(null, String.class, null),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate models
@@ -104,7 +101,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_MODEL_PACKAGE("directory.model", String.class),
+    REL_MODEL_PACKAGE("directory.model", String.class, "model"),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate repositories
@@ -115,7 +112,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_REPOSITORY_PACKAGE("directory.repository", String.class),
+    REL_REPOSITORY_PACKAGE("directory.repository", String.class, "repository"),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate services
@@ -126,7 +123,7 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_SERVICE_PACKAGE("directory.service", String.class),
+    REL_SERVICE_PACKAGE("directory.service", String.class, "service"),
 
     /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate controllers
@@ -137,10 +134,17 @@ public enum Setting {
      *
      *      somewhere/different
      */
-    REL_CONTROLLER_PACKAGE("directory.controller", String.class);
+    REL_CONTROLLER_PACKAGE("directory.controller", String.class, "controller");
 
     public final String compositePath;
     public final Class<?> type;
+    public final String defaultVal;
+
+    <T> Setting(String compositePath, Class<T> type, T defaultVal) {
+        this.compositePath = compositePath;
+        this.type = type;
+        this.defaultVal = nonNull(defaultVal) ? defaultVal.toString() : null;
+    }
 
     /**
      * Gets all the settings that are configurable through the plaster.yml file
@@ -150,6 +154,17 @@ public enum Setting {
     public static List<Setting> getConfigurableSettings() {
         return Arrays.stream(Setting.values())
                 .filter(v -> nonNull(v.compositePath))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all the settings that are defaulted
+     *
+     * @return the defaulted settings
+     */
+    public static List<Setting> getDefaultedSettings() {
+        return Arrays.stream(Setting.values())
+                .filter(v -> nonNull(v.defaultVal))
                 .collect(Collectors.toList());
     }
 }
