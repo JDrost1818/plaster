@@ -1,24 +1,24 @@
 #!/bin/sh
 
 uninstall_plaster() {
-    bin_location="$1"
-    share_location="$2"
+    bin_root="$1"
+    share_root="$2"
 
     echo "Uninstalling current installation of plaster"
-    sudo rm ${bin_location}/plaster;
-    sudo rm -rf ${share_location}/plaster;
+    sudo rm ${bin_root}/plaster;
+    sudo rm -rf ${share_root}/plaster;
 }
 
 install_plaster() {
-    bin_location="$1"
-    share_location="$2"
+    bin_root="$1"
+    share_root="$2"
 
     echo "Building project"
     mvn clean install -DskipTests=true -q;
 
     echo "Installing plaster"
-    sudo mkdir ${share_location}/plaster;
-    sudo mkdir ${share_location}/plaster/lib;
+    sudo mkdir ${share_root}/plaster;
+    sudo mkdir ${share_root}/plaster/lib;
 
     plaster_file_name=""
     cd target/;
@@ -27,52 +27,52 @@ install_plaster() {
         plaster_file_name=${file_name};
     done
 
-    sudo cp ${plaster_file_name} ${share_location}/plaster/;
-    sudo cp lib/* ${share_location}/plaster/lib/;
+    sudo cp ${plaster_file_name} ${share_root}/plaster/;
+    sudo cp lib/* ${share_root}/plaster/lib/;
 
-    sudo touch ${bin_location}/plaster;
-    sudo chmod 777 ${bin_location}/plaster;
-    sudo chmod 777 ${share_location}/plaster;
-    sudo chmod 777 ${share_location}/plaster/${plaster_file_name};
+    sudo touch ${bin_root}/plaster;
+    sudo chmod 777 ${bin_root}/plaster;
+    sudo chmod 777 ${share_root}/plaster;
+    sudo chmod 777 ${share_root}/plaster/${plaster_file_name};
 
-    echo "#!/bin/sh" >> ${bin_location}/plaster
-    echo "" >> ${bin_location}/plaster
-    echo "java -jar ${share_location}/plaster/${plaster_file_name} \$@" >> ${bin_location}/plaster
+    echo "#!/bin/sh" >> ${bin_root}/plaster
+    echo "" >> ${bin_root}/plaster
+    echo "java -jar ${share_root}/plaster/${plaster_file_name} \$@" >> ${bin_root}/plaster
 
     cd ..
 
     echo "Successfully installed plaster"
 }
 
-bin_location=""
-share_location=""
+bin_root=""
+share_root=""
 
 device="$(uname -s)"
 if [ "$device" == "Darwin" ]
 then
     echo "Mac OS detected"
-    bin_location="/usr/local/bin"
-    share_location="/usr/local/share"
+    bin_root="/usr/local/bin"
+    share_root="/usr/local/share"
 elif [ "$device" == "Linux" ]
 then
     echo "Linux OS detected"
-    bin_location="/usr/bin"
-    share_location="/usr/share"
+    bin_root="/usr/bin"
+    share_root="/usr/share"
 else
     echo "Unsupported command line tool"
     exit
 fi
 
 reinstall="first_install"
-if test -e ${bin_location}/plaster
+if test -e ${bin_root}/plaster
 then
     read -p "Plaster already installed, would you like to reinstall (y/n) " reinstall
 fi
 
 case ${reinstall} in
-    [Yy]* ) uninstall_plaster ${bin_location} ${share_location}; break;;
+    [Yy]* ) uninstall_plaster ${bin_root} ${share_root}; break;;
     first_install ) break;;
     * ) exit;;
 esac
 
-install_plaster ${bin_location} ${share_location}
+install_plaster ${bin_root} ${share_root}
