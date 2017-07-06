@@ -50,7 +50,7 @@ share_root=""
 device="$(uname -s)"
 case ${device} in
     Darwin ) bin_root="/usr/local/bin"; share_root="/usr/local/share"; break;;
-    Linux ) bin_root="/usr/bin"; share_root="usr/share"; break;;
+    Linux ) bin_root="/usr/bin"; share_root="/usr/share"; break;;
     * ) echo "Unsupported command line tool"; exit;;
 esac
 
