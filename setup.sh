@@ -6,7 +6,7 @@ uninstall_plaster() {
     sudo rm -rf /usr/share/plaster;
 }
 
-install_plaster() {
+install_linux() {
     echo "Building project"
     mvn clean install -DskipTests=true -q;
 
@@ -36,6 +36,23 @@ install_plaster() {
     cd ..
 
     echo "Successfully installed plaster"
+}
+
+install_mac() {
+    echo "Installing for mac"
+}
+
+install_plaster() {
+    device="$(uname -s)"
+    if [ "$device" == "Darwin" ]
+    then
+        install_mac;
+    elif [ "$device" == "Linux" ]
+    then
+        install_linux;
+    else
+        echo "Unsupported command line tool"
+    fi
 }
 reinstall="first_install"
 if test -e /usr/bin/plaster
