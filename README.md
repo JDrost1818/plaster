@@ -1,6 +1,6 @@
 <img src=http://jakedrost.me/img/plaster/plaster-logo.svg style="width: 50px; float: left; margin-right: 10px"/>
 
-Plaster
+Plaster v1.1.0
 =========
 <br/>
 
