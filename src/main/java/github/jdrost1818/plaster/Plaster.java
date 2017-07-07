@@ -5,6 +5,7 @@ import github.jdrost1818.plaster.data.Mode;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
+import github.jdrost1818.plaster.exception.DeveloperException;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.FieldService;
@@ -43,16 +44,16 @@ public class Plaster {
             return;
         }
 
-        ArgParseUtil.validateParsedArgs(parsedArgs);
-        setCommandLineArgs(parsedArgs);
-
-        FileInformation fileInformation = buildFileInformation(parsedArgs);
-        Mode mode = Mode.getMode(parsedArgs.getString(Arg.MODE.key));
-        String modeScope = parsedArgs.getString(Arg.MODE_SCOPE.key);
-
         try {
+            ArgParseUtil.validateParsedArgs(parsedArgs);
+            setCommandLineArgs(parsedArgs);
+
+            FileInformation fileInformation = buildFileInformation(parsedArgs);
+            Mode mode = Mode.getMode(parsedArgs.getString(Arg.MODE.key));
+            String modeScope = parsedArgs.getString(Arg.MODE_SCOPE.key);
+
             mode.perform(modeScope, fileInformation);
-        } catch (PlasterException e) {
+        } catch (PlasterException | DeveloperException e) {
             System.out.println(e.getMessage());
         }
     }

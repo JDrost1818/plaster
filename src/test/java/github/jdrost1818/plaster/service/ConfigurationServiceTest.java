@@ -3,7 +3,9 @@ package github.jdrost1818.plaster.service;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import java.io.File;
 
@@ -11,7 +13,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ConfigurationServiceTest {
-    
+
+    @Rule
+    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+
+
     public static ConfigurationService getTestConfigurationService(String root) {
         File file = new File(ConfigurationServiceTest.class.getClassLoader().getResource("testProject").getFile());
         return new ConfigurationService().load(file.getAbsolutePath() + "/" + root);
@@ -31,8 +37,9 @@ public class ConfigurationServiceTest {
         
     }
 
-    @Test(expected = PlasterException.class)
+    @Test
     public void load_pom_does_not_exist() throws Exception {
+        this.exit.expectSystemExit();
         getTestConfigurationService("thisDoesNotExist.xml");
     }
 
@@ -104,8 +111,9 @@ public class ConfigurationServiceTest {
     /**
      * Root4 has an invalid type. A string where there should be a boolean
      */
-    @Test(expected = PlasterException.class)
+    @Test
     public void load_root4() throws Exception {
+        this.exit.expectSystemExit();
         getTestConfigurationService("/root4");
     }
 
