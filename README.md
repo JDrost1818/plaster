@@ -1,12 +1,10 @@
-<img src=http://jakedrost.me/img/plaster/plaster-logo.svg style="width: 50px; float: left; margin-right: 10px"/>
+<img src=http://jakedrost.me/img/plaster/plaster-logo-with-text.png />
+----
 
-Plaster v1.1.0
-=========
-<br/>
-
-[ ![Codeship Status for JDrost1818/plaster](https://app.codeship.com/projects/184069b0-1c9a-0135-6e0f-0e8dc4a678fe/status?branch=master)](https://app.codeship.com/projects/220058)
+[![Version for JDrost1818/plaster](https://img.shields.io/SemVer/1.1.0.png)]()
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/854f4669211b4c30b988010544488fa3)](https://www.codacy.com/app/Drost011/plaster?utm_source=github.com&utm_medium=referral&utm_content=JDrost1818/plaster&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/854f4669211b4c30b988010544488fa3)](https://www.codacy.com/app/Drost011/plaster?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JDrost1818/plaster&amp;utm_campaign=Badge_Grade)
+[![Codeship Status for JDrost1818/plaster](https://app.codeship.com/projects/184069b0-1c9a-0135-6e0f-0e8dc4a678fe/status?branch=master)](https://app.codeship.com/projects/220058)
 
 Project to bring similar functionality found in Rails to the Spring Boot platform. Currently only supports 
 maven-enabled projects.
