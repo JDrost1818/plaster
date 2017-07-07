@@ -1,5 +1,6 @@
-<img src=http://jakedrost.me/img/plaster/plaster-logo-with-text.png />
-
+<a href=http://jakedrost.me/plaster>
+	<img src=http://jakedrost.me/img/plaster/plaster-logo-with-text.png />
+</a>
 -----
 
 [![Version for JDrost1818/plaster](https://img.shields.io/SemVer/1.1.0.png)]()
