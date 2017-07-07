@@ -1,5 +1,6 @@
 <img src=http://jakedrost.me/img/plaster/plaster-logo-with-text.png />
-----
+
+-----
 
 [![Version for JDrost1818/plaster](https://img.shields.io/SemVer/1.1.0.png)]()
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/854f4669211b4c30b988010544488fa3)](https://www.codacy.com/app/Drost011/plaster?utm_source=github.com&utm_medium=referral&utm_content=JDrost1818/plaster&utm_campaign=Badge_Coverage)
