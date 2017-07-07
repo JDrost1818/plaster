@@ -43,14 +43,14 @@ public class Plaster {
             return;
         }
 
-        ArgParseUtil.validateParsedArgs(parsedArgs);
-        setCommandLineArgs(parsedArgs);
-
-        FileInformation fileInformation = buildFileInformation(parsedArgs);
-        Mode mode = Mode.getMode(parsedArgs.getString(Arg.MODE.key));
-        String modeScope = parsedArgs.getString(Arg.MODE_SCOPE.key);
-
         try {
+            ArgParseUtil.validateParsedArgs(parsedArgs);
+            setCommandLineArgs(parsedArgs);
+
+            FileInformation fileInformation = buildFileInformation(parsedArgs);
+            Mode mode = Mode.getMode(parsedArgs.getString(Arg.MODE.key));
+            String modeScope = parsedArgs.getString(Arg.MODE_SCOPE.key);
+
             mode.perform(modeScope, fileInformation);
         } catch (PlasterException e) {
             System.out.println(e.getMessage());

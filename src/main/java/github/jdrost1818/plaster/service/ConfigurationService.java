@@ -52,9 +52,14 @@ public class ConfigurationService {
     }
 
     public ConfigurationService load(String applicationRoot) {
-        this.loadDefaultSettings(applicationRoot);
-        this.loadFromPom();
-        this.loadFromSettingsFile();
+        try {
+            this.loadDefaultSettings(applicationRoot);
+            this.loadFromPom();
+            this.loadFromSettingsFile();
+        } catch (PlasterException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
 
         return this;
     }
