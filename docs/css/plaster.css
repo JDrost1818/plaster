@@ -1,5 +1,8 @@
-h1, h2, h3, a {
+h1, h2, h3, a, p {
   font-family: raleway-light;
+}
+
+h1, h2, h3, a {
   color: #333 !important;
 }
 
