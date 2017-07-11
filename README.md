@@ -1,5 +1,5 @@
 <a href=http://jakedrost.me/plaster>
-	<img src=http://jakedrost.me/img/plaster-logo-with-text.png />
+	<img src=http://jakedrost.me/plaster/img/plaster-logo-with-text.png />
 </a>
 
 -----
