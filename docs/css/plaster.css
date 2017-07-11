@@ -3,6 +3,14 @@ h1, h2, h3, a {
   color: #333 !important;
 }
 
+.cd-main-content {
+  padding-top: 45px;
+}
+
+.content {
+  padding: 30px 0;
+}
+
 .mdl-layout__header-row {
     background-color: #FFF;
 }
@@ -28,7 +36,7 @@ h1, h2, h3, a {
 }
 @media screen and (min-width: 851px) {
   .cd-fixed-bg.cd-bg-1 {
-    margin-bottom: -250px;
+    min-height: 75vh;
   }
 }
 
@@ -46,9 +54,31 @@ h1, h2, h3, a {
   background-image: url("../img/hero-image-2.jpg");
 }
 
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  width: 90%;
+  max-width: 1170px;
+  text-align: center;
+  color: white;
+}
+
+
 .mdl-layout__header .mdl-layout__drawer-button {
   color: black;
     background-color: transparent !important;
     font-size: 35px;
     line-height: 65px;
+}
+
+#home-title-wrapper, #home-title-wrapper h3 {
+  color: #dedede !important;
 }
