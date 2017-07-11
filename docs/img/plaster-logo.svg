@@ -1,0 +1,22 @@
+<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="300" width="300" y="0" x="0"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_15">
+   <g id="svg_5">
+    <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="100" x2="300" y1="100" x1="96" stroke-width="8" stroke="#f64747" fill="none"/>
+    <line transform="rotate(90 100,200) " stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_4" y2="200" x2="200" y1="200" x1="0" stroke-width="8" stroke="#f64747" fill="none"/>
+   </g>
+   <g transform="rotate(180 100,100) " id="svg_14">
+    <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_12" y2="0" x2="200" y1="0" x1="-4" stroke-width="8" stroke="#3fc380" fill="none"/>
+    <line transform="rotate(90 0,100) " stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_13" y2="100" x2="100" y1="100" x1="-100" stroke-width="8" stroke="#3fc380" fill="none"/>
+   </g>
+  </g>
+ </g>
+</svg>

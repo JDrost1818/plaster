@@ -1,0 +1,54 @@
+h1, h2, h3, a {
+  font-family: raleway-light;
+  color: #333 !important;
+}
+
+.mdl-layout__header-row {
+    background-color: #FFF;
+}
+
+.mdl-layout__header, .mdl-layout__header-row {
+  height: 75px !important;
+}
+
+.header-nav-link {
+  cursor: pointer;
+  position: absolute;
+  line-height: 75px;
+  right: 0;
+  padding: 0 10px;
+}
+
+.header-nav-link:hover {
+  background-color: #EEEEEE;
+}
+
+.cd-fixed-bg.cd-bg-1 {
+  background-image: url("../img/cranes_2.jpg");
+}
+@media screen and (min-width: 851px) {
+  .cd-fixed-bg.cd-bg-1 {
+    margin-bottom: -250px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .header-nav-link {
+    display: none;
+  }
+}
+
+.cd-scrolling-bg.cd-color-1 {
+  background-color: #59ABE3;
+}
+
+.cd-fixed-bg.cd-bg-2 {
+  background-image: url("../img/hero-image-2.jpg");
+}
+
+.mdl-layout__header .mdl-layout__drawer-button {
+  color: black;
+    background-color: transparent !important;
+    font-size: 35px;
+    line-height: 65px;
+}
