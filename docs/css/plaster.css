@@ -7,10 +7,6 @@ h1, h2, h3, a {
   padding-top: 45px;
 }
 
-.content {
-  padding: 30px 0;
-}
-
 .mdl-layout__header-row {
     background-color: #FFF;
 }
@@ -36,7 +32,7 @@ h1, h2, h3, a {
 }
 @media screen and (min-width: 851px) {
   .cd-fixed-bg.cd-bg-1 {
-    min-height: 75vh;
+    min-height: 65vh;
   }
 }
 
@@ -79,6 +75,16 @@ h1, h2, h3, a {
     line-height: 65px;
 }
 
-#home-title-wrapper, #home-title-wrapper h3 {
-  color: #dedede !important;
+#home-title-wrapper, #home-title-wrapper h1 {
+  color: #EFEFEF !important;
+  font-weight: bold !important;
+  text-shadow: -1px 0 #777, 0 1px #777, 1px 0 #777, 0 -1px #777;
+}
+
+#home-title-header {
+  margin-bottom: 0;
+}
+
+.no-margin {
+  margin: 0;
 }
