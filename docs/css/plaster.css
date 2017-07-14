@@ -1,5 +1,5 @@
 h1, h2, h3, h4, h5, h6, a, p {
-  font-family: raleway-light, sans-serifß;
+  font-family: raleway-light, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, a {
@@ -157,4 +157,30 @@ h1, h2, h3, h4, h5, h6, a {
 
 .cd-scrolling-bg {
   padding: .01em 0;
+}
+
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;}
+
+code {
+  font-family: Courier, 'New Courier', monospace;
+  font-size: 12px;}
+
+#codeStyler {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin: 1em 0;}
+
+.terminal {
+  border-radius: 10px;
+  background-color: #333;
+  color: #efefef;
+}
+
+.terminal code {
+  text-align: left;
 }

@@ -13,3 +13,4 @@ hs_err_pid*
 # IDE config
 *.iml
 .idea/
+.DS_Store
