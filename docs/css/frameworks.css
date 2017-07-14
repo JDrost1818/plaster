@@ -209,6 +209,11 @@ Main components
   background-color: #506277;
   color: #a6989a;
 }
+.cd-scrolling-bg.cd-color-1 {
+  min-height: 0;
+  overflow-y: hidden;
+  margin-bottom: 0;
+}
 .cd-scrolling-bg.cd-color-2 {
   background-color: #51677E;
   color: #3d3536;

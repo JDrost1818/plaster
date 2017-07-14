@@ -1,8 +1,8 @@
-h1, h2, h3, a, p {
-  font-family: raleway-light;
+h1, h2, h3, h4, h5, h6, a, p {
+  font-family: raleway-light, sans-serifß;
 }
 
-h1, h2, h3, a {
+h1, h2, h3, h4, h5, h6, a {
   color: #333 !important;
 }
 
@@ -57,9 +57,6 @@ h1, h2, h3, a {
 @media screen and (min-width: 851px) {
   .cd-fixed-bg.cd-bg-1 {
     min-height: 65vh;
-  }
-  .content {
-    width: 850px;
   }
 }
 
@@ -125,11 +122,12 @@ h1, h2, h3, a {
   display: inline-block;
 }
 
-.info-decal {
+.info-decal-wrapper, .info-decal {
   text-align: center;
+  margin: auto;
 }
 
-.info-decal .circle {
+.info-decal-wrapper .circle {
   margin-bottom: 10px;
 }
 

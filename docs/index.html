@@ -29,6 +29,7 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/89f2f44ba07ea3fff7e561c2142813b278c2d6c6/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
     <link rel="stylesheet" href="./css/frameworks.css">
     <link rel="stylesheet" href="./css/plaster.css">
   </head>
@@ -63,29 +64,40 @@
         </div>
       </div> <!-- cd-fixed-bg -->
 
-      <div class="cd-scrolling-bg cd-color-1 green">
-        <div class="content">
-          <ul id="icon-wrapper">
+      <div class="cd-scrolling-bg cd-color-1 green row">
+        <div class="content col l8 offset-l2 s12">
+          <ul id="icon-wrapper row">
 
-            <li class="info-decal">
-              <div class="circle clickable">
+            <li class="info-decal-wrapper col s4">
+              <div class="circle clickable info-decal">
                 <i class="material-icons">build</i>
               </div>
-              <p>Configure Options</p>
+              <h5>Configure Options</h5>
+              <p>
+                Plaster performs inspections and allows for project and generation specific customizations.
+                All combined, developers can customize exactly how code gets generated.
+              </p>
             </li>
 
-            <li class="info-decal">
-              <div class="circle clickable">
+            <li class="info-decal-wrapper col s4">
+              <div class="circle clickable info-decal">
                 <i class="material-icons">code</i>
               </div>
-              <p>Generate Code</p>
+              <h5>Generate Code</h5>
+              <p>
+                Utilize the command line tool to easily create files which adhere to the desired settings.
+              </p>
             </li>
 
-            <li class="info-decal">
-              <div class="circle clickable">
+            <li class="info-decal-wrapper col s4">
+              <div class="circle clickable info-decal">
                 <i class="material-icons">autorenew</i>
               </div>
-              <p>Rinse & Repeat</p>
+              <h5>Rinse & Repeat</h5>
+              <p>
+                Add more files to your project, remove unneeded code, and/or modify existing files - all without
+                ever leaving the comfort of your terminal.
+              </p>
             </li>
           </ul>
         </div>
@@ -100,6 +112,7 @@
   <footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="./js/modernizr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     <script src="./js/material.min.js"></script>
   </footer>
 </html>
