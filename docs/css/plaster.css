@@ -235,3 +235,34 @@ code {
   }
 
 }
+
+.doc-links-wrapper {
+  position: fixed;
+  height: 100vh;
+  top: 75px;
+  width: 50px;
+  background-color: #fff;
+  z-index: 100;
+}
+
+
+.doc-links {
+  z-index: 10;
+  -webkit-box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+  -moz-box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+  box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+}
+
+.doc-links-wrapper.visible {
+  width: 25%;
+}
+
+.doc-link-entry {
+  width: 100%;
+}
+
+.doc-link-entry a {
+  height: 56px;
+  line-height: 56px;
+  vertical-align: middle;
+}
