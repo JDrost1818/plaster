@@ -14,6 +14,10 @@ h1, h2, h3, h4, h5, h6, a {
   background: #f64747 !important;
 }
 
+.blue {
+  background: #3498DB !important;
+}
+
 .cd-main-content {
   padding-top: 45px;
 }
@@ -68,6 +72,7 @@ h1, h2, h3, h4, h5, h6, a {
 
 .cd-fixed-bg.cd-bg-2 {
   background-image: url("../img/hero-image-2.jpg");
+  overflow: hidden;
 }
 
 .center {
@@ -183,4 +188,46 @@ code {
 
 .terminal code {
   text-align: left;
+}
+
+.raised {
+  -webkit-box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+  -moz-box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+  box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+}
+
+.something-wrapper {
+  padding: 0 50px !important;
+}
+
+.something {
+  padding: 10px;
+  background: rgba(255, 255, 255, .9);
+  -webkit-box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+  -moz-box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+  box-shadow: -2px 3px 6px 0 rgba(100,100,100,0.75);
+}
+
+.something .link-wrapper {
+  text-align: right;
+}
+.something a {
+  vertical-align: top;
+  color: #3498DB !important;
+}
+
+@media only screen and (min-width: 993px) {
+  .top.row {
+    padding-top: 5%;
+    margin: 0 0 15%;
+  }
+
+}
+
+@media only screen and (max-width: 992px) {
+  .top.row {
+    padding-top: 30px;
+    margin: 0;
+  }
+
 }
