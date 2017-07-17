@@ -230,4 +230,8 @@ code {
     margin: 0;
   }
 
+  .something-wrapper {
+    margin-bottom: 30px;
+  }
+
 }
