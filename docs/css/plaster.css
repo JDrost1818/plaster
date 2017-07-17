@@ -236,6 +236,10 @@ code {
 
 }
 
+.nav-wrapper {
+  margin: 0;
+}
+
 .doc-links-wrapper {
   position: fixed;
   height: 100vh;
@@ -243,6 +247,7 @@ code {
   width: 50px;
   background-color: #fff;
   z-index: 100;
+  padding: 0 !important;
 }
 
 
@@ -254,7 +259,19 @@ code {
 }
 
 .doc-links-wrapper.visible {
-  width: 25%;
+  width: 200px;
+}
+
+.doc-links-header {
+  width: 100%;
+}
+
+.doc-links-header h5 {
+  float: left;
+  vertical-align: top;
+  margin: 0;
+  padding-left: 20px;
+  line-height: 55px;
 }
 
 .doc-link-entry {
@@ -265,4 +282,8 @@ code {
   height: 56px;
   line-height: 56px;
   vertical-align: middle;
+}
+
+.doc-content {
+  margin-top: 125px;
 }
