@@ -15,9 +15,7 @@ $( document ).ready(function() {
     });
 
     var selectedUrl = getUrlParameter("selected");
-    if (selectedUrl) {
-        changeDocContent(doc_content, selectedUrl);
-    }
+    changeDocContent(doc_content, selectedUrl);
 
 });
 
