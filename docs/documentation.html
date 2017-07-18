@@ -49,24 +49,24 @@
                 <nav class="doc-links-wrapper visible">
 
                     <ul class="doc-links">
-                        <li class="doc-links-header">
-                            <h5>Navigation</h5>
-                            <a class="right"><i class="material-icons">arrow_backward</i></a>
+                        <li class="doc-links-header row">
+                            <h5 class="col s8">Navigation</h5>
+                            <i class="material-icons col s4">arrow_backward</i>
                         </li>
                         <li class="doc-link-entry">
-                            <a href="#">General</a>
+                            <a data-rel="general">General</a>
                         </li>
                         <li class="doc-link-entry">
-                            <a href="#">Configuration</a>
+                            <a data-rel="configuration">Configuration</a>
                         </li>
                         <li class="doc-link-entry">
-                            <a href="#">Mode</a>
+                            <a data-rel="mode">Mode</a>
                         </li>
                         <li class="doc-link-entry">
-                            <a href="#">Scopes</a>
+                            <a data-rel="scope">Scope</a>
                         </li>
                         <li class="doc-link-entry">
-                            <a href="#">Class Info</a>
+                            <a data-rel="class-info">Class Info</a>
                         </li>
                     </ul>
 
@@ -76,13 +76,22 @@
         </div>
 
         <main class="row">
-            <div class="doc-content z-depth-2 col l8 offset-l3 m7 offset-m4">
-                <h1>Documentation</h1>
+            <div class="doc-content z-depth-2 col l8 offset-l3 m7 offset-m4 s10 offset-s1">
+                <iframe id="documentation-iframe" src="documentation/mode.html" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" >
+                </iframe>
             </div>
         </main>
 
     </div>
 
 </body>
+
+<footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="./js/modernizr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <script src="./js/material.min.js"></script>
+    <script src="./js/plaster.js"></script>
+</footer>
 
 </html>
