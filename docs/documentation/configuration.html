@@ -70,6 +70,10 @@
         <a href="https://github.com/JDrost1818/plaster/blob/master/src/test/resources/testProject/root2/plaster.yml" class="red-hover blue-text">example</a>
         to see all possible settings filled out.
     </p>
+    <p>
+        Since the plaster.yml file is examined after the pom, anything set in the yaml file that overlaps with
+        something automatically read from the pom will be overwritten with the yaml value.
+    </p>
 
     <h4>Plaster.yml Options</h4>
     <p>
@@ -101,7 +105,7 @@
                 If true, Integer -> int where possible
             </p>
         </div>
-        <div class="row">
+        <div id="plaster-yml-key" class="row">
             <p class="col s2 offset-s1">
                 key
             </p>
@@ -121,7 +125,7 @@
     <!--
         DIRECTORY PROPERTY TABLE
     -->
-    <h6>Directory</h6>
+    <h6 id="plaster-yml-directory-property">Directory</h6>
     <div class="header row">
         <p class="col s2 offset-s1">Property</p>
         <p class="col s2">Type</p>
@@ -214,7 +218,7 @@
     <!--
         LOMBOK PROPERTY TABLE
     -->
-    <h6>Lombok</h6>
+    <h6 id="plaster-yml-lombok-property">Lombok</h6>
     <div class="header row">
         <p class="col s2 offset-s1">Property</p>
         <p class="col s2">Type</p>
@@ -233,7 +237,7 @@
                 <a href="#pom-inspection" class="red-hover blue-text">see</a>
             </p>
             <p class="col s5">
-                This overwrites the pom inspection. If true, the generation will include Lombok.
+                Turns on/off lombok generation
             </p>
         </div>
     </div>
@@ -242,4 +246,31 @@
 <div id="command-line" class="card">
     <h3>Command Line Args</h3>
     <hr class="doc-separator"/>
+    <p>
+        Sometimes there are properties that should only apply to the current generation and does not need
+        to be persisted for other generations. The following options can be be used to do just that.
+    </p>
+
+    <div class="table">
+        <div class="row">
+            <p class="col s2 offset-s1">
+                -k, --key
+            </p>
+            <p class="col s9">
+                Indicates the following field:type pair should define the key. This will overwrite
+                <a href="#plaster-yml-key" class="red-hover blue-text">key</a>
+                value.
+            </p>
+        </div>
+        <div class="row">
+            <p class="col s2 offset-s1">
+                -d, --dir
+            </p>
+            <p class="col s9">
+                Relative path to add to the generation
+                <a href="#plaster-yml-directory-property" class="red-hover blue-text">directories</a>
+                for each of the files being generated.
+            </p>
+        </div>
+    </div>
 </div>
