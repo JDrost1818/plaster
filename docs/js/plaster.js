@@ -17,8 +17,12 @@ $( document ).ready(function() {
     $(drawerIcon).click(function (){
         if ($(this).hasClass("expanded")) {
             $(this).removeClass("expanded");
+            $("#doc-links-wrapper").removeClass("visible");
+            $("#doc-content").removeClass("l8 offset-l3 m7 offset-m4")
         } else {
             $(this).addClass("expanded");
+            $("#doc-links-wrapper").addClass("visible");
+            $("#doc-content").addClass("l8 offset-l3 m7 offset-m4")
         }
     })
 
