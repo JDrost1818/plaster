@@ -294,3 +294,8 @@ code {
 #drawer-icon:after {
   content: "menu";
 }
+
+#doc-links-wrapper, #doc-content {
+  -webkit-transition: all .5s; /* Safari */
+  transition: all .5s;
+}
