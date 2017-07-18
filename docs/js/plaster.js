@@ -9,14 +9,14 @@ $( document ).ready(function() {
 
     $(".doc-link-entry a").each(function(index, elem) {
         $(elem).click(function (){
-            changeIFrame(doc_content, $(elem).data("rel"));
+            changeDocContent(doc_content, $(elem).data("rel"));
             ensureInitialDrawerState(drawerIcon);
         });
     });
 
     var selectedUrl = getUrlParameter("selected");
     if (selectedUrl) {
-        changeIFrame(doc_content, selectedUrl);
+        changeDocContent(doc_content, selectedUrl);
     }
 
 });
@@ -31,11 +31,13 @@ const supportedPages = ["general", "mode", "configuration", "scope", "class-info
  * @param relLink
  *          the link to which to change
  */
-function changeIFrame(doc_content, relLink) {
+function changeDocContent(doc_content, relLink) {
     if ($.inArray(relLink, supportedPages) === -1) {
         relLink = "general";
     }
-    $(doc_content).load("documentation/" + relLink + ".html");
+    $(doc_content).load("documentation/" + relLink + ".html", function() {
+        loadCards();
+    });
 }
 
 /**
@@ -75,4 +77,11 @@ function switchDrawerIcon(drawerIcon) {
         $("#doc-links-wrapper").addClass("visible");
         $("#doc-content").addClass("l8 offset-l3 m7 offset-m4")
     }
+}
+
+function loadCards() {
+    $(".card").each(function (i, e) {
+        console.log("here");
+        $(this).addClass("z-depth-2 row")
+    });
 }

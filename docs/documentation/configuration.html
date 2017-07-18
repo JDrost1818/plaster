@@ -1,13 +1,71 @@
-<div class="z-depth-2 row">
+<div class="card">
     <h3>Configuration</h3>
+    <hr class="doc-separator"/>
+    <p>
+        Most of what Plaster generates can be changed. It does allows users to change behavior in three
+        main ways:
+    </p>
+    <ul class="indented">
+        <li><a class="red-hover blue-text" href="#pom-inspection">pom inspection</a></li>
+        <li><a class="red-hover blue-text" href="#plaster-file">plaster.yml</a></li>
+        <li><a class="red-hover blue-text" href="#command-line">command line arguments</a></li>
+    </ul>
+    <p>
+        All combined, Plaster
+        can be morphed into the code generation tool that suits individual's needs.
+    </p>
 </div>
 
-<div class="z-depth-2 row">
-    <h3>Something else</h3>
+<div id="pom-inspection" class="card">
+    <h3>Pom Inspection</h3>
+    <hr class="doc-separator"/>
+    <p>
+        The first inspection that takes place during a generation is that of the pom.xml file.
+        In order for Plaster to work properly, users must run all commands in the root of a
+        maven project. If Plaster cannot find a pom.xml file, it will immediately fail.
+    </p>
+
+    <h4>Required Elements</h4>
+    <p>
+        Without the following information provided the pom file, Plaster cannot be guaranteed to run correctly or at
+        all.
+    </p>
+    <div class="indented table">
+        <div class="row">
+            <p class="col s2 offset-s1">
+                Group ID
+            </p>
+            <p class="col s9">
+                The group id is essential in determining where to generate code. As is convention in Maven projects,
+                the group id should match the path to the code. For example, if group id is "com.example.app", the
+                root code package should be found at "src/main/java/com/example/app/".
+            </p>
+        </div>
+    </div>
+
+    <h4>Optional Elements</h4>
+    <p>
+        If the following information is found in the pom file, generation will automatically be altered
+    </p>
+    <div class="indented table">
+        <div class="row">
+            <p class="col s2 offset-s1">
+                Lombok
+            </p>
+            <p class="col s9">
+                If Lombok is found as a dependency, getters and setters will not be generated, instead, the domain
+                objects will be annotated with a number of annotations. See
+                <a class="red-hover blue-text" href="https://projectlombok.org/" target="_blank">Lombok</a>
+                for more details.
+            </p>
+        </div>
+    </div>
 </div>
-<div class="z-depth-2 row">
-    <h3>Something else</h3>
+
+<div id="plaster-file" class="card">
+    <h3>Plaster.yml</h3>
 </div>
-<div class="z-depth-2 row">
-    <h3>Something else</h3>
+
+<div id="command-line" class="card">
+    <h3>Command Line Args</h3>
 </div>

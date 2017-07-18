@@ -18,6 +18,18 @@ h1, h2, h3, h4, h5, h6, a {
   background: #3498DB !important;
 }
 
+.green-text {
+  color: #3FC380 !important;
+}
+
+.red-text {
+  color: #f64747 !important;
+}
+
+.blue-text {
+  color: #3498DB !important;
+}
+
 .cd-main-content {
   padding-top: 45px;
 }
@@ -299,8 +311,33 @@ code {
   transition: all .5s;
 }
 
+.card {
+  padding: 25px;
+}
+
 iframe {
   position: absolute;
   height: 100%;
   width: 100%;
+}
+
+.doc-separator {
+  margin: -20px 50px 10px 0;
+  border: 1px solid #3FC380;
+}
+
+.indented {
+  padding-left: 50px !important;
+}
+
+.red-hover:hover {
+  color: #f64747 !important;
+}
+
+.table .row {
+  margin: 0;
+}
+
+.table .row:nth-child(odd) {
+  background: rgba(0, 0, 0, .1);
 }
