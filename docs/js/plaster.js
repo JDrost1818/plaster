@@ -5,13 +5,12 @@ $( document ).ready(function() {
     $(drawerIcon).click(function() {
         switchDrawerIcon($(this));
     });
+    ensureInitialDrawerState(drawerIcon);
 
     $(".doc-link-entry a").each(function(index, elem) {
         $(elem).click(function (){
             changeIFrame(iframe, $(elem).data("rel"));
-            if ($(window).width() <= 600) {
-                switchDrawerIcon(drawerIcon);
-            }
+            ensureInitialDrawerState(drawerIcon);
         });
     });
 
@@ -57,6 +56,12 @@ function getUrlParameter(sParam) {
         if (sParameterName[0] === sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
+    }
+}
+
+function ensureInitialDrawerState(drawerIcon) {
+    if ($(window).width() <= 600) {
+        switchDrawerIcon(drawerIcon);
     }
 }
 
