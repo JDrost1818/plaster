@@ -13,6 +13,15 @@ $( document ).ready(function() {
         changeIFrame(iframe, selectedUrl);
     }
 
+    const drawerIcon = $("#drawer-icon")[0];
+    $(drawerIcon).click(function (){
+        if ($(this).hasClass("expanded")) {
+            $(this).removeClass("expanded");
+        } else {
+            $(this).addClass("expanded");
+        }
+    })
+
 });
 
 const supportedPages = ["general", "mode", "configuration", "scope", "class-info"];

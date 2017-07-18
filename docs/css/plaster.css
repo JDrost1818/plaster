@@ -300,3 +300,21 @@ code {
   margin-top: 125px;
   background: #ffffff;
 }
+.sticky-drawer {
+  margin: 4px;
+  font-size: 35px;
+  line-height: 65px;
+  width: 48px;
+  text-align: center;
+  color: black;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#drawer-icon.expanded:before {
+  content: "arrow_backward";
+}
+
+#drawer-icon:after {
+  content: "menu";
+}
