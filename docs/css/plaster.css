@@ -274,7 +274,6 @@ code {
 
 #doc-content {
   margin-top: 125px;
-  background: #ffffff;
 }
 .sticky-drawer {
   margin: 4px;
@@ -298,4 +297,10 @@ code {
 #doc-links-wrapper, #doc-content {
   -webkit-transition: all .5s; /* Safari */
   transition: all .5s;
+}
+
+iframe {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }

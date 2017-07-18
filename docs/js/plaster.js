@@ -1,6 +1,6 @@
 $( document ).ready(function() {
 
-    const iframe = $("#documentation-iframe")[0];
+    const doc_content = $("#doc-content")[0];
     const drawerIcon = $("#drawer-icon")[0];
     $(drawerIcon).click(function() {
         switchDrawerIcon($(this));
@@ -9,14 +9,14 @@ $( document ).ready(function() {
 
     $(".doc-link-entry a").each(function(index, elem) {
         $(elem).click(function (){
-            changeIFrame(iframe, $(elem).data("rel"));
+            changeIFrame(doc_content, $(elem).data("rel"));
             ensureInitialDrawerState(drawerIcon);
         });
     });
 
     var selectedUrl = getUrlParameter("selected");
     if (selectedUrl) {
-        changeIFrame(iframe, selectedUrl);
+        changeIFrame(doc_content, selectedUrl);
     }
 
 });
@@ -24,18 +24,18 @@ $( document ).ready(function() {
 const supportedPages = ["general", "mode", "configuration", "scope", "class-info"];
 
 /**
- * Changes the iframe's source to the one provided as long as it is
+ * Changes the doc_content's source to the one provided as long as it is
  * a supported page.
- * @param iframe
- *          iframe for which to change source
+ * @param doc_content
+ *          doc_content for which to change source
  * @param relLink
  *          the link to which to change
  */
-function changeIFrame(iframe, relLink) {
+function changeIFrame(doc_content, relLink) {
     if ($.inArray(relLink, supportedPages) === -1) {
         relLink = "general";
     }
-    $(iframe).attr('src', "documentation/" + relLink + ".html");
+    $(doc_content).load("documentation/" + relLink + ".html");
 }
 
 /**
