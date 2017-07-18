@@ -341,3 +341,7 @@ iframe {
 .table .row:nth-child(odd) {
   background: rgba(0, 0, 0, .1);
 }
+
+.header {
+  margin-bottom: -10px;
+}

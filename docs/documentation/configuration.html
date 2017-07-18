@@ -2,7 +2,7 @@
     <h3>Configuration</h3>
     <hr class="doc-separator"/>
     <p>
-        Most of what Plaster generates can be changed. It does allows users to change behavior in three
+        Most of what Plaster generates can be changed. It allows users to change behavior in three
         main ways:
     </p>
     <ul class="indented">
@@ -11,8 +11,7 @@
         <li><a class="red-hover blue-text" href="#command-line">command line arguments</a></li>
     </ul>
     <p>
-        All combined, Plaster
-        can be morphed into the code generation tool that suits individual's needs.
+        All combined, Plaster can be morphed into the code generation tool that suits individual's needs.
     </p>
 </div>
 
@@ -30,7 +29,7 @@
         Without the following information provided the pom file, Plaster cannot be guaranteed to run correctly or at
         all.
     </p>
-    <div class="indented table">
+    <div class="table">
         <div class="row">
             <p class="col s2 offset-s1">
                 Group ID
@@ -47,7 +46,7 @@
     <p>
         If the following information is found in the pom file, generation will automatically be altered
     </p>
-    <div class="indented table">
+    <div class="table">
         <div class="row">
             <p class="col s2 offset-s1">
                 Lombok
@@ -64,8 +63,183 @@
 
 <div id="plaster-file" class="card">
     <h3>Plaster.yml</h3>
+    <hr class="doc-separator"/>
+    <p>
+        All of Plaster's settings can be altered by creating a Plaster.yml file and saving it in the root of your
+        project (on the same level as the pom.xml). You can view this
+        <a href="https://github.com/JDrost1818/plaster/blob/master/src/test/resources/testProject/root2/plaster.yml" class="red-hover blue-text">example</a>
+        to see all possible settings filled out.
+    </p>
+
+    <h4>Plaster.yml Options</h4>
+    <p>
+        The following properties can be altered whenever desired to change the behavior of generations.
+    </p>
+
+    <!--
+        PROPERTY PROPERTY TABLE
+    -->
+    <h6>Property</h6>
+    <div class="header row">
+        <p class="col s2 offset-s1">Property</p>
+        <p class="col s2">Type</p>
+        <p class="col s2">Default</p>
+        <p class="col s5">Description</p>
+    </div>
+    <div class="table">
+        <div class="row">
+            <p class="col s2 offset-s1">
+                enablePrimitives
+            </p>
+            <p class="col s2">
+                boolean
+            </p>
+            <p class="col s2">
+                false
+            </p>
+            <p class="col s5">
+                If true, Integer -> int where possible
+            </p>
+        </div>
+        <div class="row">
+            <p class="col s2 offset-s1">
+                key
+            </p>
+            <p class="col s2">
+                string
+            </p>
+            <p class="col s2">
+                id:string
+            </p>
+            <p class="col s5">
+                name:type definition for ids in models
+            </p>
+        </div>
+    </div>
+
+
+    <!--
+        DIRECTORY PROPERTY TABLE
+    -->
+    <h6>Directory</h6>
+    <div class="header row">
+        <p class="col s2 offset-s1">Property</p>
+        <p class="col s2">Type</p>
+        <p class="col s2">Default</p>
+        <p class="col s5">Description</p>
+    </div>
+    <div class="table">
+        <div id="plaster-yml-base" class="row">
+            <p class="col s2 offset-s1">
+                base
+            </p>
+            <p class="col s2">
+                string
+            </p>
+            <p class="col s2">
+
+            </p>
+            <p class="col s5">
+                Relative path to add to the root of the project in which to generate files. For all generations, this
+                will be added to the base path determined
+                <a href="#pom-inspection" class="red-hover blue-text">here</a>
+            </p>
+        </div>
+        <div class="row">
+            <p class="col s2 offset-s1">
+                model
+            </p>
+            <p class="col s2">
+                string
+            </p>
+            <p class="col s2">
+                model/
+            </p>
+            <p class="col s5">
+                Relative path to add to the
+                <a href="#plaster-yml-base" class="red-hover blue-text">base path</a>
+                in which to generate models
+            </p>
+        </div>
+        <div class="row">
+            <p class="col s2 offset-s1">
+                repository
+            </p>
+            <p class="col s2">
+                string
+            </p>
+            <p class="col s2">
+                repository/
+            </p>
+            <p class="col s5">
+                Relative path to add to the
+                <a href="#plaster-yml-base" class="red-hover blue-text">base path</a>
+                in which to generate repositories
+            </p>
+        </div>
+        <div class="row">
+            <p class="col s2 offset-s1">
+                controller
+            </p>
+            <p class="col s2">
+                string
+            </p>
+            <p class="col s2">
+                controller/
+            </p>
+            <p class="col s5">
+                Relative path to add to the
+                <a href="#plaster-yml-base" class="red-hover blue-text">base path</a>
+                in which to generate controllers
+            </p>
+        </div>
+        <div class="row">
+            <p class="col s2 offset-s1">
+                service
+            </p>
+            <p class="col s2">
+                string
+            </p>
+            <p class="col s2">
+                service/
+            </p>
+            <p class="col s5">
+                Relative path to add to the
+                <a href="#plaster-yml-base" class="red-hover blue-text">base path</a>
+                in which to generate services
+            </p>
+        </div>
+    </div>
+
+    <!--
+        LOMBOK PROPERTY TABLE
+    -->
+    <h6>Lombok</h6>
+    <div class="header row">
+        <p class="col s2 offset-s1">Property</p>
+        <p class="col s2">Type</p>
+        <p class="col s2">Default</p>
+        <p class="col s5">Description</p>
+    </div>
+    <div class="table">
+        <div class="row">
+            <p class="col s2 offset-s1">
+                enable
+            </p>
+            <p class="col s2">
+                boolean
+            </p>
+            <p class="col s2">
+                <a href="#pom-inspection" class="red-hover blue-text">see</a>
+            </p>
+            <p class="col s5">
+                This overwrites the pom inspection. If true, the generation will include Lombok.
+            </p>
+        </div>
+    </div>
 </div>
 
 <div id="command-line" class="card">
     <h3>Command Line Args</h3>
+    <hr class="doc-separator"/>
 </div>
