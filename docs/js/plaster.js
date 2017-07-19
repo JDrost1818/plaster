@@ -19,7 +19,7 @@ $( document ).ready(function() {
 
 });
 
-const supportedPages = ["general", "mode", "configuration", "scope", "class-info"];
+const supportedPages = ["general", "configuration", "usage"];
 
 /**
  * Changes the doc_content's source to the one provided as long as it is
