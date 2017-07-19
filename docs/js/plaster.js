@@ -7,7 +7,7 @@ $( document ).ready(function() {
     });
     ensureInitialDrawerState(drawerIcon);
 
-    $(".doc-link-entry a").each(function(index, elem) {
+    $(".doc-link").each(function(index, elem) {
         $(elem).click(function (){
             changeDocContent(doc_content, $(elem).data("rel"));
             ensureInitialDrawerState(drawerIcon);
@@ -68,18 +68,17 @@ function ensureInitialDrawerState(drawerIcon) {
 function switchDrawerIcon(drawerIcon) {
     if ($(drawerIcon).hasClass("expanded")) {
         $(drawerIcon).removeClass("expanded");
-        $("#doc-links-wrapper").removeClass("visible");
+        $("#side-links-wrapper").removeClass("visible");
         $("#doc-content").removeClass("l8 offset-l3 m7 offset-m4")
     } else {
         $(drawerIcon).addClass("expanded");
-        $("#doc-links-wrapper").addClass("visible");
+        $("#side-links-wrapper").addClass("visible");
         $("#doc-content").addClass("l8 offset-l3 m7 offset-m4")
     }
 }
 
 function loadCards() {
     $(".card").each(function (i, e) {
-        console.log("here");
         $(this).addClass("z-depth-2 row")
     });
 }

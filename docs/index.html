@@ -38,17 +38,27 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary" style="position: fixed;">
         <div class="mdl-layout__header-row">
+
+          <div class="sticky-drawer">
+            <i id="drawer-icon" class="material-icons"></i>
+          </div>
+
           <a href="/">
             <img src="img/plaster-logo-with-text.png"/>
           </a>
 
-          <a href="documentation" class="header-nav-link">Documentation</a>
         </div>
       </header>
-      <div class="mdl-layout__drawer" style="position: fixed;">
-        <span class="mdl-layout-title">Navigation</span>
-        <nav class="mdl-navigation">
-          <a href="/" class="mdl-navigation__link">Home</a>
+
+      <div class="nav-wrapper">
+        <nav id="side-links-wrapper" class="">
+
+          <ul class="side-links">
+            <li class="side-link-entry">
+              <a href="documentation">Documentation</a>
+            </li>
+          </ul>
+
         </nav>
       </div>
     </div>
@@ -171,5 +181,6 @@
     <script src="./js/modernizr.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     <script src="./js/material.min.js"></script>
+    <script src="./js/plaster.js"></script>
   </footer>
 </html>
