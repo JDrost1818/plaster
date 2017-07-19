@@ -16,7 +16,7 @@ public enum Mode {
 
     GENERATE(
             Lists.newArrayList("g", "gen", "generate"),
-            Lists.newArrayList(SCAFFOLD, CONTROLLER, SERVICE, REPOSITORY, FIELDS),
+            Lists.newArrayList(SCAFFOLD, MODEL, CONTROLLER, SERVICE, REPOSITORY, FIELDS),
             (s, f) -> s.modify(ServiceProvider.getGenerateService(), f)),
 
     MODIFY(
