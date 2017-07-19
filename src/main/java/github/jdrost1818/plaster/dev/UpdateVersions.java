@@ -1,6 +1,8 @@
 package github.jdrost1818.plaster.dev;
 
 import com.github.zafarkhaja.semver.Version;
+import com.google.common.collect.Lists;
+import github.jdrost1818.plaster.util.ArgParseUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -36,6 +38,7 @@ public class UpdateVersions {
 
         updatePom(updateType);
         updateReadMe(updateType);
+        updateCommandLineOptions();
     }
 
     private static void updatePom(UpdateType updateType) throws IOException {
@@ -54,9 +57,20 @@ public class UpdateVersions {
         updateSemVer(filename, before, after, updateType);
     }
 
+    private static void updateCommandLineOptions() throws IOException {
+        File file = openFile("docs", "documentation", "command-line-usage.html");
+
+        List<String> lines = Lists.newArrayList(
+                "<p>",
+                ArgParseUtil.getArgParser().formatUsage(),
+                "</p>");
+
+        FileUtils.writeLines(file, lines);
+    }
+
     @SuppressWarnings("unchecked")
     private static void updateSemVer(String filename, String before, String after, UpdateType updateType) throws IOException {
-        File file = Paths.get(System.getProperty("user.dir"), filename).toFile();
+        File file = openFile(filename);
 
         List<String> convertedLines = (List<String>) FileUtils.readLines(file).stream()
                 .map(line -> {
@@ -77,9 +91,13 @@ public class UpdateVersions {
         FileUtils.writeLines(file, convertedLines);
     }
 
+    private static File  openFile(String... filename) {
+        return Paths.get(System.getProperty("user.dir"), filename).toFile();
+    }
+
     private interface VersionUpdater {
 
-        public Version updateVersion(Version versionToUpdate);
+        Version updateVersion(Version versionToUpdate);
 
     }
 
