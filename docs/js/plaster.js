@@ -35,6 +35,7 @@ function changeDocContent(doc_content, relLink) {
     }
     $(doc_content).load("documentation/" + relLink + ".html", function() {
         loadCards();
+        $("#command-line-usage").load("documentation/command-line-usage.html")
     });
 }
 

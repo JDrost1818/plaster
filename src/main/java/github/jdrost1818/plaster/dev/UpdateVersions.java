@@ -61,11 +61,9 @@ public class UpdateVersions {
         File file = openFile("docs", "documentation", "command-line-usage.html");
 
         List<String> lines = Lists.newArrayList(
-                "<p>",
-                ArgParseUtil.getArgParser().formatUsage(),
-                "</p>");
+                "\n      $ " + StringUtils.substringBeforeLast(ArgParseUtil.getArgParser().formatUsage(), "\n"));
 
-        FileUtils.writeLines(file, lines);
+        FileUtils.writeLines(file, lines, "");
     }
 
     @SuppressWarnings("unchecked")
@@ -91,7 +89,7 @@ public class UpdateVersions {
         FileUtils.writeLines(file, convertedLines);
     }
 
-    private static File  openFile(String... filename) {
+    private static File openFile(String... filename) {
         return Paths.get(System.getProperty("user.dir"), filename).toFile();
     }
 
