@@ -2,6 +2,7 @@ $( document ).ready(function() {
 
     const doc_content = $("#doc-content")[0];
     const drawerIcon = $("#drawer-icon")[0];
+
     $(drawerIcon).click(function() {
         switchDrawerIcon($(this));
     });
