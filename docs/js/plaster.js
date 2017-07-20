@@ -16,7 +16,6 @@ $( document ).ready(function() {
 
     var selectedUrl = getUrlParameter("selected");
     changeDocContent(doc_content, selectedUrl);
-
 });
 
 const supportedPages = ["general", "configuration", "usage"];

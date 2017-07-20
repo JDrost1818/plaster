@@ -345,3 +345,7 @@ iframe {
 .header {
   margin-bottom: -10px;
 }
+
+.hierarchy-item {
+  margin: 0;
+}

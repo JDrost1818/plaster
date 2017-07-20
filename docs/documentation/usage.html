@@ -15,36 +15,79 @@
         The basic syntax can be broken down into four parts:
     </p>
     <ul class="indented">
-        <li><span>Mode</span></li>
-        <li><span>Scope</span></li>
-        <li><span>Class Information</span></li>
-        <li><span>Configuration</span></li>
+        <li><a class="red-hover blue-text" href="#usage-mode">Mode</a></li>
+        <li><a class="red-hover blue-text" href="#usage-scope">Scope</a></li>
+        <li><a class="red-hover blue-text" href="#usage-class-info">Class Information</a></li>
+        <li><a class="red-hover blue-text" href="?selected=configuration">Configuration</a></li>
     </ul>
+
+</div>
+
+<div id="usage-mode" class="card">
+    <h3>Mode</h3>
+    <hr class="doc-separator"/>
     <p>
-        Think of each as a key which unlocks different options down the tree. In better terms,
-        different modes have different scopes, which in turn require different class information.
-        Therefore, each mode has slightly different options and to best understand it, one should
-        look at the documentation on the different modes:
+        The mode is the first argument and specifies is to be accomplished. There are three current
+        modes for which Plaster supports.
     </p>
-    <ul class="indented">
-        <li><a class="red-hover blue-text" href="#mode-generate">Generate</a></li>
-        <li><a class="red-hover blue-text" href="#mode-delete">Delete</a></li>
-        <li><a class="red-hover blue-text" href="#mode-modify">Modify</a></li>
-    </ul>
+
+    <h4>Generate</h4>
+    <p>
+
+    </p>
+
+    <h4>Delete</h4>
+    <p>
+
+    </p>
+
+    <h4>Modify</h4>
+    <p>
+
+    </p>
+
 </div>
 
-<div id="mode-generate" class="card">
-    <h3>Generate, Gen, G</h3>
+<div id="usage-scope" class="card">
+    <h3>Scope</h3>
     <hr class="doc-separator"/>
+    <p>
+        The scope defines the extent to which Plaster is going to perform the mode.
+        In order to more easily understand the process, remember which files depend on each other.
+        Without being pedantic, notice how each file relies on all files above it in the hierarchy:
+    </p>
+    <div class="hierarchy row">
+        <h6 class="hierarchy-item center-align col s12">Model</h6>
+        <h6 class="hierarchy-item center-align col s12">Repository</h6>
+        <h6 class="hierarchy-item center-align col s12">Service</h6>
+        <h6 class="hierarchy-item center-align col s12">Controller</h6>
+    </div>
+    <p>
+        Therefore, something below cannot exist without everything above. All those in the hierarchy are available
+        as a scope. When using as a scope, Plaster will not just do the single file, rather, will do all those required.
+        So when generating or deleting, recognize all files the will be affected. Anything above will be generated and
+        anything below will be deleted whenever the respective modes are activated.
+    </p>
+
+    <h4>Scaffold</h4>
+    <p>
+        Scaffold is a special scope keyword used to indicate all modes should be activated. This is semantically the
+        same as using the controller scope during generation and model during deletion; however, it is included as a
+        more intuitive option.
+    </p>
+
+    <h4>Note</h4>
+    <p>
+        The modify mode is the only mode that has restricted access to scopes. It can only be used in tandem with
+        the model scope.
+    </p>
 
 </div>
 
-<div id="mode-delete" class="card">
-    <h3>Delete, Del, D</h3>
+<div id="usage-class-info" class="card">
+    <h3>Class Information</h3>
     <hr class="doc-separator"/>
-</div>
-
-<div id="mode-modify" class="card">
-    <h3>Modify, Mod, M</h3>
-    <hr class="doc-separator"/>
+    <p>
+        TODO
+    </p>
 </div>
