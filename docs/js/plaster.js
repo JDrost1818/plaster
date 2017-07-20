@@ -62,16 +62,16 @@ function getUrlParameter(sParam) {
 
 function ensureInitialDrawerState(drawerIcon) {
     if ($(window).width() <= 600) {
-        switchDrawerIcon(drawerIcon);
+        switchDrawerIcon(drawerIcon, false);
     }
 }
 
-function switchDrawerIcon(drawerIcon) {
-    if ($(drawerIcon).hasClass("expanded")) {
+function switchDrawerIcon(drawerIcon, shouldBeExpanded) {
+    if ($(drawerIcon).hasClass("expanded") || shouldBeExpanded === false) {
         $(drawerIcon).removeClass("expanded");
         $("#side-links-wrapper").removeClass("visible");
         $("#doc-content").removeClass("l8 offset-l3 m7 offset-m4")
-    } else {
+    } else if (!$(drawerIcon).hasClass("expanded") || shouldBeExpanded) {
         $(drawerIcon).addClass("expanded");
         $("#side-links-wrapper").addClass("visible");
         $("#doc-content").addClass("l8 offset-l3 m7 offset-m4")
