@@ -1,4 +1,4 @@
-package github.jdrost1818.plaster.dev;
+package github.jdrost1818.dev;
 
 import com.github.zafarkhaja.semver.Version;
 import com.google.common.collect.Lists;
