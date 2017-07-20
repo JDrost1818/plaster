@@ -14,6 +14,4 @@ public class Modify {
 
     public static final PlasterMethod REPOSITORY = (PlasterMethod<RepositoryModifier>) RepositoryModifier::modifyRepository;
 
-    public static final PlasterMethod FIELDS = (PlasterMethod<FieldModifier>) FieldModifier::modifyField;
-
 }

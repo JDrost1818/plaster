@@ -11,17 +11,15 @@ import java.util.List;
 public enum ModeScope {
 
     SCAFFOLD(
-            Lists.newArrayList(Modify.MODEL, Modify.CONTROLLER, Modify.SERVICE, Modify.REPOSITORY)),
+            Lists.newArrayList(Modify.MODEL, Modify.REPOSITORY, Modify.SERVICE, Modify.CONTROLLER)),
     MODEL(
             Lists.newArrayList(Modify.MODEL)),
-    CONTROLLER(
-            Lists.newArrayList(Modify.CONTROLLER)),
-    SERVICE(
-            Lists.newArrayList(Modify.SERVICE)),
     REPOSITORY(
-            Lists.newArrayList(Modify.REPOSITORY)),
-    FIELDS(
-            Lists.newArrayList(Modify.FIELDS));
+            Lists.newArrayList(Modify.MODEL, Modify.REPOSITORY)),
+    SERVICE(
+            Lists.newArrayList(Modify.MODEL, Modify.REPOSITORY, Modify.SERVICE)),
+    CONTROLLER(
+            Lists.newArrayList(Modify.MODEL, Modify.REPOSITORY, Modify.SERVICE, Modify.CONTROLLER));
 
     private final List<PlasterMethod> modActions;
     ModeScope(List<PlasterMethod> modActions) {

@@ -16,12 +16,12 @@ public enum Mode {
 
     GENERATE(
             Lists.newArrayList("g", "gen", "generate"),
-            Lists.newArrayList(SCAFFOLD, MODEL, CONTROLLER, SERVICE, REPOSITORY, FIELDS),
+            Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER),
             (s, f) -> s.modify(ServiceProvider.getGenerateService(), f)),
 
     MODIFY(
             Lists.newArrayList("m", "mod", "modify"),
-            Lists.newArrayList(FIELDS),
+            Lists.newArrayList(MODEL),
             (s, f) -> s.modify(ServiceProvider.getEditService(), f));
 
     private final List<String> searchTerms;
