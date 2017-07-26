@@ -1,10 +1,8 @@
-<a href=http://jakedrost.me/plaster>
-	<img src=http://jakedrost.me/plaster/img/plaster-logo-with-text.png />
-</a>
+[![plaster](http://jakedrost.me/plaster/img/plaster-logo-with-text.png)](href=http://jakedrost.me/plaster)
 
 -----
 
-[![Version for JDrost1818/plaster](https://img.shields.io/SemVer/1.1.1.png)]()
+[![Version for JDrost1818/plaster](https://img.shields.io/badge/semver-1.1.1-brightgreen.svg)]()
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/854f4669211b4c30b988010544488fa3)](https://www.codacy.com/app/Drost011/plaster?utm_source=github.com&utm_medium=referral&utm_content=JDrost1818/plaster&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/854f4669211b4c30b988010544488fa3)](https://www.codacy.com/app/Drost011/plaster?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JDrost1818/plaster&amp;utm_campaign=Badge_Grade)
 [![Codeship Status for JDrost1818/plaster](https://app.codeship.com/projects/184069b0-1c9a-0135-6e0f-0e8dc4a678fe/status?branch=master)](https://app.codeship.com/projects/220058)

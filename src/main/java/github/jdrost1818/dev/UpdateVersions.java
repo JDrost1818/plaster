@@ -50,8 +50,8 @@ public class UpdateVersions {
     }
 
     private static void updateReadMe(UpdateType updateType) throws IOException {
-        String before = "\\[!\\[Version for JDrost1818/plaster]\\(https://img\\.shields\\.io/SemVer/";
-        String after = "\\.png\\)]\\(\\)";
+        String before = "\\[!\\[Version for JDrost1818/plaster]\\(https://img\\.shields\\.io/badge/semver-";
+        String after = "-brightgreen\\.svg\\)]\\(\\)";
         String filename = "README.md";
 
         updateSemVer(filename, before, after, updateType);
