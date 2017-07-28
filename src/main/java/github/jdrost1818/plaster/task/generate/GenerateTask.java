@@ -18,6 +18,10 @@ public abstract class GenerateTask extends PlasterTask {
     private final PlasterTask nextGeneration;
     private final FileExecutor fileExecutor;
 
+    public static PlasterTask getInitialTask(ModeScope scope) {
+        return new Model();
+    }
+
     GenerateTask(String errorMsg, ModeScope scope, PlasterTask nextGeneration, FileExecutor fileExecutor) {
         super(errorMsg, scope);
 
