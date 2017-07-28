@@ -16,7 +16,7 @@ public class DoNothing extends PlasterTask {
     }
 
     @Override
-    protected void success(FileInformation fileInformation) {
+    protected void success(FileInformation fileInformation, ModeScope maxGenScope) {
 
     }
 }

@@ -55,4 +55,7 @@ public class ServiceProvider {
     @Getter
     private static final EditService editService = new EditService();
 
+    @Getter
+    private static final UtilityService utilityService = new UtilityService(configurationService);
+
 }

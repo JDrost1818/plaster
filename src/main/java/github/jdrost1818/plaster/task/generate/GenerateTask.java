@@ -4,13 +4,14 @@ import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ServiceProvider;
+import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.modifier.GenerateService;
 import github.jdrost1818.plaster.task.FileExecutor;
 import github.jdrost1818.plaster.task.PlasterTask;
-import github.jdrost1818.plaster.task.util.Fail;
-import github.jdrost1818.plaster.task.util.FileExistsCheck;
 
 public abstract class GenerateTask extends PlasterTask {
+
+    private static UtilityService utilityService = ServiceProvider.getUtilityService();
 
     static GenerateService generateService = ServiceProvider.getGenerateService();
 
@@ -27,7 +28,16 @@ public abstract class GenerateTask extends PlasterTask {
     @Override
     protected boolean execute(FileInformation fileInformation) {
         try {
-            this.fileExecutor.generate(fileInformation);
+            if (!utilityService.fileExists(fileInformation, this.scope)) {
+                this.fileExecutor.generate(fileInformation);
+            } else {
+                String infoMessage = String.format(
+                        "%s already exists for scope ['%s'] - skipping generation",
+                        fileInformation.getClassName(),
+                        this.scope.name());
+
+                System.out.println(infoMessage);
+            }
         } catch (PlasterException e) {
             System.out.println(e.getMessage());
             return false;
@@ -37,11 +47,7 @@ public abstract class GenerateTask extends PlasterTask {
     }
 
     @Override
-    protected void success(FileInformation fileInformation) {
-        FileExistsCheck.builder()
-                .onFileDoesNotExist(this.nextGeneration)
-                .onFileExists(new Fail("Cannot generate file that already exists", null))
-                .build()
-                    .perform(fileInformation, null);
+    protected void success(FileInformation fileInformation, ModeScope maxGenScope) {
+        this.nextGeneration.perform(fileInformation, maxGenScope);
     }
 }
