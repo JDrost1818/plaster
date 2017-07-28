@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @AllArgsConstructor
-public class GenerateService implements ModelModifier, ControllerModifier, ServiceModifier, RepositoryModifier, FieldModifier {
+public class GenerateService implements ModelModifier, ControllerModifier, ServiceModifier, RepositoryModifier {
 
     private final ConfigurationService configurationService;
 
@@ -47,11 +47,6 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
     @Override
     public void modifyRepository(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.REPOSITORY, this.repositoryTemplateService);
-    }
-
-    @Override
-    public void modifyField(FileInformation fileInformation) {
-        throw new UnsupportedOperationException("Adding fields to already existing fields is not supported. Sorry.");
     }
 
     private void generate(FileInformation fileInformation, TemplateType templateType, TemplateService templateService) {

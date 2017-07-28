@@ -3,6 +3,7 @@ package github.jdrost1818.plaster.data;
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.exception.PlasterException;
+import github.jdrost1818.plaster.task.delete.DeleteTask;
 import github.jdrost1818.plaster.task.generate.GenerateTask;
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,9 +21,9 @@ public enum Mode {
             (s, f) -> GenerateTask.getInitialTask(s).perform(f, s)),
 
     MODIFY(
-            Lists.newArrayList("m", "mod", "modify"),
-            Lists.newArrayList(MODEL),
-            (s, f) -> GenerateTask.getInitialTask(s).perform(f, s));
+            Lists.newArrayList("d", "del", "delete"),
+            Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER),
+            (s, f) -> DeleteTask.getInitialTask(s).perform(f, s));
 
     private final List<String> searchTerms;
     private final List<ModeScope> scopes;

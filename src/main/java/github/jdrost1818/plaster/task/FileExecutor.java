@@ -4,6 +4,6 @@ import github.jdrost1818.plaster.domain.FileInformation;
 
 public interface FileExecutor {
 
-    void generate(FileInformation fileInformation);
+    void execute(FileInformation fileInformation);
 
 }

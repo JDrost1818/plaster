@@ -1,6 +1,6 @@
 package github.jdrost1818.plaster.service;
 
-import github.jdrost1818.plaster.service.modifier.EditService;
+import github.jdrost1818.plaster.service.modifier.DeleteService;
 import github.jdrost1818.plaster.service.modifier.GenerateService;
 import github.jdrost1818.plaster.service.template.ControllerTemplateService;
 import github.jdrost1818.plaster.service.template.ModelTemplateService;
@@ -53,7 +53,7 @@ public class ServiceProvider {
     );
 
     @Getter
-    private static final EditService editService = new EditService();
+    private static final DeleteService deleteService = new DeleteService();
 
     @Getter
     private static final UtilityService utilityService = new UtilityService(configurationService);
