@@ -10,7 +10,7 @@ class Controller extends GenerateTask {
                 "Could not generate controller",
                 ModeScope.CONTROLLER,
                 new DoNothing(),
-                (info) -> generateService.modifyRepository(info)
+                (info) -> generateService.modifyController(info)
         );
     }
 
