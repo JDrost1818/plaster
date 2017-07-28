@@ -2,13 +2,15 @@ package github.jdrost1818.plaster.task.generate;
 
 import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.domain.FileInformation;
-import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.modifier.GenerateService;
 import github.jdrost1818.plaster.task.FileExecutor;
 import github.jdrost1818.plaster.task.PlasterTask;
 
+/**
+ * Defines a common method of execution for tasks which should generate new files
+ */
 public abstract class GenerateTask extends PlasterTask {
 
     private static UtilityService utilityService = ServiceProvider.getUtilityService();
@@ -22,6 +24,18 @@ public abstract class GenerateTask extends PlasterTask {
         return new Model();
     }
 
+    /**
+     *
+     *
+     * @param errorMsg
+     *          message to display on a failure
+     * @param scope
+     *          the scope the task is tied to
+     * @param nextGeneration
+     *          the next task to perform on success
+     * @param fileExecutor
+     *          to be used to generate the file
+     */
     GenerateTask(String errorMsg, ModeScope scope, PlasterTask nextGeneration, FileExecutor fileExecutor) {
         super(errorMsg, scope);
 
@@ -29,6 +43,9 @@ public abstract class GenerateTask extends PlasterTask {
         this.fileExecutor = fileExecutor;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean execute(FileInformation fileInformation) {
         if (!utilityService.fileExists(fileInformation, this.scope)) {
@@ -45,6 +62,9 @@ public abstract class GenerateTask extends PlasterTask {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void success(FileInformation fileInformation, ModeScope maxGenScope) {
         this.nextGeneration.perform(fileInformation, maxGenScope);

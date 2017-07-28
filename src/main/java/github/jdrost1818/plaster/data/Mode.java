@@ -20,7 +20,7 @@ public enum Mode {
             Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER),
             (s, f) -> GenerateTask.getInitialTask(s).perform(f, s)),
 
-    MODIFY(
+    DELETE(
             Lists.newArrayList("d", "del", "delete"),
             Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER),
             (s, f) -> DeleteTask.getInitialTask(s).perform(f, s));

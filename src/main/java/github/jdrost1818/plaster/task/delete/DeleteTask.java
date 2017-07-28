@@ -2,7 +2,6 @@ package github.jdrost1818.plaster.task.delete;
 
 import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.domain.FileInformation;
-import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.modifier.DeleteService;
