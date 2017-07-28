@@ -31,20 +31,15 @@ public abstract class GenerateTask extends PlasterTask {
 
     @Override
     protected boolean execute(FileInformation fileInformation) {
-        try {
-            if (!utilityService.fileExists(fileInformation, this.scope)) {
-                this.fileExecutor.execute(fileInformation);
-            } else {
-                String infoMessage = String.format(
-                        "%s already exists for scope ['%s'] - skipping generation",
-                        fileInformation.getClassName(),
-                        this.scope.name());
+        if (!utilityService.fileExists(fileInformation, this.scope)) {
+            this.fileExecutor.execute(fileInformation);
+        } else {
+            String infoMessage = String.format(
+                    "%s already exists for scope ['%s'] - skipping generation",
+                    fileInformation.getClassName(),
+                    this.scope.name());
 
-                System.out.println(infoMessage);
-            }
-        } catch (PlasterException e) {
-            System.out.println(e.getMessage());
-            return false;
+            System.out.println(infoMessage);
         }
 
         return true;
