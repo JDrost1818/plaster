@@ -3,9 +3,11 @@ package github.jdrost1818.plaster.task.util;
 import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.task.PlasterTask;
+import lombok.Builder;
 
 import java.nio.file.Paths;
 
+@Builder
 public class FileExistsCheck extends PlasterTask {
 
     private final ModeScope scope;

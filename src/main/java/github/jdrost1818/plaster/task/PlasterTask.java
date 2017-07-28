@@ -22,13 +22,17 @@ public abstract class PlasterTask {
                 this.success(fileInformation);
             }
         } else {
-            this.failure(this.errorMsg);
+            this.failure();
         }
     }
 
     protected abstract boolean execute(FileInformation fileInformation);
 
     protected abstract void success(FileInformation fileInformation);
+
+    protected void failure() {
+        failure(this.errorMsg);
+    }
 
     protected void failure(String message) {
         throw new PlasterException(message);
