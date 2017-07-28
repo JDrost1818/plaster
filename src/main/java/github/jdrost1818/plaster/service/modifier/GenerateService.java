@@ -6,6 +6,7 @@ import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.template.*;
 import github.jdrost1818.plaster.service.type.*;
 import github.jdrost1818.plaster.util.PathUtil;
@@ -20,6 +21,8 @@ import java.io.OutputStream;
 public class GenerateService implements ModelModifier, ControllerModifier, ServiceModifier, RepositoryModifier {
 
     private final ConfigurationService configurationService;
+
+    private final UtilityService utilityService;
 
     private final ModelTemplateService modelTemplateService;
 
@@ -54,7 +57,7 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
                 fileInformation.getClassName(),
                 this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
 
-        String genFilePath = this.getRenderLocation(templateType.relPathSetting, fileInformation.getClassName() + templateType.suffix);
+        String genFilePath = this.utilityService.getFilePath(fileInformation, templateType);
         String renderedFileString = templateService.renderTemplate(
                 fileInformation,
                 genTypeModel);
@@ -81,17 +84,6 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
         } catch (IOException e) {
             throw new PlasterException("Error creating file. Ensure you have permissions to perform this action: " + location);
         }
-    }
-
-    private String getRenderLocation(Setting setting, String className) {
-        String projectPath = this.configurationService.get(Setting.PROJECT_PATH);
-        String basePath = this.configurationService.get(Setting.BASE_PATH);
-        String appPath = this.configurationService.get(Setting.APP_PATH);
-        String dirPath = this.configurationService.get(setting);
-        String customPath = this.configurationService.get(Setting.SUB_DIR_PATH);
-        String fileName = className + ".java";
-
-        return PathUtil.joinPath(projectPath, basePath, appPath, dirPath, customPath, fileName);
     }
     
 }

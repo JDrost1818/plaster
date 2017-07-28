@@ -31,8 +31,6 @@ public class UtilityServiceTest {
         when(this.configurationService.get(Setting.BASE_PATH)).thenReturn("base");
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("app");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("sub");
-
-
     }
 
     @Test

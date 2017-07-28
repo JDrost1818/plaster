@@ -20,6 +20,9 @@ public class ServiceProvider {
     private static final ConfigurationService configurationService = new ConfigurationService().load("");
 
     @Getter
+    private static final UtilityService utilityService = new UtilityService(configurationService);
+
+    @Getter
     private static final SearchService searchService = new SearchService(configurationService);
 
     @Getter
@@ -46,6 +49,7 @@ public class ServiceProvider {
     @Getter
     private static final GenerateService generateService = new GenerateService(
             configurationService,
+            utilityService,
             modelTemplateService,
             controllerTemplateService,
             serviceTemplateService,
@@ -54,8 +58,5 @@ public class ServiceProvider {
 
     @Getter
     private static final DeleteService deleteService = new DeleteService();
-
-    @Getter
-    private static final UtilityService utilityService = new UtilityService(configurationService);
 
 }
