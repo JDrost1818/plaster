@@ -1,6 +1,7 @@
 package github.jdrost1818.plaster.task.delete;
 
 import github.jdrost1818.plaster.data.ModeScope;
+import github.jdrost1818.plaster.task.util.DoNothing;
 
 class Model extends DeleteTask {
 
@@ -8,7 +9,7 @@ class Model extends DeleteTask {
         super(
                 "Could not delete model",
                 ModeScope.MODEL,
-                new Repository(),
+                new DoNothing(),
                 (info) -> deleteService.modifyModel(info)
         );
     }

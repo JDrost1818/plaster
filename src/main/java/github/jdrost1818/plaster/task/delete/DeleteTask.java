@@ -19,7 +19,7 @@ public abstract class DeleteTask extends PlasterTask {
     private final FileExecutor fileExecutor;
 
     public static PlasterTask getInitialTask(ModeScope scope) {
-        return new Model();
+        return new Controller();
     }
 
     DeleteTask(String errorMsg, ModeScope scope, PlasterTask nextGeneration, FileExecutor fileExecutor) {

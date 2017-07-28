@@ -2,7 +2,7 @@ package github.jdrost1818.plaster.task.generate;
 
 import github.jdrost1818.plaster.data.ModeScope;
 
-public class Service extends GenerateTask {
+class Service extends GenerateTask {
 
     Service() {
         super(

@@ -9,7 +9,7 @@ class Controller extends DeleteTask {
         super(
                 "Could not delete controller",
                 ModeScope.CONTROLLER,
-                new DoNothing(),
+                new Service(),
                 (info) -> deleteService.modifyController(info)
         );
     }

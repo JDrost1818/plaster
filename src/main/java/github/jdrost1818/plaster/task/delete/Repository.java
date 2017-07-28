@@ -8,8 +8,9 @@ class Repository extends DeleteTask {
         super(
                 "Could not delete repository",
                 ModeScope.REPOSITORY,
-                new Service(),
+                new Model(),
                 (info) -> deleteService.modifyRepository(info)
         );
     }
+
 }

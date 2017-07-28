@@ -12,4 +12,5 @@ class Repository extends GenerateTask {
                 (info) -> generateService.modifyRepository(info)
         );
     }
+
 }
