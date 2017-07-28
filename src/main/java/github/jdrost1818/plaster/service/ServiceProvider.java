@@ -57,6 +57,6 @@ public class ServiceProvider {
     );
 
     @Getter
-    private static final DeleteService deleteService = new DeleteService();
+    private static final DeleteService deleteService = new DeleteService(utilityService);
 
 }
