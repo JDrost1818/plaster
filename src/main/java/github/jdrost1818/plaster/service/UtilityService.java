@@ -36,8 +36,4 @@ public class UtilityService {
         return Paths.get(getFilePath(fileInformation, scope)).toFile().exists();
     }
 
-    public boolean fileExists(FileInformation fileInformation, TemplateType templateType) {
-        return Paths.get(getFilePath(fileInformation, templateType)).toFile().exists();
-    }
-
 }

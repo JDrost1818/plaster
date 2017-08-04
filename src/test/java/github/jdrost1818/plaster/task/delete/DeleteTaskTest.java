@@ -52,7 +52,7 @@ public class DeleteTaskTest {
 
     @Test
     public void execute_should_not_delete() throws Exception {
-        when(this.utilityService.fileExists(this.fileInformation, ModeScope.CONTROLLER)).thenReturn(true);
+        when(this.utilityService.fileExists(this.fileInformation, ModeScope.CONTROLLER)).thenReturn(false);
 
         this.deleteTask.perform(this.fileInformation, ModeScope.CONTROLLER);
 
