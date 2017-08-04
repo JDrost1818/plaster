@@ -7,18 +7,21 @@ import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.modifier.GenerateService;
 import github.jdrost1818.plaster.task.FileExecutor;
 import github.jdrost1818.plaster.task.PlasterTask;
+import lombok.Setter;
 
 /**
  * Defines a common method of execution for tasks which should generate new files
  */
 public abstract class GenerateTask extends PlasterTask {
 
+    @Setter
     private static UtilityService utilityService = ServiceProvider.getUtilityService();
 
     static GenerateService generateService = ServiceProvider.getGenerateService();
 
-    private final PlasterTask nextGeneration;
-    private final FileExecutor fileExecutor;
+    final PlasterTask nextGeneration;
+
+    final FileExecutor fileExecutor;
 
     public static PlasterTask getInitialTask(ModeScope scope) {
         return new Model();

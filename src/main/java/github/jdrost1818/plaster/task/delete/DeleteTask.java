@@ -14,7 +14,6 @@ public abstract class DeleteTask extends PlasterTask {
     @Setter
     private static UtilityService utilityService = ServiceProvider.getUtilityService();
 
-    @Setter
     static DeleteService deleteService = ServiceProvider.getDeleteService();
 
     final PlasterTask nextGeneration;
