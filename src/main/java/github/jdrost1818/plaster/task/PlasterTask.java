@@ -30,10 +30,22 @@ public abstract class PlasterTask {
 
     protected abstract void success(FileInformation fileInformation, ModeScope maxGenScope);
 
+    /**
+     * Throws an exception with the given text
+     *
+     * @throws PlasterException with the default message
+     */
     protected void failure() {
-        failure(this.errorMsg);
+        this.failure(this.errorMsg);
     }
 
+    /**
+     * Throws an exception with the given text
+     *
+     * @param message
+     *          text to associate with the exception
+     * @throws PlasterException with the corresponding message
+     */
     protected void failure(String message) {
         throw new PlasterException(message);
     }

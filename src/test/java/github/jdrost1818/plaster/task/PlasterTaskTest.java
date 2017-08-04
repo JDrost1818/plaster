@@ -2,11 +2,14 @@ package github.jdrost1818.plaster.task;
 
 import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.domain.FileInformation;
+import github.jdrost1818.plaster.exception.PlasterException;
 import lombok.Builder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
@@ -101,6 +104,56 @@ public class PlasterTaskTest {
         };
 
         this.task.perform(null, ModeScope.MODEL);
+    }
+
+    @Test
+    public void failure() throws Exception {
+        this.task = new PlasterTask("error message", ModeScope.MODEL) {
+
+            @Override
+            protected boolean execute(FileInformation fileInformation) {
+                return false;
+            }
+
+            @Override
+            protected void success(FileInformation fileInformation, ModeScope maxGenScope) {
+                fail("SHOULD NOT ENTER SUCCESS STATE");
+            }
+        };
+
+        try {
+            this.task.failure();
+        } catch (PlasterException e) {
+            assertThat(e.getMessage(), equalTo("error message"));
+            return;
+        }
+
+        fail();
+    }
+
+    @Test
+    public void custom_failure() throws Exception {
+        this.task = new PlasterTask("", ModeScope.MODEL) {
+
+            @Override
+            protected boolean execute(FileInformation fileInformation) {
+                return false;
+            }
+
+            @Override
+            protected void success(FileInformation fileInformation, ModeScope maxGenScope) {
+                fail("SHOULD NOT ENTER SUCCESS STATE");
+            }
+        };
+
+        try {
+            this.task.failure("This is a custom failure");
+        } catch (PlasterException e) {
+            assertThat(e.getMessage(), equalTo("This is a custom failure"));
+            return;
+        }
+
+        fail();
     }
 
 }
