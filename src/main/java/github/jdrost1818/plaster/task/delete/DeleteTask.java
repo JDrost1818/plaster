@@ -7,15 +7,19 @@ import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.modifier.DeleteService;
 import github.jdrost1818.plaster.task.FileExecutor;
 import github.jdrost1818.plaster.task.PlasterTask;
+import lombok.Setter;
 
 public abstract class DeleteTask extends PlasterTask {
 
+    @Setter
     private static UtilityService utilityService = ServiceProvider.getUtilityService();
 
+    @Setter
     static DeleteService deleteService = ServiceProvider.getDeleteService();
 
-    private final PlasterTask nextGeneration;
-    private final FileExecutor fileExecutor;
+    final PlasterTask nextGeneration;
+
+    final FileExecutor fileExecutor;
 
     public static PlasterTask getInitialTask(ModeScope scope) {
         return new Controller();
@@ -48,4 +52,5 @@ public abstract class DeleteTask extends PlasterTask {
     protected void success(FileInformation fileInformation, ModeScope maxGenScope) {
         this.nextGeneration.perform(fileInformation, maxGenScope);
     }
+
 }
