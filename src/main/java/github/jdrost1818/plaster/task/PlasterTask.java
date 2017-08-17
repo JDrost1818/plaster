@@ -51,7 +51,9 @@ public abstract class PlasterTask {
     }
 
     protected void finish() {
-
+        // Todo: wrap up things in the finish.
+        // the main thought is to make all the generations be "pending"
+        // generations until finished. This might have other purposes though too.
     }
 
 }
