@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.UtilityService;
-import github.jdrost1818.plaster.service.modifier.DeleteService;
 import github.jdrost1818.plaster.task.FileExecutor;
 import github.jdrost1818.plaster.task.PlasterTask;
 import org.junit.Before;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static github.jdrost1818.plaster.task.delete.DeleteTask.deleteService;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;

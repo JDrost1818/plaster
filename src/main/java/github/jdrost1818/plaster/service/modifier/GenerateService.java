@@ -8,8 +8,10 @@ import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.template.*;
-import github.jdrost1818.plaster.service.type.*;
-import github.jdrost1818.plaster.util.PathUtil;
+import github.jdrost1818.plaster.service.type.ControllerModifier;
+import github.jdrost1818.plaster.service.type.ModelModifier;
+import github.jdrost1818.plaster.service.type.RepositoryModifier;
+import github.jdrost1818.plaster.service.type.ServiceModifier;
 import lombok.AllArgsConstructor;
 
 import java.io.File;

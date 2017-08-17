@@ -4,7 +4,6 @@ import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
-import github.jdrost1818.plaster.template.Template;
 import github.jdrost1818.plaster.util.PathUtil;
 import lombok.AllArgsConstructor;
 

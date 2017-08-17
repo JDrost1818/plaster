@@ -1,7 +1,6 @@
 package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.data.Setting;
-import github.jdrost1818.plaster.exception.PlasterException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
