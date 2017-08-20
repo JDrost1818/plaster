@@ -1,6 +1,6 @@
 package github.jdrost1818.plaster.service;
 
-import github.jdrost1818.plaster.service.modifier.EditService;
+import github.jdrost1818.plaster.service.modifier.DeleteService;
 import github.jdrost1818.plaster.service.modifier.GenerateService;
 import github.jdrost1818.plaster.service.template.ControllerTemplateService;
 import github.jdrost1818.plaster.service.template.ModelTemplateService;
@@ -18,6 +18,9 @@ public class ServiceProvider {
 
     @Getter
     private static final ConfigurationService configurationService = new ConfigurationService().load("");
+
+    @Getter
+    private static final UtilityService utilityService = new UtilityService(configurationService);
 
     @Getter
     private static final SearchService searchService = new SearchService(configurationService);
@@ -46,6 +49,7 @@ public class ServiceProvider {
     @Getter
     private static final GenerateService generateService = new GenerateService(
             configurationService,
+            utilityService,
             modelTemplateService,
             controllerTemplateService,
             serviceTemplateService,
@@ -53,6 +57,6 @@ public class ServiceProvider {
     );
 
     @Getter
-    private static final EditService editService = new EditService();
+    private static final DeleteService deleteService = new DeleteService(utilityService);
 
 }

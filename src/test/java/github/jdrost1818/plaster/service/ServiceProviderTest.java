@@ -61,8 +61,8 @@ public class ServiceProviderTest {
     }
 
     @Test
-    public void getEditService() throws Exception {
-        assertThat(ServiceProvider.getEditService(), sameInstance(ServiceProvider.getEditService()));
+    public void getDeleteService() throws Exception {
+        assertThat(ServiceProvider.getDeleteService(), sameInstance(ServiceProvider.getDeleteService()));
     }
 
 }
