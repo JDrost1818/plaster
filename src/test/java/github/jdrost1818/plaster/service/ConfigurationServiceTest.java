@@ -62,6 +62,8 @@ public class ConfigurationServiceTest {
         assertThat(configurationService.get(Setting.REL_SERVICE_PACKAGE), equalTo("service"));
         assertThat(configurationService.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("controller"));
         assertThat(configurationService.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("false"));
+        assertThat(configurationService.get(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED), equalTo("true"));
+        assertThat(configurationService.get(Setting.IS_TESTING_ENABLED), equalTo("true"));
     }
 
     /**
@@ -84,6 +86,8 @@ public class ConfigurationServiceTest {
         assertThat(configurationService.get(Setting.REL_SERVICE_PACKAGE), equalTo("somewhere/service"));
         assertThat(configurationService.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("somewhere/controller"));
         assertThat(configurationService.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("true"));
+        assertThat(configurationService.get(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED), equalTo("true"));
+        assertThat(configurationService.get(Setting.IS_TESTING_ENABLED), equalTo("false"));
     }
 
     /**
@@ -105,6 +109,8 @@ public class ConfigurationServiceTest {
         assertThat(configurationService.get(Setting.REL_SERVICE_PACKAGE), equalTo("service"));
         assertThat(configurationService.get(Setting.REL_CONTROLLER_PACKAGE), equalTo("controller"));
         assertThat(configurationService.get(Setting.SHOULD_USE_PRIMITIVES), equalTo("false"));
+        assertThat(configurationService.get(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED), equalTo("false"));
+        assertThat(configurationService.get(Setting.IS_TESTING_ENABLED), equalTo("true"));
     }
 
     /**

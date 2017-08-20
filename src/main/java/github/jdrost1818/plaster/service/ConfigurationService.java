@@ -21,6 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
@@ -81,6 +82,7 @@ public class ConfigurationService {
      *  REL_SERVICE_PACKAGE     = service
      *  REL_CONTROLLER_PACKAGE  = controller
      *  SHOULD_USE_PRIMITIVES   = false
+     *  IS_TESTING_ENABLED      = true
      *
      * *  = This can only be configured at invocation as a command-line argument
      *
@@ -100,10 +102,11 @@ public class ConfigurationService {
      * into our settings configuration. These are the settings we can fetch
      * by reading information in the pom
      *
-     *  IS_LOMBOK_ENABLED   = true if found in dependencies
-     *  MAVEN_GROUP_ID      = found in pom under the group-id tag
-     *  BASE_PATH           = "src/main/java" in most (nearly all) cases
-     *  APP_PATH            = if group id == "com.example.app" app_path = "com/example/app/
+     *  MAVEN_GROUP_ID                          = found in pom under the group-id tag
+     *  BASE_PATH                               = "src/main/java" in most (nearly all) cases
+     *  APP_PATH                                = if group id == "com.example.app" app_path = "com/example/app/
+     *  IS_LOMBOK_ENABLED                       = true if found in dependencies
+     *  IS_REST_DOCUMENTATION_TESTING_ENABLED   = true if found in dependencies
      *
      */
     private void loadFromPom() {
@@ -129,6 +132,7 @@ public class ConfigurationService {
             /*
                 This part inspects the dependencies to see what we can turn on
              */
+            List<Setting> dependencySettings = Setting.getDependentSettings();
             NodeList dependencies = doc.getElementsByTagName("dependency");
             for (int i=0; i < dependencies.getLength(); i++) {
                 Element curDependency = (Element) dependencies.item(i);
@@ -139,10 +143,13 @@ public class ConfigurationService {
 
                     // Search for lombok
                     String dependencyId = curGroupIds.item(0).getTextContent();
-                    if (dependencyId.contains("org.projectlombok")) {
-                        this.configMap.put(Setting.IS_LOMBOK_ENABLED, "true");
+                    for (Setting setting : dependencySettings) {
+                        for (String dependencyStr : setting.dependencyFlags) {
+                            if (dependencyId.contains(dependencyStr)) {
+                                this.configMap.put(setting, "true");
+                            }
+                        }
                     }
-
                 }
             }
 

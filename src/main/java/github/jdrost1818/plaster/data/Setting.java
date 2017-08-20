@@ -1,10 +1,13 @@
 package github.jdrost1818.plaster.data;
 
+import com.google.common.collect.Lists;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
+import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 /**
  * Defines all the keys for the settings that
@@ -32,12 +35,28 @@ public enum Setting {
     SHOULD_USE_PRIMITIVES("property.enablePrimitives", Boolean.class, false),
 
     /**
+     * boolean string. If true, tests will be generated for the generated classes.
+     *
+     * This is determined via inspecting the pom and the plaster.yml file
+     */
+    IS_TESTING_ENABLED("property.enableTesting", Boolean.class, true),
+
+    /**
      * boolean string. If true, will not generate getters and setters, and will rather
      * annotate model class with lombok.
      *
      * This is determined via inspecting the pom and the plaster.yml file
      */
-    IS_LOMBOK_ENABLED("lombok.enable", Boolean.class, false),
+    IS_LOMBOK_ENABLED("lombok.enable", Boolean.class, false,
+            Lists.newArrayList("org.projectlombok")),
+
+    /**
+     * boolean string. If true, integration tests will document the API.
+     *
+     * This is determined via inspecting the pom and the plaster.yml file
+     */
+    IS_REST_DOCUMENTATION_TESTING_ENABLED("property.enableRestDocumentationTesting", Boolean.class, false,
+            Lists.newArrayList("org.springframework.restdocs")),
 
     /**
      * string defining where the src directory is from the root of the repository.
@@ -139,11 +158,29 @@ public enum Setting {
     public final String compositePath;
     public final Class<?> type;
     public final String defaultVal;
+    public final List<String> dependencyFlags;
 
     <T> Setting(String compositePath, Class<T> type, T defaultVal) {
+        this(compositePath, type, defaultVal, Lists.newArrayList());
+    }
+
+    <T> Setting(String compositePath, Class<T> type, T defaultVal, List<String> dependencyFlags) {
         this.compositePath = compositePath;
         this.type = type;
         this.defaultVal = nonNull(defaultVal) ? defaultVal.toString() : null;
+        this.dependencyFlags = dependencyFlags;
+    }
+
+    /**
+     * Gets all the settings that enable themselves when a dependency
+     * is found in the pom examination
+     *
+     * @return the configurable settings
+     */
+    public static List<Setting> getDependentSettings() {
+        return Arrays.stream(Setting.values())
+                .filter(v -> isNotEmpty(v.dependencyFlags))
+                .collect(Collectors.toList());
     }
 
     /**
