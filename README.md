@@ -51,5 +51,5 @@ To install, you must have [maven] installed. Then on linux machines, simply run:
 [plaster.yml]: https://github.com/JDrost1818/plaster-java/blob/master/src/test/resources/testProject/root2/plaster.yml
 [waffle.io]: https://waffle.io/
 [here]: https://waffle.io/JDrost1818/plaster
-[website]: https://jakedrost.me/plaster
+[website]: http://jakedrost.me/plaster
   
