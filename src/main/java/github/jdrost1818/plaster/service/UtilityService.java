@@ -1,7 +1,6 @@
 package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.data.GenerationLocation;
-import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;

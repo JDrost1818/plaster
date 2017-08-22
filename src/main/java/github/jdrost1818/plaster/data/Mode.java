@@ -1,12 +1,8 @@
 package github.jdrost1818.plaster.data;
 
 import com.google.common.collect.Lists;
-import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.exception.PlasterException;
-import github.jdrost1818.plaster.service.task.delete.DeleteTask;
-import github.jdrost1818.plaster.service.task.generate.GenerateTask;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.NoSuchElementException;
