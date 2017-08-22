@@ -31,9 +31,15 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
 
     private final ControllerTemplateService controllerTemplateService;
 
+    private final ControllerTestTemplateService controllerTestTemplateService;
+
     private final ServiceTemplateService serviceTemplateService;
 
+    private final ServiceTestTemplateService serviceTestTemplateService;
+
     private final RepositoryTemplateService repositoryTemplateService;
+
+    private final RepositoryTestTemplateService repositoryTestTemplateService;
 
     @Override
     public void modifyModel(FileInformation fileInformation) {
@@ -46,16 +52,25 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
     @Override
     public void modifyController(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.CONTROLLER, this.controllerTemplateService);
+        if (this.configurationService.getBoolean(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED)) {
+            this.generate(fileInformation, TemplateType.CONTROLLER_TEST, this.controllerTestTemplateService);
+        }
     }
 
     @Override
     public void modifyService(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.SERVICE, this.serviceTemplateService);
+        if (this.configurationService.getBoolean(Setting.IS_TESTING_ENABLED)) {
+            this.generate(fileInformation, TemplateType.SERVICE_TEST, this.serviceTestTemplateService);
+        }
     }
 
     @Override
     public void modifyRepository(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.REPOSITORY, this.repositoryTemplateService);
+        if (this.configurationService.getBoolean(Setting.IS_TESTING_ENABLED)) {
+            this.generate(fileInformation, TemplateType.REPOSITORY_TEST, this.repositoryTestTemplateService);
+        }
     }
 
     private void generate(FileInformation fileInformation, TemplateType templateType, TemplateService templateService) {

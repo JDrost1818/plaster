@@ -41,10 +41,19 @@ public class ServiceProvider {
     private static final ControllerTemplateService controllerTemplateService = new ControllerTemplateService(configurationService);
 
     @Getter
+    private static final ControllerTestTemplateService controllerTestTemplateService = new ControllerTestTemplateService(configurationService);
+
+    @Getter
     private static final RepositoryTemplateService repositoryTemplateService = new RepositoryTemplateService(configurationService);
 
     @Getter
+    private static final RepositoryTestTemplateService repositoryTestTemplateService = new RepositoryTestTemplateService(configurationService);
+
+    @Getter
     private static final ServiceTemplateService serviceTemplateService = new ServiceTemplateService(configurationService);
+
+    @Getter
+    private static final ServiceTestTemplateService serviceTestTemplateService = new ServiceTestTemplateService(configurationService);
 
     @Getter
     private static final GenerateService generateService = new GenerateService(
@@ -53,8 +62,11 @@ public class ServiceProvider {
             modelTemplateService,
             modelTestTemplateService,
             controllerTemplateService,
+            controllerTestTemplateService,
             serviceTemplateService,
-            repositoryTemplateService
+            serviceTestTemplateService,
+            repositoryTemplateService,
+            repositoryTestTemplateService
     );
 
     @Getter

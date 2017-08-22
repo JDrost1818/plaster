@@ -6,11 +6,14 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.template.Template;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.util.List;
+
+import static java.util.Objects.isNull;
 
 public class ModelTemplateService extends TemplateService {
 
