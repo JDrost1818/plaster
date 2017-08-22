@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -47,12 +49,19 @@ public class {{ serviceTestField.className }} {
 
     @Test
     public void testUpdate() {
+        {{ modelField.className }} instance = new {{ modelField.className }}();
+        when(this.{{ repoField.varName }}.save(same(instance))).thenReturn(instance);
 
+        assertThat(instance, sameInstance(this.classUnderTest.update(instance)));
     }
 
     @Test
     public void testDelete() {
+        {{ idField.className }} id = {{ idField.exampleValue }};
 
+        this.classUnderTest.delete(id);
+
+        verify(this.newUserRepository, times(1)).delete(id);
     }
 
 }
