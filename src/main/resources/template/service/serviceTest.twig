@@ -61,7 +61,7 @@ public class {{ serviceTestField.className }} {
 
         this.classUnderTest.delete(id);
 
-        verify(this.newUserRepository, times(1)).delete(id);
+        verify(this.{{ repoField.varName }}, times(1)).delete(id);
     }
 
 }
