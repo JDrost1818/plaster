@@ -13,21 +13,21 @@ public enum TemplateType {
             GenerationLocation.CODE
     ),
     REPOSITORY(
-            "RepositoryDelete",
+            "Repository",
             "repoField",
             "repository/repository.twig",
             Setting.REL_REPOSITORY_PACKAGE,
             GenerationLocation.CODE
     ),
     SERVICE(
-            "ServiceDelete",
+            "Service",
             "serviceField",
             "service/service.twig",
             Setting.REL_SERVICE_PACKAGE,
             GenerationLocation.CODE
     ),
     CONTROLLER(
-            "ControllerDelete",
+            "Controller",
             "controllerField",
             "controller/controller.twig",
             Setting.REL_CONTROLLER_PACKAGE,

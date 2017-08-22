@@ -12,6 +12,7 @@ import github.jdrost1818.plaster.service.task.generate.ModelGenerate;
 public class TaskService {
 
     private final ConfigurationService configurationService = ServiceProvider.getConfigurationService();
+    private PlasterTaskId lastGenerateTaskId;
 
     public void perform(Mode mode, ModeScope modeScope, FileInformation fileInformation) {
         PlasterTask initialTask = getInitialTask(mode, modeScope);
@@ -21,6 +22,10 @@ public class TaskService {
     }
 
     private void perform(PlasterTask task, FileInformation fileInformation, PlasterTaskId lastTaskId) {
+        if (task == null) {
+            return;
+        }
+
         if (task.execute(fileInformation)) {
             if (task.taskId == lastTaskId) {
                 task.finish();
@@ -35,7 +40,7 @@ public class TaskService {
     private PlasterTask getInitialTask(Mode mode, ModeScope scope) {
         switch(mode) {
             case GENERATE:
-                return getInitialGenerateTask(scope);
+                return getInitialGenerateTask();
             case DELETE:
                 return getInitialDeleteTask(scope);
         }
@@ -46,14 +51,29 @@ public class TaskService {
         return new ControllerDelete();
     }
 
-    private PlasterTask getInitialGenerateTask(ModeScope scope) {
+    private PlasterTask getInitialGenerateTask() {
         if (configurationService.getBoolean(Setting.IS_TESTING_ENABLED)) {
             return new ModelGenerate();
         }
         return new ModelGenerate();
     }
 
-    private PlasterTaskId getLastTaskId() {
+    private PlasterTaskId getLastTaskId(Mode mode, ModeScope scope) {
+        switch (mode) {
+            case GENERATE:
+                return getLastGenerateTaskId(scope);
+            case DELETE:
+                return getLastDeleteTaskId();
+        }
         return null;
+    }
+
+
+    private PlasterTaskId getLastGenerateTaskId(ModeScope scope) {
+        return PlasterTaskId.CONTROLLER_IT;
+    }
+
+    private PlasterTaskId getLastDeleteTaskId() {
+        return PlasterTaskId.MODEL;
     }
 }
