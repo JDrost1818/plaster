@@ -31,7 +31,7 @@ public enum TemplateType {
     ),
     MODEL_TEST(
             "Test",
-            "modelTestField",
+            "modelField",
             "model/modelTest.twig",
             Setting.REL_MODEL_PACKAGE,
             true

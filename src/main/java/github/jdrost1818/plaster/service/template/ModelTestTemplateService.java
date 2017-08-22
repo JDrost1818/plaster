@@ -1,5 +1,6 @@
 package github.jdrost1818.plaster.service.template;
 
+import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import org.jtwig.JtwigModel;
@@ -13,7 +14,7 @@ public class ModelTestTemplateService extends TemplateService {
 
     @Override
     JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
-        return model;
+        return super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL_TEST);
     }
 
     @Override
