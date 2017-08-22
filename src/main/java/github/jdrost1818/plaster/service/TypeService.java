@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 
 /**
- * ServiceDelete for converting strings into full fledged {@link Type}s
+ * Service for converting strings into full fledged {@link Type}s
  */
 @AllArgsConstructor
 public class TypeService {
