@@ -14,7 +14,12 @@ public class ServiceTestTemplateService extends TemplateService {
 
     @Override
     JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
-        return super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE_TEST);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE_TEST);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.REPOSITORY);
+
+        return model;
     }
 
     @Override

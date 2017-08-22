@@ -31,28 +31,28 @@ public enum TemplateType {
     ),
     MODEL_TEST(
             "Test",
-            "modelField",
+            "modelTestField",
             "model/modelTest.twig",
             Setting.REL_MODEL_PACKAGE,
             true
     ),
     REPOSITORY_TEST(
             "RepositoryTest",
-            "repoField",
+            "repoTestField",
             "repo/repositoryTest.twig",
             Setting.REL_REPOSITORY_PACKAGE,
             true
     ),
     SERVICE_TEST(
             "ServiceTest",
-            "serviceField",
+            "serviceTestField",
             "service/serviceTest.twig",
             Setting.REL_SERVICE_PACKAGE,
             true
     ),
     CONTROLLER_TEST(
             "ControllerTest",
-            "controllerField",
+            "controllerTestField",
             "controller/controllerTest.twig",
             Setting.REL_CONTROLLER_PACKAGE,
             true
