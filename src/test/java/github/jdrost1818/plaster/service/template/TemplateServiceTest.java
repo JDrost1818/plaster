@@ -127,7 +127,7 @@ public class TemplateServiceTest {
         }
 
         @Override
-        public JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
+        public JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
             return null;
         }
 

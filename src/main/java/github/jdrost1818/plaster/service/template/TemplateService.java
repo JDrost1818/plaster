@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public abstract class TemplateService {
 
-    private final ConfigurationService configurationService;
+    protected final ConfigurationService configurationService;
 
     /**
      * Adds information not applicable to all types of rendering being done.
@@ -32,11 +32,9 @@ public abstract class TemplateService {
      *          model to which to add information
      * @param fileInformation
      *          information about the file to generate
-     * @param genTypeModel
-     *          model store
      * @return the fully-customized model object
      */
-    abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
+    abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation);
 
     /**
      * Gets the appropriate template with which to perform the rendering
@@ -48,14 +46,13 @@ public abstract class TemplateService {
     /**
      * The entry point to render a template.
      * @param fileInformation
-     * @param genTypeModel
      * @return
      */
-    public final String renderTemplate(FileInformation fileInformation, GenTypeModel genTypeModel) {
+    public final String renderTemplate(FileInformation fileInformation) {
         JtwigTemplate template = getTemplate();
 
         JtwigModel model = JtwigModel.newModel();
-        model = addCustomInformation(model, fileInformation, genTypeModel);
+        model = addCustomInformation(model, fileInformation);
 
         ByteArrayOutputStream inMemOut = new ByteArrayOutputStream();
         PrintStream inMemPrint = new PrintStream(inMemOut);
@@ -156,16 +153,16 @@ public abstract class TemplateService {
      *
      * @param model
      *          model to which to add the field
-     * @param genTypeModel
-     *          model store
+     * @param rootClassName
+     *          base name of the class
      * @param templateType
      *          which type are we adding
      * @return the modified model
      */
-    JtwigModel addTypeField(JtwigModel model, GenTypeModel genTypeModel, TemplateType templateType) {
+    JtwigModel addTypeField(JtwigModel model, String rootClassName, TemplateType templateType) {
         String packageName = getCustomPackage(templateType.relPathSetting);
-        String className = TypeUtil.normalizeTypeString(genTypeModel.getClassName() + templateType.suffix);
-        String varName = TypeUtil.normalizeVariableName(genTypeModel.getClassName()) + templateType.suffix;
+        String className = TypeUtil.normalizeTypeString(rootClassName + templateType.suffix);
+        String varName = TypeUtil.normalizeVariableName(rootClassName) + templateType.suffix;
 
         return model.with(templateType.templateVarName, new FlattenedField(packageName, className, varName));
     }

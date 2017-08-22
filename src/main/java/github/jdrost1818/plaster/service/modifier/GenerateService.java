@@ -3,7 +3,6 @@ package github.jdrost1818.plaster.service.modifier;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
-import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.UtilityService;
@@ -55,14 +54,10 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
     }
 
     private void generate(FileInformation fileInformation, TemplateType templateType, TemplateService templateService) {
-        GenTypeModel genTypeModel = new GenTypeModel(
-                fileInformation.getClassName(),
-                this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED));
-
         String genFilePath = this.utilityService.getFilePath(fileInformation, templateType);
         String renderedFileString = templateService.renderTemplate(
-                fileInformation,
-                genTypeModel);
+                fileInformation
+        );
 
         try {
             this.getOutputStream(genFilePath).write(renderedFileString.getBytes());

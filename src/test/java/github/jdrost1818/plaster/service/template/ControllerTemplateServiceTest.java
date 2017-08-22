@@ -48,13 +48,11 @@ public class ControllerTemplateServiceTest {
     public void addTypeField() throws Exception {
         JtwigModel model = JtwigModel.newModel();
 
-        GenTypeModel genTypeModel = new GenTypeModel("example_class", false);
-
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
         when(this.configurationService.get(Setting.REL_CONTROLLER_PACKAGE)).thenReturn("/controller");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
 
-        JtwigModel modifiedModel = this.classUnderTest.addTypeField(model, genTypeModel, TemplateType.CONTROLLER);
+        JtwigModel modifiedModel = this.classUnderTest.addTypeField(model, "example_class", TemplateType.CONTROLLER);
 
         FlattenedField x = (FlattenedField) modifiedModel.get("controllerField").get().getValue();
 
@@ -73,9 +71,8 @@ public class ControllerTemplateServiceTest {
     @Test
     public void addCustomInformation() {
         JtwigModel model = JtwigModel.newModel();
-        GenTypeModel genTypeModel = new GenTypeModel("example_class", false);
 
-        JtwigModel modifiedModel = this.classUnderTest.addCustomInformation(model, this.fileInformation, genTypeModel);
+        JtwigModel modifiedModel = this.classUnderTest.addCustomInformation(model, this.fileInformation);
 
         assertThat(modifiedModel.get("dependencies").get().getValue(), equalTo(Lists.newArrayList(new Dependency("java.util.List"))));
         assertThat(modifiedModel.get("controllerField").get().getValue(), equalTo(new FlattenedField("", "ExampleClassController", "exampleClassController")));
@@ -130,15 +127,13 @@ public class ControllerTemplateServiceTest {
                 "\n" +
                 "}\n";
 
-        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", false);
-
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
         when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
         when(this.configurationService.get(Setting.REL_CONTROLLER_PACKAGE)).thenReturn("/controller");
         when(this.configurationService.get(Setting.REL_SERVICE_PACKAGE)).thenReturn("/service");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
 
-        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation);
 
         assertThat(expected, equalTo(actual));
     }

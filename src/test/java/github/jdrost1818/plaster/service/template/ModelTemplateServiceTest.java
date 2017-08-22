@@ -54,13 +54,11 @@ public class ModelTemplateServiceTest {
     public void addTypeField() throws Exception {
         JtwigModel model = JtwigModel.newModel();
 
-        GenTypeModel genTypeModel = new GenTypeModel("example_class", false);
-
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
         when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
 
-        JtwigModel modifiedModel = this.classUnderTest.addTypeField(model, genTypeModel, TemplateType.MODEL);
+        JtwigModel modifiedModel = this.classUnderTest.addTypeField(model, "example_class", TemplateType.MODEL);
 
         FlattenedField x = (FlattenedField) modifiedModel.get("modelField").get().getValue();
 
@@ -79,9 +77,10 @@ public class ModelTemplateServiceTest {
     @Test
     public void addCustomInformation_lombok_enabled() {
         JtwigModel model = JtwigModel.newModel();
-        GenTypeModel genTypeModel = new GenTypeModel("example_class", true);
 
-        JtwigModel modifiedModel = this.classUnderTest.addCustomInformation(model, this.fileInformation, genTypeModel);
+        when(this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED)).thenReturn(true);
+
+        JtwigModel modifiedModel = this.classUnderTest.addCustomInformation(model, this.fileInformation);
 
         List<FlattenedField> addedFields = (List<FlattenedField>) modifiedModel.get("fields").get().getValue();
         List<Dependency> dependencies = (List<Dependency>)modifiedModel.get("dependencies").get().getValue();
@@ -101,9 +100,8 @@ public class ModelTemplateServiceTest {
     @Test
     public void addCustomInformation_lombok_not_enabled() {
         JtwigModel model = JtwigModel.newModel();
-        GenTypeModel genTypeModel = new GenTypeModel("example_class", false);
 
-        JtwigModel modifiedModel = this.classUnderTest.addCustomInformation(model, this.fileInformation, genTypeModel);
+        JtwigModel modifiedModel = this.classUnderTest.addCustomInformation(model, this.fileInformation);
 
         List<FlattenedField> addedFields = (List<FlattenedField>) modifiedModel.get("fields").get().getValue();
         List<Dependency> dependencies = (List<Dependency>)modifiedModel.get("dependencies").get().getValue();
@@ -155,13 +153,12 @@ public class ModelTemplateServiceTest {
                 "\n" +
                 "}\n";
 
-        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", true);
-
+        when(this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED)).thenReturn(true);
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
         when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
 
-        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation);
 
         assertThat(expected, equalTo(actual));
     }
@@ -224,13 +221,11 @@ public class ModelTemplateServiceTest {
                 "\n" +
                 "}\n";
 
-        GenTypeModel genTypeModel = new GenTypeModel("ExampleClass", false);
-
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
         when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
 
-        String actual = this.classUnderTest.renderTemplate(this.fileInformation, genTypeModel);
+        String actual = this.classUnderTest.renderTemplate(this.fileInformation);
 
         assertThat(expected, equalTo(actual));
     }

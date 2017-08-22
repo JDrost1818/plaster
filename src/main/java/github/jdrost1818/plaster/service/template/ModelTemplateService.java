@@ -1,10 +1,10 @@
 package github.jdrost1818.plaster.service.template;
 
 import com.google.common.collect.Lists;
+import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
-import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.template.Template;
 import org.jtwig.JtwigModel;
@@ -22,15 +22,15 @@ public class ModelTemplateService extends TemplateService {
      * {@inheritDoc}
      */
     @Override
-    JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
+    JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
         JtwigModel modelModel;
 
-        modelModel = super.addTypeField(model, genTypeModel, TemplateType.MODEL);
+        modelModel = super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
         modelModel = super.addDependencies(modelModel, fileInformation);
         modelModel = super.addFields(modelModel, fileInformation);
         modelModel = super.addId(modelModel, fileInformation);
 
-        if (genTypeModel.isLombokEnabled()) {
+        if (this.configurationService.getBoolean(Setting.IS_LOMBOK_ENABLED)) {
             modelModel = addLombokHeader(modelModel);
         } else {
             modelModel = addGettersAndSetters(modelModel, fileInformation);

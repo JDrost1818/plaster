@@ -2,7 +2,6 @@ package github.jdrost1818.plaster.service.template;
 
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
-import github.jdrost1818.plaster.domain.GenTypeModel;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -17,11 +16,11 @@ public class RepositoryTemplateService extends TemplateService {
      * {@inheritDoc}
      */
     @Override
-    JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel) {
+    JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
         JtwigModel repoModel;
 
-        repoModel = super.addTypeField(model, genTypeModel, TemplateType.REPOSITORY);
-        repoModel = super.addTypeField(repoModel, genTypeModel, TemplateType.MODEL);
+        repoModel = super.addTypeField(model, fileInformation.getClassName(), TemplateType.REPOSITORY);
+        repoModel = super.addTypeField(repoModel, fileInformation.getClassName(), TemplateType.MODEL);
         repoModel = super.addDependencies(repoModel, fileInformation.getId());
         repoModel = super.addId(repoModel, fileInformation);
 
