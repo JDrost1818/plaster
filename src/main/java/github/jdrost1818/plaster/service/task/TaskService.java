@@ -12,7 +12,6 @@ import github.jdrost1818.plaster.service.task.generate.ModelGenerate;
 public class TaskService {
 
     private final ConfigurationService configurationService = ServiceProvider.getConfigurationService();
-    private PlasterTaskId lastGenerateTaskId;
 
     public void perform(Mode mode, ModeScope modeScope, FileInformation fileInformation) {
         PlasterTask initialTask = getInitialTask(mode, modeScope);
