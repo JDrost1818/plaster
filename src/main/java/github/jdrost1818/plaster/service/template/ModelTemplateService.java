@@ -18,7 +18,7 @@ import static java.util.Objects.isNull;
 public class ModelTemplateService extends TemplateService {
 
     public ModelTemplateService(ConfigurationService configurationService) {
-        super(configurationService);
+        super(TemplateType.MODEL, configurationService);
     }
 
     /**

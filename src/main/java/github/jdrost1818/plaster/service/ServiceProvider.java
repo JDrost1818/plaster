@@ -1,7 +1,6 @@
 package github.jdrost1818.plaster.service;
 
-import github.jdrost1818.plaster.service.modifier.DeleteService;
-import github.jdrost1818.plaster.service.modifier.GenerateService;
+import github.jdrost1818.plaster.service.task.TaskService;
 import github.jdrost1818.plaster.service.template.*;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -32,6 +31,9 @@ public class ServiceProvider {
     private static final FieldService fieldService = new FieldService(typeService);
 
     @Getter
+    private static final TaskService taskService = new TaskService();
+
+    @Getter
     private static final ModelTemplateService modelTemplateService = new ModelTemplateService(configurationService);
 
     @Getter
@@ -54,22 +56,5 @@ public class ServiceProvider {
 
     @Getter
     private static final ServiceTestTemplateService serviceTestTemplateService = new ServiceTestTemplateService(configurationService);
-
-    @Getter
-    private static final GenerateService generateService = new GenerateService(
-            configurationService,
-            utilityService,
-            modelTemplateService,
-            modelTestTemplateService,
-            controllerTemplateService,
-            controllerTestTemplateService,
-            serviceTemplateService,
-            serviceTestTemplateService,
-            repositoryTemplateService,
-            repositoryTestTemplateService
-    );
-
-    @Getter
-    private static final DeleteService deleteService = new DeleteService(utilityService);
 
 }

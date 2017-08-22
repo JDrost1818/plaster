@@ -9,6 +9,7 @@ import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.util.PathUtil;
 import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -24,9 +25,13 @@ public abstract class TemplateService {
 
     protected final ConfigurationService configurationService;
 
+    @Getter
+    protected final TemplateType templateType;
+
     private Map<String, String> exampleValueMap = new HashMap<>();
 
-    public TemplateService(ConfigurationService configurationService) {
+    public TemplateService(TemplateType templateType, ConfigurationService configurationService) {
+        this.templateType = templateType;
         this.configurationService = configurationService;
 
         this.exampleValueMap.put("int", "1");

@@ -9,7 +9,7 @@ import org.jtwig.JtwigTemplate;
 public class ControllerTestTemplateService extends TemplateService {
 
     public ControllerTestTemplateService(ConfigurationService configurationService) {
-        super(configurationService);
+        super(TemplateType.CONTROLLER_TEST, configurationService);
     }
 
     @Override

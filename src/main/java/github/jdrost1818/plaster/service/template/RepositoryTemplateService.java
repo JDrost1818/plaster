@@ -9,7 +9,7 @@ import org.jtwig.JtwigTemplate;
 public class RepositoryTemplateService extends TemplateService {
 
     public RepositoryTemplateService(ConfigurationService configurationService) {
-        super(configurationService);
+        super(TemplateType.REPOSITORY, configurationService);
     }
 
     /**

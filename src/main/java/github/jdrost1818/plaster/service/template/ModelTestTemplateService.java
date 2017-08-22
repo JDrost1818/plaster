@@ -9,12 +9,12 @@ import org.jtwig.JtwigTemplate;
 public class ModelTestTemplateService extends TemplateService {
 
     public ModelTestTemplateService(ConfigurationService configurationService) {
-        super(configurationService);
+        super(TemplateType.MODEL_TEST, configurationService);
     }
 
     @Override
     JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
-        return super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL_TEST);
+        return super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
     }
 
     @Override

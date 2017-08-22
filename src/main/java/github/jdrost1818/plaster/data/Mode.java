@@ -3,8 +3,9 @@ package github.jdrost1818.plaster.data;
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.exception.PlasterException;
-import github.jdrost1818.plaster.task.delete.DeleteTask;
-import github.jdrost1818.plaster.task.generate.GenerateTask;
+import github.jdrost1818.plaster.service.task.delete.DeleteTask;
+import github.jdrost1818.plaster.service.task.generate.GenerateTask;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -13,26 +14,19 @@ import java.util.NoSuchElementException;
 import static github.jdrost1818.plaster.data.ModeScope.*;
 import static java.util.Objects.isNull;
 
+@AllArgsConstructor
 public enum Mode {
 
     GENERATE(
             Lists.newArrayList("g", "gen", "generate"),
-            Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER),
-            (s, f) -> GenerateTask.getInitialTask(s).perform(f, s)),
+            Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER)),
 
     DELETE(
             Lists.newArrayList("d", "del", "delete"),
-            Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER),
-            (s, f) -> DeleteTask.getInitialTask(s).perform(f, s));
+            Lists.newArrayList(SCAFFOLD, MODEL, REPOSITORY, SERVICE, CONTROLLER));
 
     private final List<String> searchTerms;
     private final List<ModeScope> scopes;
-    private final Perform performFunction;
-    Mode(List<String> searchTerms, List<ModeScope> scopes, Perform performFunction) {
-        this.searchTerms = searchTerms;
-        this.scopes = scopes;
-        this.performFunction = performFunction;
-    }
 
     /**
      * Gets the mode for the provided term
@@ -55,28 +49,6 @@ public enum Mode {
         }
 
         throw new PlasterException("Cannot find mode for: " + searchTerm);
-    }
-
-    /**
-     * Gets the scope from the mode
-     *
-     * @param scopeKey
-     *          name of the scope to get
-     */
-    public void perform(String scopeKey, FileInformation fileInformation) {
-        ModeScope scope = ModeScope.valueOf(StringUtils.upperCase(scopeKey));
-
-        if (!this.scopes.contains(scope)) {
-            throw new PlasterException(this.name() + " does not support: " + scope.name());
-        }
-
-        this.performFunction.execute(scope, fileInformation);
-    }
-
-    private interface Perform {
-
-        void execute(ModeScope scope, FileInformation fileInformation);
-
     }
 
 }

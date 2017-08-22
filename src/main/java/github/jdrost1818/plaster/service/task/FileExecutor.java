@@ -1,4 +1,4 @@
-package github.jdrost1818.plaster.task;
+package github.jdrost1818.plaster.service.task;
 
 import github.jdrost1818.plaster.domain.FileInformation;
 

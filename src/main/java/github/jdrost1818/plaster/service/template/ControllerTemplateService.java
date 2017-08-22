@@ -10,7 +10,7 @@ import org.jtwig.JtwigTemplate;
 public class ControllerTemplateService extends TemplateService {
 
     public ControllerTemplateService(ConfigurationService configurationService) {
-        super(configurationService);
+        super(TemplateType.CONTROLLER, configurationService);
     }
 
     /**

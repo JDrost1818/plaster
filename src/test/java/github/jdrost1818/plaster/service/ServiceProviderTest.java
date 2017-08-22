@@ -20,11 +20,6 @@ public class ServiceProviderTest {
     }
 
     @Test
-    public void getGenerateService() throws Exception {
-        assertThat(ServiceProvider.getGenerateService(), sameInstance(ServiceProvider.getGenerateService()));
-    }
-
-    @Test
     public void getTypeService() throws Exception {
         assertThat(ServiceProvider.getTypeService(), sameInstance(ServiceProvider.getTypeService()));
     }
@@ -58,11 +53,6 @@ public class ServiceProviderTest {
     @Test
     public void getServiceTemplateService() throws Exception {
         assertThat(ServiceProvider.getServiceTemplateService(), sameInstance(ServiceProvider.getServiceTemplateService()));
-    }
-
-    @Test
-    public void getDeleteService() throws Exception {
-        assertThat(ServiceProvider.getDeleteService(), sameInstance(ServiceProvider.getDeleteService()));
     }
 
 }
