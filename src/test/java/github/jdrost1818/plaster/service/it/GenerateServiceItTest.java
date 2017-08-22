@@ -8,6 +8,7 @@ import github.jdrost1818.plaster.service.ConfigurationServiceTest;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.modifier.GenerateService;
 import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +40,12 @@ public class GenerateServiceItTest {
         ));
     }
 
+    @After
+    public void tearDown() throws Exception {
+        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
+        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/test/java/com/example/app/somewhere/"));
+    }
+
     @Test
     public void generateModel_lombok_enabled() throws IOException {
         String expected = GeneratedContent.MODEL_CLASS_LOMBOK_IT;
@@ -49,8 +56,6 @@ public class GenerateServiceItTest {
         assertTrue(generatedFile.exists());
 
         String content = new String(Files.readAllBytes(generatedFile.toPath()));
-
-        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
 
         assertThat(content, equalTo(expected));
     }
@@ -68,7 +73,6 @@ public class GenerateServiceItTest {
         String content = new String(Files.readAllBytes(generatedFile.toPath()));
 
         ServiceProvider.getConfigurationService().put(Setting.IS_LOMBOK_ENABLED, "true");
-        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
 
         assertThat(content, equalTo(expected));
     }
@@ -84,8 +88,6 @@ public class GenerateServiceItTest {
 
         String content = new String(Files.readAllBytes(generatedFile.toPath()));
 
-        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
-
         assertThat(content, equalTo(expected));
     }
 
@@ -100,8 +102,6 @@ public class GenerateServiceItTest {
 
         String content = new String(Files.readAllBytes(generatedFile.toPath()));
 
-        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
-
         assertThat(content, equalTo(expected));
     }
 
@@ -115,8 +115,6 @@ public class GenerateServiceItTest {
         assertTrue(generatedFile.exists());
 
         String content = new String(Files.readAllBytes(generatedFile.toPath()));
-
-        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
 
         assertThat(content, equalTo(expected));
     }

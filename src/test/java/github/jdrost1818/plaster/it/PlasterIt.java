@@ -59,6 +59,7 @@ public class PlasterIt {
     @After
     public void tearDown() throws IOException {
         FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
+        FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/test/java/com/example/app/somewhere/"));
     }
 
 }
