@@ -91,9 +91,9 @@ public class ModelTemplateServiceTest {
         assertTrue(modifiedModel.get("header").isPresent());
         assertFalse(modifiedModel.get("methods").isPresent());
         assertThat(addedFields, hasItems(
-                new FlattenedField("", "Map", "var1"),
-                new FlattenedField("", "List", "var2"),
-                new FlattenedField("", "Example", "var3")
+                new FlattenedField("", "Map", "var1", "null"),
+                new FlattenedField("", "List", "var2", "null"),
+                new FlattenedField("", "Example", "var3", "null")
         ));
     }
 
@@ -112,9 +112,9 @@ public class ModelTemplateServiceTest {
         assertFalse(modifiedModel.get("header").isPresent());
         assertTrue(modifiedModel.get("methods").isPresent());
         assertThat(addedFields, hasItems(
-                new FlattenedField("", "Map", "var1"),
-                new FlattenedField("", "List", "var2"),
-                new FlattenedField("", "Example", "var3")
+                new FlattenedField("", "Map", "var1", "null"),
+                new FlattenedField("", "List", "var2", "null"),
+                new FlattenedField("", "Example", "var3", "null")
         ));
     }
 

@@ -24,6 +24,7 @@ public class FlattenedField {
         this.packagePath = "";
         this.className = field.getTypeDeclaration().getDeclaration();
         this.varName = field.getVariableName();
+        this.exampleValue = "null";
     }
 
 }

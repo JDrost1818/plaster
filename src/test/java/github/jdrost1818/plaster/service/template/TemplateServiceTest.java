@@ -53,9 +53,9 @@ public class TemplateServiceTest {
         List<FlattenedField> addedFields = (List<FlattenedField>) modifiedModel.get("fields").get().getValue();
 
         assertThat(addedFields, hasItems(
-                new FlattenedField("", "Map", "var1"),
-                new FlattenedField("", "List", "var2"),
-                new FlattenedField("", "Example", "var3")
+                new FlattenedField("", "Map", "var1", "null"),
+                new FlattenedField("", "List", "var2", "null"),
+                new FlattenedField("", "Example", "var3", "null")
         ));
     }
 
