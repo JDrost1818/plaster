@@ -3,14 +3,14 @@ package github.jdrost1818.plaster.service.task.generate;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.task.PlasterTaskId;
 
-class Model extends GenerateTask {
+public class ModelGenerate extends GenerateTask {
 
-    public Model() {
+    public ModelGenerate() {
         super(
                 "Could not generate model",
                 PlasterTaskId.MODEL,
                 ServiceProvider.getModelTemplateService(),
-                new Repository()
+                new RepositoryGenerate()
         );
     }
 

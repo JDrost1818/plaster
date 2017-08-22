@@ -4,9 +4,9 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.service.task.PlasterTaskId;
 import github.jdrost1818.plaster.service.task.util.DoNothing;
 
-class Model extends DeleteTask {
+public class ModelDelete extends DeleteTask {
 
-    public Model() {
+    public ModelDelete() {
         super(
                 "Could not delete model",
                 PlasterTaskId.MODEL,

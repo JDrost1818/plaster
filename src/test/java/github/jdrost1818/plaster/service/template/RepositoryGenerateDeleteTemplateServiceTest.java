@@ -13,18 +13,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ControllerTemplateServiceTest {
+public class RepositoryGenerateDeleteTemplateServiceTest {
 
     @Mock
     private ConfigurationService configurationService;
 
-    private ControllerTemplateService classUnderTest;
+    private RepositoryTemplateService classUnderTest;
 
     private FileInformation fileInformation;
 
@@ -32,7 +35,7 @@ public class ControllerTemplateServiceTest {
     public void setUp() throws Exception {
         initMocks(this);
 
-        this.classUnderTest = new ControllerTemplateService(configurationService);
+        this.classUnderTest = new RepositoryTemplateService(configurationService);
 
         Field id = new Field(new TypeDeclaration("List", Lists.newArrayList(StoredJavaType.LIST.getType(false))), "id");
         Field mapField = new Field(new TypeDeclaration("Map", Lists.newArrayList(StoredJavaType.MAP.getType(false))), "var1");
@@ -49,16 +52,16 @@ public class ControllerTemplateServiceTest {
         JtwigModel model = JtwigModel.newModel();
 
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
-        when(this.configurationService.get(Setting.REL_CONTROLLER_PACKAGE)).thenReturn("/controller");
+        when(this.configurationService.get(Setting.REL_REPOSITORY_PACKAGE)).thenReturn("/repository");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
 
-        JtwigModel modifiedModel = this.classUnderTest.addTypeField(model, "example_class", TemplateType.CONTROLLER);
+        JtwigModel modifiedModel = this.classUnderTest.addTypeField(model, "example_class", TemplateType.REPOSITORY);
 
-        FlattenedField x = (FlattenedField) modifiedModel.get("controllerField").get().getValue();
+        FlattenedField x = (FlattenedField) modifiedModel.get("repoField").get().getValue();
 
-        assertThat(x.getClassName(), equalTo("ExampleClassController"));
-        assertThat(x.getPackagePath(), equalTo("com.example.app.controller.somewhere"));
-        assertThat(x.getVarName(), equalTo("exampleClassController"));
+        assertThat(x.getClassName(), equalTo("ExampleClassRepository"));
+        assertThat(x.getPackagePath(), equalTo("com.example.app.repository.somewhere"));
+        assertThat(x.getVarName(), equalTo("exampleClassRepository"));
     }
 
     @Test
@@ -74,61 +77,39 @@ public class ControllerTemplateServiceTest {
 
         JtwigModel modifiedModel = this.classUnderTest.addCustomInformation(model, this.fileInformation);
 
-        assertThat(modifiedModel.get("dependencies").get().getValue(), equalTo(Lists.newArrayList(new Dependency("java.util.List"))));
-        assertThat(modifiedModel.get("controllerField").get().getValue(), equalTo(new FlattenedField("", "ExampleClassController", "exampleClassController")));
+        List<Dependency> dependencies = (List<Dependency>)modifiedModel.get("dependencies").get().getValue();
+
+        assertThat(dependencies, hasSize(1));
         assertThat(modifiedModel.get("modelField").get().getValue(), equalTo(new FlattenedField("", "ExampleClass", "exampleClass")));
-        assertThat(modifiedModel.get("serviceField").get().getValue(), equalTo(new FlattenedField("", "ExampleClassService", "exampleClassService")));
+        assertThat(modifiedModel.get("repoField").get().getValue(), equalTo(new FlattenedField("", "ExampleClassRepository", "exampleClassRepository")));
         assertThat(modifiedModel.get("idField").get().getValue(), equalTo(new FlattenedField("", "List", "id")));
-        assertThat(modifiedModel.get("baseRoute").get().getValue(), equalTo("exampleClass"));
     }
 
     @Test
     public void renderTemplate() {
-        String expected = "package com.example.app.controller.somewhere;\n" +
+        String expected = "" +
+                "package com.example.app.repository.somewhere;\n" +
                 "\n" +
-                "import org.springframework.beans.factory.annotation.Autowired;\n" +
-                "import org.springframework.web.bind.annotation.*;\n" +
+                "import org.springframework.data.domain.Page;\n" +
+                "import org.springframework.data.domain.Pageable;\n" +
+                "import org.springframework.data.jpa.domain.Specification;\n" +
+                "import org.springframework.data.repository.CrudRepository;\n" +
                 "\n" +
                 "import java.util.List;\n" +
                 "\n" +
-                "import com.example.app.service.somewhere.ExampleClassService;\n" +
                 "import com.example.app.model.somewhere.ExampleClass;\n" +
                 "\n" +
-                "@RestController\n" +
-                "@RequestMapping(\"/exampleClass\")\n" +
-                "public class ExampleClassController {\n" +
+                "public interface ExampleClassRepository extends CrudRepository<ExampleClass, List> {\n" +
                 "\n" +
-                "    private final ExampleClassService exampleClassService;\n" +
+                "    Page<ExampleClass> findAll(Specification<ExampleClass> spec, Pageable pageInfo);\n" +
                 "\n" +
-                "    @Autowired\n" +
-                "    public ExampleClassController(ExampleClassService exampleClassService) {\n" +
-                "            this.exampleClassService = exampleClassService;\n" +
-                "    }\n" +
+                "    ExampleClass findOne(Specification<ExampleClass> spec);\n" +
                 "\n" +
-                "    @RequestMapping(value = \"/\", method = RequestMethod.POST)\n" +
-                "    public ExampleClass create(@RequestBody ExampleClass exampleClass) {\n" +
-                "            return this.exampleClassService.create(exampleClass);\n" +
-                "    }\n" +
-                "\n" +
-                "    @RequestMapping(value = \"/{id}\", method = RequestMethod.GET)\n" +
-                "    public ExampleClass read(@PathVariable List id) {\n" +
-                "            return this.exampleClassService.read(id);\n" +
-                "    }\n" +
-                "\n" +
-                "    @RequestMapping(value = \"/{id}\", method = RequestMethod.PUT)\n" +
-                "    public ExampleClass update(@PathVariable List id, @RequestBody ExampleClass exampleClass) {\n" +
-                "            return this.exampleClassService.update(exampleClass);\n" +
-                "    }\n" +
-                "\n" +
-                "    @RequestMapping(value = \"/{id}\", method = RequestMethod.DELETE)\n" +
-                "    public void delete(@PathVariable List id) {\n" +
-                "            this.exampleClassService.delete(id);\n" +
-                "    }\n" +
-                "\n" +
-                "}\n";
+                "}";
 
         when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
         when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
+        when(this.configurationService.get(Setting.REL_REPOSITORY_PACKAGE)).thenReturn("/repository");
         when(this.configurationService.get(Setting.REL_CONTROLLER_PACKAGE)).thenReturn("/controller");
         when(this.configurationService.get(Setting.REL_SERVICE_PACKAGE)).thenReturn("/service");
         when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");

@@ -139,14 +139,14 @@ public class GeneratedContent {
             "package com.example.app.somewhere.service;\n" +
             "\n" +
             "import org.springframework.beans.factory.annotation.Autowired;\n" +
-            "import org.springframework.stereotype.Service;\n" +
+            "import org.springframework.stereotype.ServiceDelete;\n" +
             "\n" +
             "import java.util.List;\n" +
             "\n" +
             "import com.example.app.somewhere.model.ExampleClass;\n" +
             "import com.example.app.somewhere.repository.ExampleClassRepository;\n" +
             "\n" +
-            "@Service\n" +
+            "@ServiceDelete\n" +
             "public class ExampleClassService {\n" +
             "\n" +
             "    private final ExampleClassRepository exampleClassRepository;\n" +

@@ -56,7 +56,7 @@ public class Plaster {
             Mode mode = Mode.getMode(parsedArgs.getString(Arg.MODE.key));
             String modeScope = parsedArgs.getString(Arg.MODE_SCOPE.key);
 
-            taskService.perform(mode, ModeScope.valueOf(modeScope), fileInformation);
+            taskService.perform(mode, ModeScope.valueOf(StringUtils.upperCase(modeScope)), fileInformation);
         } catch (PlasterException | DeveloperException e) {
             System.out.println(e.getMessage());
         }

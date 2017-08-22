@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public abstract class DeleteTask extends PlasterTask {
+abstract class DeleteTask extends PlasterTask {
 
     @Setter
     private static UtilityService utilityService = ServiceProvider.getUtilityService();
@@ -24,7 +24,7 @@ public abstract class DeleteTask extends PlasterTask {
     final TemplateType templateType;
 
     public static PlasterTask getInitialTask(ModeScope scope) {
-        return new Controller();
+        return new ControllerDelete();
     }
 
     DeleteTask(String errorMsg, PlasterTaskId taskId, TemplateType templateType, PlasterTask nextGeneration) {

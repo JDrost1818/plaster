@@ -25,7 +25,7 @@ import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ModelTemplateServiceTest {
+public class ModelGenerateDeleteTemplateServiceTest {
 
     @Mock
     private ConfigurationService configurationService;
