@@ -9,21 +9,36 @@ import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.util.PathUtil;
 import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AllArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public abstract class TemplateService {
 
     protected final ConfigurationService configurationService;
+
+    private Map<String, String> exampleValueMap = new HashMap<>();
+
+    public TemplateService(ConfigurationService configurationService) {
+        this.configurationService = configurationService;
+
+        this.exampleValueMap.put("int", "1");
+        this.exampleValueMap.put("Integer", "1");
+        this.exampleValueMap.put("long", "1L");
+        this.exampleValueMap.put("Long", "1L");
+        this.exampleValueMap.put("double", "1D");
+        this.exampleValueMap.put("Double", "1D");
+        this.exampleValueMap.put("float", "1F");
+        this.exampleValueMap.put("Float", "1F");
+        this.exampleValueMap.put("String", "\"val\"");
+    }
 
     /**
      * Adds information not applicable to all types of rendering being done.
@@ -127,7 +142,10 @@ public abstract class TemplateService {
      * @return the modified model
      */
     JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
-        return model.with("idField", new FlattenedField(fileInformation.getId()));
+        FlattenedField idField = new FlattenedField(fileInformation.getId());
+        idField.setExampleValue(this.getExampleValue(fileInformation.getId()));
+
+        return model.with("idField", idField);
     }
 
     /**
@@ -197,6 +215,14 @@ public abstract class TemplateService {
         String path = PathUtil.joinPath(appPackage, relGenPackage, customGenPackage);
 
         return PathUtil.pathToPackage(path);
+    }
+
+    private String getExampleValue(Field field) {
+        List<Type> types = field.getTypeDeclaration().getTypes();
+        if (CollectionUtils.isEmpty(types) || types.size() > 1) {
+            return "null";
+        }
+        return this.exampleValueMap.getOrDefault(types.get(0).getClassName(), "null");
     }
 
 }

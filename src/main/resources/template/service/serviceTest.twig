@@ -37,10 +37,12 @@ public class {{ serviceTestField.className }} {
 
     @Test
     public void testRead() {
-        {{ modelField }}
+        {{ idField.className }} id = {{ idField.exampleValue }};
         {{ modelField.className }} instance = new {{ modelField.className }}();
 
-        when(this.{{ repoField.varName }}.save(id)).thenReturn(instance);
+        when(this.{{ repoField.varName }}.findOne(id)).thenReturn(instance);
+
+        assertThat(instance, sameInstance(this.classUnderTest.read(id)));
     }
 
     @Test
