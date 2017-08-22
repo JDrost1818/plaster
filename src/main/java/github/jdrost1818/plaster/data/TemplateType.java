@@ -54,10 +54,24 @@ public enum TemplateType {
             Setting.REL_SERVICE_PACKAGE,
             GenerationLocation.TEST
     ),
+    SERVICE_IT(
+            "ServiceIT",
+            "serviceTestField",
+            "service/serviceIT.twig",
+            Setting.REL_SERVICE_PACKAGE,
+            GenerationLocation.TEST
+    ),
     CONTROLLER_TEST(
             "ControllerTest",
             "controllerTestField",
             "controller/controllerTest.twig",
+            Setting.REL_CONTROLLER_PACKAGE,
+            GenerationLocation.TEST
+    ),
+    CONTROLLER_IT(
+            "ControllerIT",
+            "controllerTestField",
+            "controller/controllerIT.twig",
             Setting.REL_CONTROLLER_PACKAGE,
             GenerationLocation.TEST
     );

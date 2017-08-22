@@ -3,14 +3,14 @@ package github.jdrost1818.plaster.service.task.delete;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.service.task.PlasterTaskId;
 
-public class RepositoryDelete extends DeleteTask {
+public class RepositoryTestDelete extends DeleteTask {
 
-    RepositoryDelete() {
+    public RepositoryTestDelete() {
         super(
-                "Could not delete repository",
-                PlasterTaskId.REPOSITORY,
+                "Could not delete repository tests",
+                PlasterTaskId.REPOSITORY_TEST,
                 TemplateType.REPOSITORY,
-                new RepositoryDelete()
+                new ModelDelete()
         );
     }
 
