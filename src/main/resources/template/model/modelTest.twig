@@ -1,22 +1,7 @@
 package {{ modelField.packagePath }};
 
-import javax.persistence.*;
+import org.junit.Test;
 
-{% include '/template/util/imports.twig' with dependencies %}
-
-{{ header }}
-@Entity
 public class {{ modelField.className }} {
-
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-private {{ idField.className }} {{ idField.varName }};
-
-{% for field in fields %}
-    private {{ field.className }} {{ field.varName }};
-
-{% endfor %}
-
-{{ methods }}
 
 }

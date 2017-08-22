@@ -18,6 +18,6 @@ public class ModelTestTemplateService extends TemplateService {
 
     @Override
     JtwigTemplate getTemplate() {
-        return null;
+        return JtwigTemplate.classpathTemplate("template/model/modelTest.twig");
     }
 }

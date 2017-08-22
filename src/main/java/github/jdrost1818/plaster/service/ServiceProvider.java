@@ -2,10 +2,7 @@ package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.service.modifier.DeleteService;
 import github.jdrost1818.plaster.service.modifier.GenerateService;
-import github.jdrost1818.plaster.service.template.ControllerTemplateService;
-import github.jdrost1818.plaster.service.template.ModelTemplateService;
-import github.jdrost1818.plaster.service.template.RepositoryTemplateService;
-import github.jdrost1818.plaster.service.template.ServiceTemplateService;
+import github.jdrost1818.plaster.service.template.*;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
@@ -38,6 +35,9 @@ public class ServiceProvider {
     private static final ModelTemplateService modelTemplateService = new ModelTemplateService(configurationService);
 
     @Getter
+    private static final ModelTestTemplateService modelTestTemplateService = new ModelTestTemplateService(configurationService);
+
+    @Getter
     private static final ControllerTemplateService controllerTemplateService = new ControllerTemplateService(configurationService);
 
     @Getter
@@ -51,6 +51,7 @@ public class ServiceProvider {
             configurationService,
             utilityService,
             modelTemplateService,
+            modelTestTemplateService,
             controllerTemplateService,
             serviceTemplateService,
             repositoryTemplateService

@@ -28,6 +28,10 @@ public class UtilityService {
         String customPath = this.configurationService.get(Setting.SUB_DIR_PATH);
         String fileName = fileInformation.getClassName() + templateType.suffix + ".java";
 
+        if (templateType.isTest) {
+            basePath = basePath.replace("src/main", "src/test");
+        }
+
         return PathUtil.joinPath(projectPath, basePath, appPath, dirPath, customPath, fileName);
     }
 

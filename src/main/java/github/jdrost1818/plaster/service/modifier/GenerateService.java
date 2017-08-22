@@ -27,6 +27,8 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
 
     private final ModelTemplateService modelTemplateService;
 
+    private final ModelTestTemplateService modelTestTemplateService;
+
     private final ControllerTemplateService controllerTemplateService;
 
     private final ServiceTemplateService serviceTemplateService;
@@ -36,6 +38,9 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
     @Override
     public void modifyModel(FileInformation fileInformation) {
         this.generate(fileInformation, TemplateType.MODEL, this.modelTemplateService);
+        if (this.configurationService.getBoolean(Setting.IS_TESTING_ENABLED)) {
+            this.generate(fileInformation, TemplateType.MODEL_TEST, this.modelTestTemplateService);
+        }
     }
 
     @Override
@@ -55,9 +60,7 @@ public class GenerateService implements ModelModifier, ControllerModifier, Servi
 
     private void generate(FileInformation fileInformation, TemplateType templateType, TemplateService templateService) {
         String genFilePath = this.utilityService.getFilePath(fileInformation, templateType);
-        String renderedFileString = templateService.renderTemplate(
-                fileInformation
-        );
+        String renderedFileString = templateService.renderTemplate(fileInformation);
 
         try {
             this.getOutputStream(genFilePath).write(renderedFileString.getBytes());

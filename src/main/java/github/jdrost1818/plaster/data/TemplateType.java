@@ -33,30 +33,39 @@ public enum TemplateType {
             "Test",
             "modelTestField",
             "model/modelTest.twig",
-            Setting.REL_MODEL_PACKAGE
+            Setting.REL_MODEL_PACKAGE,
+            true
     ),
     REPOSITORY_TEST(
             "RepositoryTest",
             "repoField",
             "repo/repositoryTest.twig",
-            Setting.REL_REPOSITORY_PACKAGE
+            Setting.REL_REPOSITORY_PACKAGE,
+            true
     ),
     SERVICE_TEST(
             "ServiceTest",
             "serviceField",
             "service/serviceTest.twig",
-            Setting.REL_SERVICE_PACKAGE
+            Setting.REL_SERVICE_PACKAGE,
+            true
     ),
     CONTROLLER_TEST(
             "ControllerTest",
             "controllerField",
             "controller/controllerTest.twig",
-            Setting.REL_CONTROLLER_PACKAGE
+            Setting.REL_CONTROLLER_PACKAGE,
+            true
     );
 
     public final String suffix;
     public final String templateVarName;
     public final String templateLocation;
     public final Setting relPathSetting;
+    public final Boolean isTest;
+
+    TemplateType(String suffix, String templateVarName, String templateLocation, Setting relPathSetting) {
+        this(suffix, templateVarName, templateLocation, relPathSetting, false);
+    }
 
 }
