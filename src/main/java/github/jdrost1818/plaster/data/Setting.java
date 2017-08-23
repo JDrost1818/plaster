@@ -112,6 +112,17 @@ public enum Setting {
     MAVEN_GROUP_ID(null, String.class, null),
 
     /**
+     * string defining the name of the project.
+     *
+     * This is determined by inspection the pom
+     *
+     * Example:
+     *
+     *      plaster
+     */
+    APP_NAME(null, String.class, null),
+
+    /**
      * string defining custom package, from the {@link Setting#APP_PATH} to generate models
      *
      * This is determined by inspecting the plaster.yml file

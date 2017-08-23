@@ -5,7 +5,9 @@ import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.util.PathUtil;
+import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.nio.file.Paths;
 
@@ -22,8 +24,15 @@ public class UtilityService {
         String customPath = this.configurationService.get(Setting.SUB_DIR_PATH);
         String fileName = fileInformation.getClassName() + templateType.suffix + ".java";
 
+        // Todo - This is going to get out of hand. Fix it... Somehow
         if (templateType.generationLocation == GenerationLocation.TEST) {
             basePath = basePath.replace("src/main", "src/test");
+        } else if (templateType.generationLocation == GenerationLocation.ROOT_TEST) {
+            basePath = basePath.replace("src/main", "src/test");
+            String itFileName =  this.configurationService.get(Setting.APP_NAME)  + templateType.suffix;
+            itFileName = TypeUtil.normalizeTypeString(itFileName) + ".java";
+
+            return PathUtil.joinPath(projectPath, basePath, appPath, itFileName);
         }
 
         return PathUtil.joinPath(projectPath, basePath, appPath, dirPath, customPath, fileName);

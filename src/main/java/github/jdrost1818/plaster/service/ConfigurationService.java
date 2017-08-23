@@ -129,6 +129,9 @@ public class ConfigurationService {
             this.configMap.put(Setting.APP_PATH, PathUtil.
                     normalize(mavenGroupId.replace(".", "/"), "/"));
 
+            String artifactName = doc.getElementsByTagName("artifactId").item(0).getTextContent();
+            this.configMap.put(Setting.APP_NAME, artifactName);
+
             /*
                 This part inspects the dependencies to see what we can turn on
              */
