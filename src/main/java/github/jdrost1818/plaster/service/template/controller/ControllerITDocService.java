@@ -15,11 +15,18 @@ public class ControllerITDocService extends TemplateService {
 
     @Override
     protected JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
-        return null;
+
+        model = super.addId(model, fileInformation);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER_IT_DOC);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE);
+
+        return model;
     }
 
     @Override
     protected JtwigTemplate getTemplate() {
-        return null;
+        return JtwigTemplate.classpathTemplate("template/controller/controllerTest.twig");
     }
 }

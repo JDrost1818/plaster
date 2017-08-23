@@ -183,7 +183,6 @@ public abstract class TemplateService {
      *          which type are we adding
      * @return the modified model
      */
-    @VisibleForTesting
     protected JtwigModel addTypeField(JtwigModel model, String rootClassName, TemplateType templateType) {
         String packageName = getCustomPackage(templateType.relPathSetting);
         String className = TypeUtil.normalizeTypeString(rootClassName + templateType.suffix);
