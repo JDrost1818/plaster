@@ -80,6 +80,13 @@ public enum TemplateType {
             "controller/controllerITDoc.twig",
             Setting.REL_CONTROLLER_PACKAGE,
             GenerationLocation.TEST
+    ),
+    IT_DOC_PARENT(
+            "ITDocTest",
+            "docField",
+            "general/itDocParent.twig",
+            Setting.APP_PATH,
+            GenerationLocation.ROOT_TEST
     );
 
     public final String suffix;
