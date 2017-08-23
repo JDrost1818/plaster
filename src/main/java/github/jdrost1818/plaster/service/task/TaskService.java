@@ -51,9 +51,6 @@ public class TaskService {
     }
 
     private PlasterTask getInitialGenerateTask() {
-        if (configurationService.getBoolean(Setting.IS_TESTING_ENABLED)) {
-            return new ModelGenerate();
-        }
         return new ModelGenerate();
     }
 

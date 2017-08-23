@@ -74,6 +74,12 @@ public enum TemplateType {
             "controller/controllerIT.twig",
             Setting.REL_CONTROLLER_PACKAGE,
             GenerationLocation.TEST
+    ), CONTROLLER_IT_DOC(
+            "ControllerIT",
+            "controllerTestField",
+            "controller/controllerITDoc.twig",
+            Setting.REL_CONTROLLER_PACKAGE,
+            GenerationLocation.TEST
     );
 
     public final String suffix;

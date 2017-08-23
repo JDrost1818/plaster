@@ -1,4 +1,4 @@
-package github.jdrost1818.plaster.service.template;
+package github.jdrost1818.plaster.service.template.model;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
@@ -25,7 +25,7 @@ import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ModelGenerateDeleteTemplateServiceTest {
+public class ModelTemplateServiceTest {
 
     @Mock
     private ConfigurationService configurationService;
@@ -48,23 +48,6 @@ public class ModelGenerateDeleteTemplateServiceTest {
         this.fileInformation = new FileInformation("example_class", id, Lists.newArrayList(
                 mapField, listField, exampleField
         ));
-    }
-
-    @Test
-    public void addTypeField() throws Exception {
-        JtwigModel model = JtwigModel.newModel();
-
-        when(this.configurationService.get(Setting.APP_PATH)).thenReturn("/com/example/app");
-        when(this.configurationService.get(Setting.REL_MODEL_PACKAGE)).thenReturn("/model");
-        when(this.configurationService.get(Setting.SUB_DIR_PATH)).thenReturn("/somewhere");
-
-        JtwigModel modifiedModel = this.classUnderTest.addTypeField(model, "example_class", TemplateType.MODEL);
-
-        FlattenedField x = (FlattenedField) modifiedModel.get("modelField").get().getValue();
-
-        assertThat(x.getClassName(), equalTo("ExampleClass"));
-        assertThat(x.getPackagePath(), equalTo("com.example.app.model.somewhere"));
-        assertThat(x.getVarName(), equalTo("exampleClass"));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package github.jdrost1818.plaster.service.template;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
@@ -54,14 +55,14 @@ public abstract class TemplateService {
      *          information about the file to generate
      * @return the fully-customized model object
      */
-    abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation);
+    protected abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation);
 
     /**
      * Gets the appropriate template with which to perform the rendering
      *
      * @return the Jtwig template
      */
-    abstract JtwigTemplate getTemplate();
+    protected abstract JtwigTemplate getTemplate();
 
     /**
      * The entry point to render a template.
@@ -94,7 +95,7 @@ public abstract class TemplateService {
      *          information about the file to generate
      * @return the modified model
      */
-    JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
         List<Field> fields = new ArrayList<>(fileInformation.getFields());
         fields.add(fileInformation.getId());
 
@@ -110,7 +111,7 @@ public abstract class TemplateService {
      *          field which contains the dependency to add
      * @return the modified model
      */
-    JtwigModel addDependencies(JtwigModel model, Field field) {
+    protected JtwigModel addDependencies(JtwigModel model, Field field) {
         return addDependencies(model, Lists.newArrayList(field));
     }
 
@@ -123,7 +124,7 @@ public abstract class TemplateService {
      *          fields which contain the dependencies to add
      * @return the modified model
      */
-    JtwigModel addDependencies(JtwigModel model, List<Field> fields) {
+    protected JtwigModel addDependencies(JtwigModel model, List<Field> fields) {
          List<Dependency> dependencies = fields.stream()
                  .map(Field::getTypeDeclaration)
                  .map(TypeDeclaration::getTypes)
@@ -146,7 +147,7 @@ public abstract class TemplateService {
      *          information about the file to generate
      * @return the modified model
      */
-    JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
         FlattenedField idField = new FlattenedField(fileInformation.getId());
         idField.setExampleValue(this.getExampleValue(fileInformation.getId()));
 
@@ -163,7 +164,7 @@ public abstract class TemplateService {
      *          information about the file to generate
      * @return the modified model
      */
-    JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {
         List<FlattenedField> fields = fileInformation.getFields().stream()
                 .map(FlattenedField::new)
                 .collect(Collectors.toList());
@@ -182,7 +183,8 @@ public abstract class TemplateService {
      *          which type are we adding
      * @return the modified model
      */
-    JtwigModel addTypeField(JtwigModel model, String rootClassName, TemplateType templateType) {
+    @VisibleForTesting
+    protected JtwigModel addTypeField(JtwigModel model, String rootClassName, TemplateType templateType) {
         String packageName = getCustomPackage(templateType.relPathSetting);
         String className = TypeUtil.normalizeTypeString(rootClassName + templateType.suffix);
         String varName = TypeUtil.normalizeVariableName(rootClassName) + templateType.suffix;
@@ -198,7 +200,7 @@ public abstract class TemplateService {
      *          content to format
      * @return the formatted file content
      */
-    String formatFile(String fileString) {
+    protected String formatFile(String fileString) {
         return fileString.replaceAll("(\r?\n){3,}", "\n\n").replaceAll("\t", "    ");
     }
 

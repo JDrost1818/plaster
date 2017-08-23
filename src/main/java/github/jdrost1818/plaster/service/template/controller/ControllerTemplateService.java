@@ -1,8 +1,9 @@
-package github.jdrost1818.plaster.service.template;
+package github.jdrost1818.plaster.service.template.controller;
 
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.template.TemplateService;
 import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -17,7 +18,7 @@ public class ControllerTemplateService extends TemplateService {
      * {@inheritDoc}
      */
     @Override
-    JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
         JtwigModel controllerModel;
 
         controllerModel = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER);
@@ -34,7 +35,7 @@ public class ControllerTemplateService extends TemplateService {
      * {@inheritDoc}
      */
     @Override
-    JtwigTemplate getTemplate() {
+    protected JtwigTemplate getTemplate() {
         return JtwigTemplate.classpathTemplate("template/controller/controller.twig");
     }
 

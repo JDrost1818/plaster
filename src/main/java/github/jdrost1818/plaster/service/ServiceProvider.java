@@ -1,7 +1,14 @@
 package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.service.task.TaskService;
-import github.jdrost1818.plaster.service.template.*;
+import github.jdrost1818.plaster.service.template.controller.ControllerTemplateService;
+import github.jdrost1818.plaster.service.template.controller.ControllerTestTemplateService;
+import github.jdrost1818.plaster.service.template.model.ModelTemplateService;
+import github.jdrost1818.plaster.service.template.model.ModelTestTemplateService;
+import github.jdrost1818.plaster.service.template.repository.RepositoryTemplateService;
+import github.jdrost1818.plaster.service.template.repository.RepositoryTestTemplateService;
+import github.jdrost1818.plaster.service.template.service.ServiceTemplateService;
+import github.jdrost1818.plaster.service.template.service.ServiceTestTemplateService;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 

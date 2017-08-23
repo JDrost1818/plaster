@@ -1,4 +1,4 @@
-package github.jdrost1818.plaster.service.template;
+package github.jdrost1818.plaster.service.template.model;
 
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
@@ -6,6 +6,7 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.template.TemplateService;
 import github.jdrost1818.plaster.template.Template;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -22,7 +23,7 @@ public class ModelTemplateService extends TemplateService {
      * {@inheritDoc}
      */
     @Override
-    JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
         JtwigModel modelModel;
 
         modelModel = super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
@@ -43,7 +44,7 @@ public class ModelTemplateService extends TemplateService {
      * {@inheritDoc}
      */
     @Override
-    JtwigTemplate getTemplate() {
+    protected JtwigTemplate getTemplate() {
         return JtwigTemplate.classpathTemplate("template/model/model.twig");
     }
 

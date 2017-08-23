@@ -1,8 +1,9 @@
-package github.jdrost1818.plaster.service.template;
+package github.jdrost1818.plaster.service.template.service;
 
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.template.TemplateService;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -13,7 +14,7 @@ public class ServiceTestTemplateService extends TemplateService {
     }
 
     @Override
-    JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
 
         model = super.addId(model, fileInformation);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE);
@@ -25,7 +26,7 @@ public class ServiceTestTemplateService extends TemplateService {
     }
 
     @Override
-    JtwigTemplate getTemplate() {
+    protected JtwigTemplate getTemplate() {
         return JtwigTemplate.classpathTemplate("template/service/serviceTest.twig");
     }
 }
