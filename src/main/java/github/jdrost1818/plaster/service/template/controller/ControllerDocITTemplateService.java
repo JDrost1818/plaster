@@ -20,6 +20,10 @@ public class ControllerDocITTemplateService extends TemplateService {
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER_IT_DOC);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE);
+        model = super.addDocField(model, fileInformation);
+        model = super.addFields(model, fileInformation);
+        model = super.addBaseRoute(model, fileInformation);
+        model = super.addId(model, fileInformation);
 
         return model;
     }

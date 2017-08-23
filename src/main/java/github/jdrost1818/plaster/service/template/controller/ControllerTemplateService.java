@@ -26,7 +26,7 @@ public class ControllerTemplateService extends TemplateService {
         controllerModel = super.addTypeField(controllerModel, fileInformation.getClassName(), TemplateType.SERVICE);
         controllerModel = super.addDependencies(controllerModel, fileInformation.getId());
         controllerModel = super.addId(controllerModel, fileInformation);
-        controllerModel = addBaseRoute(controllerModel, fileInformation);
+        controllerModel = super.addBaseRoute(controllerModel, fileInformation);
 
         return controllerModel;
     }
@@ -37,10 +37,6 @@ public class ControllerTemplateService extends TemplateService {
     @Override
     protected JtwigTemplate getTemplate() {
         return JtwigTemplate.classpathTemplate("template/controller/controller.twig");
-    }
-
-    private JtwigModel addBaseRoute(JtwigModel model, FileInformation fileInformation) {
-        return model.with("baseRoute", StringUtils.uncapitalize(fileInformation.getClassName()));
     }
 
 }

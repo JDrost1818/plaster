@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -196,13 +197,18 @@ public abstract class TemplateService {
     }
 
     protected JtwigModel addDocField(JtwigModel model, FileInformation fileInformation) {
-        String fullFilePath = this.utilityService.getPackage(fileInformation, templateType);
+        String fullFilePath = this.utilityService.getPackage(fileInformation, TemplateType.IT_DOC_PARENT);
 
         String packageName = PathUtil.pathToPackage(FilenameUtils.getPath(fullFilePath));
         String className = FilenameUtils.getName(fullFilePath).replace(".java", "");
 
-        return model.with(templateType.templateVarName, new FlattenedField(packageName, className, ""));
+        return model.with(TemplateType.IT_DOC_PARENT.templateVarName, new FlattenedField(packageName, className, ""));
     }
+
+    protected JtwigModel addBaseRoute(JtwigModel model, FileInformation fileInformation) {
+        return model.with("baseRoute", StringUtils.uncapitalize(fileInformation.getClassName()));
+    }
+
 
     /**
      * Formats a string using the best Java formatting standards to ensure the generated
