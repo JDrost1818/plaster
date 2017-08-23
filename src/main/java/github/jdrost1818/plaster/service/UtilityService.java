@@ -7,7 +7,6 @@ import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.util.PathUtil;
 import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 
 import java.nio.file.Paths;
 

@@ -2,7 +2,6 @@ package github.jdrost1818.plaster.service.task;
 
 import github.jdrost1818.plaster.data.Mode;
 import github.jdrost1818.plaster.data.ModeScope;
-import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.ServiceProvider;

@@ -3,7 +3,6 @@ package github.jdrost1818.plaster.service.template.model;
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.StoredJavaType;
-import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.*;
 import github.jdrost1818.plaster.domain.template.FlattenedField;
 import github.jdrost1818.plaster.service.ConfigurationService;

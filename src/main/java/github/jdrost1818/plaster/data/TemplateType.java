@@ -74,7 +74,8 @@ public enum TemplateType {
             "controller/controllerIT.twig",
             Setting.REL_CONTROLLER_PACKAGE,
             GenerationLocation.TEST
-    ), CONTROLLER_IT_DOC(
+    ),
+    CONTROLLER_IT_DOC(
             "ControllerIT",
             "controllerTestField",
             "controller/controllerITDoc.twig",
@@ -82,7 +83,7 @@ public enum TemplateType {
             GenerationLocation.TEST
     ),
     IT_DOC_PARENT(
-            "ITDocTest",
+            "ITDoc",
             "docField",
             "general/itDocParent.twig",
             Setting.APP_PATH,

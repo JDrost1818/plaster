@@ -4,8 +4,8 @@ import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.task.PlasterTaskId;
-import github.jdrost1818.plaster.service.task.util.CheckSetting;
 import github.jdrost1818.plaster.service.task.util.CheckFileExists;
+import github.jdrost1818.plaster.service.task.util.CheckSetting;
 
 public class ControllerTestGenerate extends GenerateTask {
 

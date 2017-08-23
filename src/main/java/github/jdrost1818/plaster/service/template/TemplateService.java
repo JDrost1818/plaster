@@ -1,6 +1,5 @@
 package github.jdrost1818.plaster.service.template;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
