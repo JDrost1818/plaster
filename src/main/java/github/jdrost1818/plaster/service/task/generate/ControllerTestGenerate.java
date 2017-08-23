@@ -18,8 +18,8 @@ public class ControllerTestGenerate extends GenerateTask {
                         Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED,
                         new CheckFileExists(
                                 TemplateType.IT_DOC_PARENT,
-                                new ControllerITDocGenerate(),
-                                new ITDocParentGenerate(new ControllerITDocGenerate())
+                                new ControllerDocITGenerate(),
+                                new DocITParentGenerate(new ControllerDocITGenerate())
                         ),
                         new ControllerItGenerate())
         );

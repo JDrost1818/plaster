@@ -7,9 +7,9 @@ import github.jdrost1818.plaster.service.template.TemplateService;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-public class ControllerITDocService extends TemplateService {
+public class ControllerDocITTemplateService extends TemplateService {
 
-    public ControllerITDocService(ConfigurationService configurationService) {
+    public ControllerDocITTemplateService(ConfigurationService configurationService) {
         super(TemplateType.CONTROLLER_IT_DOC, configurationService);
     }
 
@@ -26,6 +26,6 @@ public class ControllerITDocService extends TemplateService {
 
     @Override
     protected JtwigTemplate getTemplate() {
-        return JtwigTemplate.classpathTemplate("template/controller/controllerITDoc.twig");
+        return JtwigTemplate.classpathTemplate("template/controller/controllerDocIT.twig");
     }
 }

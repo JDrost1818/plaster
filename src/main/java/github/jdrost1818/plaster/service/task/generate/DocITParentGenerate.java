@@ -4,13 +4,13 @@ import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.task.PlasterTask;
 import github.jdrost1818.plaster.service.task.PlasterTaskId;
 
-public class ITDocParentGenerate extends GenerateTask {
+public class DocITParentGenerate extends GenerateTask {
 
-    public ITDocParentGenerate(PlasterTask nextTask) {
+    public DocITParentGenerate(PlasterTask nextTask) {
         super(
                 "Could not generate integration test parent class",
-                PlasterTaskId.IT_DOC_PARENT,
-                ServiceProvider.getItDocParentTemplateService(),
+                PlasterTaskId.DOC_IT_PARENT,
+                ServiceProvider.getDocITParentTemplateService(),
                 nextTask
         );
     }

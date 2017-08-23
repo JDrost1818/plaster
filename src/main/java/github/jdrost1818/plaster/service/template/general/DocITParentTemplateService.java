@@ -7,14 +7,18 @@ import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.service.template.TemplateService;
+import github.jdrost1818.plaster.util.PathUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-public class ITDocParentTemplateService extends TemplateService {
+import java.net.FileNameMap;
+
+public class DocITParentTemplateService extends TemplateService {
 
     private final UtilityService utilityService = ServiceProvider.getUtilityService();
 
-    public ITDocParentTemplateService(ConfigurationService configurationService) {
+    public DocITParentTemplateService(ConfigurationService configurationService) {
         super(TemplateType.IT_DOC_PARENT, configurationService);
     }
 
@@ -25,14 +29,14 @@ public class ITDocParentTemplateService extends TemplateService {
 
     @Override
     protected JtwigTemplate getTemplate() {
-        return JtwigTemplate.classpathTemplate("template/general/itDocParent.twig");
+        return JtwigTemplate.classpathTemplate("template/general/docITParent.twig");
     }
 
     private JtwigModel addTemplateInfo(JtwigModel model, FileInformation fileInformation) {
         String fullFilePath = this.utilityService.getFilePath(fileInformation, templateType);
 
-        String packageName = fullFilePath.split("/", 1)[0];
-        String className = fullFilePath.split("/", 1)[1];
+        String packageName = PathUtil.pathToPackage(FilenameUtils.getPath(fullFilePath));
+        String className = FilenameUtils.getName(fullFilePath).replace(".java", "");
 
         return model.with(templateType.templateVarName, new FlattenedField(packageName, className, ""));
     }

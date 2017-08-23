@@ -83,9 +83,9 @@ public enum TemplateType {
             GenerationLocation.TEST
     ),
     IT_DOC_PARENT(
-            "ITDoc",
+            "DocIT",
             "docField",
-            "general/itDocParent.twig",
+            "general/docITParent.twig",
             Setting.APP_PATH,
             GenerationLocation.ROOT_TEST
     );

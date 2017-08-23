@@ -4,13 +4,13 @@ import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.task.PlasterTaskId;
 import github.jdrost1818.plaster.service.task.util.DoNothing;
 
-public class ControllerITDocGenerate extends GenerateTask {
+public class ControllerDocITGenerate extends GenerateTask {
 
-    public ControllerITDocGenerate() {
+    public ControllerDocITGenerate() {
         super(
                 "Could not generate controller it doc tests",
-                PlasterTaskId.CONTROLLER_IT_DOC,
-                ServiceProvider.getControllerTestTemplateService(),
+                PlasterTaskId.CONTROLLER_DOC_IT,
+                ServiceProvider.getControllerDocITTemplateService(),
                 new DoNothing()
         );
     }

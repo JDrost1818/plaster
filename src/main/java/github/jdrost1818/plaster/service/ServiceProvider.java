@@ -1,9 +1,10 @@
 package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.service.task.TaskService;
+import github.jdrost1818.plaster.service.template.controller.ControllerDocITTemplateService;
 import github.jdrost1818.plaster.service.template.controller.ControllerTemplateService;
 import github.jdrost1818.plaster.service.template.controller.ControllerTestTemplateService;
-import github.jdrost1818.plaster.service.template.general.ITDocParentTemplateService;
+import github.jdrost1818.plaster.service.template.general.DocITParentTemplateService;
 import github.jdrost1818.plaster.service.template.model.ModelTemplateService;
 import github.jdrost1818.plaster.service.template.model.ModelTestTemplateService;
 import github.jdrost1818.plaster.service.template.repository.RepositoryTemplateService;
@@ -54,6 +55,9 @@ public class ServiceProvider {
     private static final ControllerTestTemplateService controllerTestTemplateService = new ControllerTestTemplateService(configurationService);
 
     @Getter
+    private static final ControllerDocITTemplateService controllerDocITTemplateService = new ControllerDocITTemplateService(configurationService);
+
+    @Getter
     private static final RepositoryTemplateService repositoryTemplateService = new RepositoryTemplateService(configurationService);
 
     @Getter
@@ -66,6 +70,6 @@ public class ServiceProvider {
     private static final ServiceTestTemplateService serviceTestTemplateService = new ServiceTestTemplateService(configurationService);
 
     @Getter
-    private static final ITDocParentTemplateService itDocParentTemplateService = new ITDocParentTemplateService(configurationService);
+    private static final DocITParentTemplateService docITParentTemplateService = new DocITParentTemplateService(configurationService);
 
 }

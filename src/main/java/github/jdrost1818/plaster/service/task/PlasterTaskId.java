@@ -15,8 +15,8 @@ public enum PlasterTaskId {
     CONTROLLER(""),
     CONTROLLER_TEST(""),
     CONTROLLER_IT(""),
-    CONTROLLER_IT_DOC(""),
-    IT_DOC_PARENT("");
+    CONTROLLER_DOC_IT(""),
+    DOC_IT_PARENT("");
 
     public final String description;
 }
