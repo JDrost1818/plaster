@@ -1,5 +1,6 @@
 package github.jdrost1818.plaster.service.template.general;
 
+import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.domain.template.FlattenedField;
@@ -33,7 +34,7 @@ public class DocITParentTemplateService extends TemplateService {
     }
 
     private JtwigModel addTemplateInfo(JtwigModel model, FileInformation fileInformation) {
-        String fullFilePath = this.utilityService.getFilePath(fileInformation, templateType);
+        String fullFilePath = this.utilityService.getPackage(fileInformation, templateType);
 
         String packageName = PathUtil.pathToPackage(FilenameUtils.getPath(fullFilePath));
         String className = FilenameUtils.getName(fullFilePath).replace(".java", "");
