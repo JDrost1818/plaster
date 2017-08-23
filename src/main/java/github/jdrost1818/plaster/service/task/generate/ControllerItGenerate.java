@@ -10,7 +10,7 @@ public class ControllerItGenerate extends GenerateTask {
         super(
                 "Could not generate controller it doc tests",
                 PlasterTaskId.CONTROLLER_IT,
-                ServiceProvider.getControllerTestTemplateService(),
+                ServiceProvider.getControllerItTemplateService(),
                 new DoNothing()
         );
     }

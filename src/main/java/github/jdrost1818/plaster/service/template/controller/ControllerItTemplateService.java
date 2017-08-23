@@ -20,6 +20,7 @@ public class ControllerItTemplateService extends TemplateService {
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER_IT);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.REPOSITORY);
 
         return model;    }
 
