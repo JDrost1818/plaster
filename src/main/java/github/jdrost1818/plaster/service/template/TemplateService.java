@@ -6,11 +6,14 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.*;
 import github.jdrost1818.plaster.domain.template.FlattenedField;
 import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.ServiceProvider;
+import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.util.PathUtil;
 import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -24,6 +27,8 @@ import java.util.stream.Collectors;
 public abstract class TemplateService {
 
     protected final ConfigurationService configurationService;
+
+    private final UtilityService utilityService = ServiceProvider.getUtilityService();
 
     @Getter
     protected final TemplateType templateType;
@@ -188,6 +193,15 @@ public abstract class TemplateService {
         String varName = TypeUtil.normalizeVariableName(rootClassName) + templateType.suffix;
 
         return model.with(templateType.templateVarName, new FlattenedField(packageName, className, varName));
+    }
+
+    protected JtwigModel addDocField(JtwigModel model, FileInformation fileInformation) {
+        String fullFilePath = this.utilityService.getPackage(fileInformation, templateType);
+
+        String packageName = PathUtil.pathToPackage(FilenameUtils.getPath(fullFilePath));
+        String className = FilenameUtils.getName(fullFilePath).replace(".java", "");
+
+        return model.with(templateType.templateVarName, new FlattenedField(packageName, className, ""));
     }
 
     /**
