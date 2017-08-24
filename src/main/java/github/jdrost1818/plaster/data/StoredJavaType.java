@@ -38,7 +38,7 @@ public enum StoredJavaType {
             new Type("Date", new Dependency("java.util.Date")),
             Lists.newArrayList("date")),
     TIMESTAMP(
-            new Type("Timestamp", new Dependency("java.util.Timestamp")),
+            new Type("Timestamp", new Dependency("java.security.Timestamp")),
             Lists.newArrayList("timestamp")),
 
     LIST(
