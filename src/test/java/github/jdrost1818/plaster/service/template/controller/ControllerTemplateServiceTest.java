@@ -69,6 +69,7 @@ public class ControllerTemplateServiceTest {
         String expected = "package com.example.app.controller.somewhere;\n" +
                 "\n" +
                 "import org.springframework.beans.factory.annotation.Autowired;\n" +
+                "import org.springframework.http.HttpStatus;\n" +
                 "import org.springframework.web.bind.annotation.*;\n" +
                 "\n" +
                 "import java.util.List;\n" +
@@ -87,7 +88,8 @@ public class ControllerTemplateServiceTest {
                 "            this.exampleClassService = exampleClassService;\n" +
                 "    }\n" +
                 "\n" +
-                "    @RequestMapping(value = \"/\", method = RequestMethod.POST)\n" +
+                "    @RequestMapping(method = RequestMethod.POST)\n" +
+                "    @ResponseStatus(value = HttpStatus.CREATED)\n" +
                 "    public ExampleClass create(@RequestBody ExampleClass exampleClass) {\n" +
                 "            return this.exampleClassService.create(exampleClass);\n" +
                 "    }\n" +

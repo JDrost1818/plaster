@@ -63,9 +63,8 @@ public class TaskService {
         return null;
     }
 
-
     private PlasterTaskId getLastGenerateTaskId(ModeScope scope) {
-        return PlasterTaskId.CONTROLLER_IT;
+        return PlasterTaskId.CONTROLLER_DOC_IT;
     }
 
     private PlasterTaskId getLastDeleteTaskId() {
