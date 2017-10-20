@@ -9,7 +9,7 @@ public class RepositoryTestDelete extends DeleteTask {
         super(
                 "Could not delete repository tests",
                 PlasterTaskId.REPOSITORY_TEST,
-                TemplateType.REPOSITORY,
+                TemplateType.REPOSITORY_TEST,
                 new ModelDelete()
         );
     }

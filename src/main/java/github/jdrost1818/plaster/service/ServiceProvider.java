@@ -41,7 +41,7 @@ public class ServiceProvider {
     private static final FieldService fieldService = new FieldService(typeService);
 
     @Getter
-    private static final TaskService taskService = new TaskService();
+    private static final TaskService taskService = new TaskService(configurationService);
 
     @Getter
     private static final ModelTemplateService modelTemplateService = new ModelTemplateService(configurationService);

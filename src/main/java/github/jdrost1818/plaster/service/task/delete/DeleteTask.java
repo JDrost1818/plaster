@@ -1,6 +1,5 @@
 package github.jdrost1818.plaster.service.task.delete;
 
-import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.exception.PlasterException;
@@ -22,10 +21,6 @@ abstract class DeleteTask extends PlasterTask {
     final PlasterTask nextGeneration;
 
     final TemplateType templateType;
-
-    public static PlasterTask getInitialTask(ModeScope scope) {
-        return new ControllerDelete();
-    }
 
     DeleteTask(String errorMsg, PlasterTaskId taskId, TemplateType templateType, PlasterTask nextGeneration) {
         super(errorMsg, taskId);

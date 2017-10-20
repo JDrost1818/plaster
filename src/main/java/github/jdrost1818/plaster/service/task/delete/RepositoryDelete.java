@@ -10,7 +10,7 @@ public class RepositoryDelete extends DeleteTask {
                 "Could not delete repository",
                 PlasterTaskId.REPOSITORY,
                 TemplateType.REPOSITORY,
-                new RepositoryDelete()
+                new RepositoryTestDelete()
         );
     }
 

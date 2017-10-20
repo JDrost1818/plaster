@@ -10,7 +10,7 @@ public class ServiceDelete extends DeleteTask {
                 "Could not delete service",
                 PlasterTaskId.SERVICE,
                 TemplateType.SERVICE,
-                new RepositoryDelete()
+                new ServiceTestDelete()
         );
     }
 

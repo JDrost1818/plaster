@@ -8,8 +8,8 @@ public class ControllerITDelete extends DeleteTask {
     public ControllerITDelete() {
         super(
                 "Could not delete controller integration test",
-                PlasterTaskId.CONTROLLER_TEST,
-                TemplateType.CONTROLLER_TEST,
+                PlasterTaskId.CONTROLLER_IT,
+                TemplateType.CONTROLLER_IT,
                 new ControllerTestDelete()
         );
     }

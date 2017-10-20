@@ -10,14 +10,14 @@ import org.jtwig.JtwigTemplate;
 public class ControllerDocITTemplateService extends TemplateService {
 
     public ControllerDocITTemplateService(ConfigurationService configurationService) {
-        super(TemplateType.CONTROLLER_IT_DOC, configurationService);
+        super(TemplateType.CONTROLLER_DOC_IT, configurationService);
     }
 
     @Override
     protected JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation) {
         model = super.addId(model, fileInformation);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER);
-        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER_IT_DOC);
+        model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.CONTROLLER_DOC_IT);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.MODEL);
         model = super.addTypeField(model, fileInformation.getClassName(), TemplateType.SERVICE);
         model = super.addDocField(model, fileInformation);

@@ -10,7 +10,7 @@ public class ControllerDelete extends DeleteTask {
                 "Could not delete controller",
                 PlasterTaskId.CONTROLLER,
                 TemplateType.CONTROLLER,
-                new ControllerITDelete()
+                new ControllerDocITDelete()
         );
     }
 
