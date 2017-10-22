@@ -6,7 +6,6 @@ import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ConfigurationService;
-import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.task.delete.ControllerDelete;
 import github.jdrost1818.plaster.service.task.generate.ModelGenerate;
 

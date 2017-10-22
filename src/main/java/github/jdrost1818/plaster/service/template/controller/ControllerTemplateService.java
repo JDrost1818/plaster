@@ -4,7 +4,6 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.template.TemplateService;
-import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
