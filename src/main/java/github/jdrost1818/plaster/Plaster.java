@@ -2,6 +2,7 @@ package github.jdrost1818.plaster;
 
 import github.jdrost1818.plaster.data.Arg;
 import github.jdrost1818.plaster.data.Mode;
+import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.Field;
 import github.jdrost1818.plaster.domain.FileInformation;
@@ -10,6 +11,7 @@ import github.jdrost1818.plaster.exception.PlasterException;
 import github.jdrost1818.plaster.service.ConfigurationService;
 import github.jdrost1818.plaster.service.FieldService;
 import github.jdrost1818.plaster.service.ServiceProvider;
+import github.jdrost1818.plaster.service.task.TaskService;
 import github.jdrost1818.plaster.util.ArgParseUtil;
 import lombok.experimental.UtilityClass;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -34,6 +36,8 @@ public class Plaster {
 
     private static FieldService fieldService = ServiceProvider.getFieldService();
 
+    private static TaskService taskService = ServiceProvider.getTaskService();
+
     public static void main(String[] args) {
         ArgumentParser parser = ArgParseUtil.getArgParser();
         Namespace parsedArgs;
@@ -52,7 +56,7 @@ public class Plaster {
             Mode mode = Mode.getMode(parsedArgs.getString(Arg.MODE.key));
             String modeScope = parsedArgs.getString(Arg.MODE_SCOPE.key);
 
-            mode.perform(modeScope, fileInformation);
+            taskService.perform(mode, ModeScope.valueOf(StringUtils.upperCase(modeScope)), fileInformation);
         } catch (PlasterException | DeveloperException e) {
             System.out.println(e.getMessage());
         }

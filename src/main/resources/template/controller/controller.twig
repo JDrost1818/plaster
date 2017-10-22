@@ -1,6 +1,7 @@
 package {{ controllerField.packagePath }};
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 {% include '/template/util/imports.twig' with dependencies %}
@@ -19,7 +20,8 @@ public class {{ controllerField.className }} {
             this.{{ serviceField.varName }} = {{ serviceField.varName }};
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public {{ modelField.className }} create(@RequestBody {{ modelField.className }} {{ modelField.varName }}) {
             return this.{{ serviceField.varName }}.create({{ modelField.varName }});
     }

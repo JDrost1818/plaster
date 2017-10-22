@@ -11,3 +11,4 @@ directory:
 property:
   enablePrimitives: true
   key: key:string
+  enableTesting: false

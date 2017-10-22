@@ -95,6 +95,7 @@ public class GeneratedContent {
             "package com.example.app.somewhere.controller.someplace;\n" +
                     "\n" +
                     "import org.springframework.beans.factory.annotation.Autowired;\n" +
+                    "import org.springframework.http.HttpStatus;\n" +
                     "import org.springframework.web.bind.annotation.*;\n" +
                     "\n" +
                     "import com.example.app.somewhere.service.someplace.ExampleClassService;\n" +
@@ -111,7 +112,8 @@ public class GeneratedContent {
                     "            this.exampleClassService = exampleClassService;\n" +
                     "    }\n" +
                     "\n" +
-                    "    @RequestMapping(value = \"/\", method = RequestMethod.POST)\n" +
+                    "    @RequestMapping(method = RequestMethod.POST)\n" +
+                    "    @ResponseStatus(value = HttpStatus.CREATED)\n" +
                     "    public ExampleClass create(@RequestBody ExampleClass exampleClass) {\n" +
                     "            return this.exampleClassService.create(exampleClass);\n" +
                     "    }\n" +

@@ -6,7 +6,7 @@
 
     <groupId>github.jdrost1818.plaster</groupId>
     <artifactId>plaster</artifactId>
-    <version>2.0.0</version><!--PROJECT_ID-->
+    <version>2.1.0</version><!--PROJECT_ID-->
 
     <packaging>jar</packaging>
 

@@ -6,24 +6,50 @@ import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.*;
 import github.jdrost1818.plaster.domain.template.FlattenedField;
 import github.jdrost1818.plaster.service.ConfigurationService;
+import github.jdrost1818.plaster.service.ServiceProvider;
+import github.jdrost1818.plaster.service.UtilityService;
 import github.jdrost1818.plaster.util.PathUtil;
 import github.jdrost1818.plaster.util.TypeUtil;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public abstract class TemplateService {
 
-    private final ConfigurationService configurationService;
+    protected final ConfigurationService configurationService;
+
+    private final UtilityService utilityService = ServiceProvider.getUtilityService();
+
+    @Getter
+    protected final TemplateType templateType;
+
+    private Map<String, String> exampleValueMap = new HashMap<>();
+
+    public TemplateService(TemplateType templateType, ConfigurationService configurationService) {
+        this.templateType = templateType;
+        this.configurationService = configurationService;
+
+        this.exampleValueMap.put("int", "1");
+        this.exampleValueMap.put("Integer", "1");
+        this.exampleValueMap.put("long", "1L");
+        this.exampleValueMap.put("Long", "1L");
+        this.exampleValueMap.put("double", "1D");
+        this.exampleValueMap.put("Double", "1D");
+        this.exampleValueMap.put("float", "1F");
+        this.exampleValueMap.put("Float", "1F");
+        this.exampleValueMap.put("String", "\"val\"");
+    }
 
     /**
      * Adds information not applicable to all types of rendering being done.
@@ -32,30 +58,27 @@ public abstract class TemplateService {
      *          model to which to add information
      * @param fileInformation
      *          information about the file to generate
-     * @param genTypeModel
-     *          model store
      * @return the fully-customized model object
      */
-    abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation, GenTypeModel genTypeModel);
+    protected abstract JtwigModel addCustomInformation(JtwigModel model, FileInformation fileInformation);
 
     /**
      * Gets the appropriate template with which to perform the rendering
      *
      * @return the Jtwig template
      */
-    abstract JtwigTemplate getTemplate();
+    protected abstract JtwigTemplate getTemplate();
 
     /**
      * The entry point to render a template.
      * @param fileInformation
-     * @param genTypeModel
      * @return
      */
-    public final String renderTemplate(FileInformation fileInformation, GenTypeModel genTypeModel) {
+    public final String renderTemplate(FileInformation fileInformation) {
         JtwigTemplate template = getTemplate();
 
         JtwigModel model = JtwigModel.newModel();
-        model = addCustomInformation(model, fileInformation, genTypeModel);
+        model = addCustomInformation(model, fileInformation);
 
         ByteArrayOutputStream inMemOut = new ByteArrayOutputStream();
         PrintStream inMemPrint = new PrintStream(inMemOut);
@@ -77,7 +100,7 @@ public abstract class TemplateService {
      *          information about the file to generate
      * @return the modified model
      */
-    JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addDependencies(JtwigModel model, FileInformation fileInformation) {
         List<Field> fields = new ArrayList<>(fileInformation.getFields());
         fields.add(fileInformation.getId());
 
@@ -93,7 +116,7 @@ public abstract class TemplateService {
      *          field which contains the dependency to add
      * @return the modified model
      */
-    JtwigModel addDependencies(JtwigModel model, Field field) {
+    protected JtwigModel addDependencies(JtwigModel model, Field field) {
         return addDependencies(model, Lists.newArrayList(field));
     }
 
@@ -106,7 +129,7 @@ public abstract class TemplateService {
      *          fields which contain the dependencies to add
      * @return the modified model
      */
-    JtwigModel addDependencies(JtwigModel model, List<Field> fields) {
+    protected JtwigModel addDependencies(JtwigModel model, List<Field> fields) {
          List<Dependency> dependencies = fields.stream()
                  .map(Field::getTypeDeclaration)
                  .map(TypeDeclaration::getTypes)
@@ -129,8 +152,11 @@ public abstract class TemplateService {
      *          information about the file to generate
      * @return the modified model
      */
-    JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
-        return model.with("idField", new FlattenedField(fileInformation.getId()));
+    protected JtwigModel addId(JtwigModel model, FileInformation fileInformation) {
+        FlattenedField idField = new FlattenedField(fileInformation.getId());
+        idField.setExampleValue(this.getExampleValue(fileInformation.getId()));
+
+        return model.with("idField", idField);
     }
 
     /**
@@ -143,7 +169,7 @@ public abstract class TemplateService {
      *          information about the file to generate
      * @return the modified model
      */
-    JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {
+    protected JtwigModel addFields(JtwigModel model, FileInformation fileInformation) {
         List<FlattenedField> fields = fileInformation.getFields().stream()
                 .map(FlattenedField::new)
                 .collect(Collectors.toList());
@@ -156,18 +182,22 @@ public abstract class TemplateService {
      *
      * @param model
      *          model to which to add the field
-     * @param genTypeModel
-     *          model store
+     * @param rootClassName
+     *          base name of the class
      * @param templateType
      *          which type are we adding
      * @return the modified model
      */
-    JtwigModel addTypeField(JtwigModel model, GenTypeModel genTypeModel, TemplateType templateType) {
+    protected JtwigModel addTypeField(JtwigModel model, String rootClassName, TemplateType templateType) {
         String packageName = getCustomPackage(templateType.relPathSetting);
-        String className = TypeUtil.normalizeTypeString(genTypeModel.getClassName() + templateType.suffix);
-        String varName = TypeUtil.normalizeVariableName(genTypeModel.getClassName()) + templateType.suffix;
+        String className = TypeUtil.normalizeTypeString(rootClassName + templateType.suffix);
+        String varName = TypeUtil.normalizeVariableName(rootClassName) + templateType.suffix;
 
         return model.with(templateType.templateVarName, new FlattenedField(packageName, className, varName));
+    }
+
+    protected JtwigModel addBaseRoute(JtwigModel model, FileInformation fileInformation) {
+        return model.with("baseRoute", StringUtils.uncapitalize(fileInformation.getClassName()));
     }
 
     /**
@@ -178,7 +208,7 @@ public abstract class TemplateService {
      *          content to format
      * @return the formatted file content
      */
-    String formatFile(String fileString) {
+    protected String formatFile(String fileString) {
         return fileString.replaceAll("(\r?\n){3,}", "\n\n").replaceAll("\t", "    ");
     }
 
@@ -200,6 +230,14 @@ public abstract class TemplateService {
         String path = PathUtil.joinPath(appPackage, relGenPackage, customGenPackage);
 
         return PathUtil.pathToPackage(path);
+    }
+
+    private String getExampleValue(Field field) {
+        List<Type> types = field.getTypeDeclaration().getTypes();
+        if (CollectionUtils.isEmpty(types) || types.size() > 1) {
+            return "null";
+        }
+        return this.exampleValueMap.getOrDefault(types.get(0).getClassName(), "null");
     }
 
 }

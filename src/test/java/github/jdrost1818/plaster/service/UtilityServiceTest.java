@@ -1,7 +1,7 @@
 package github.jdrost1818.plaster.service;
 
-import github.jdrost1818.plaster.data.ModeScope;
 import github.jdrost1818.plaster.data.Setting;
+import github.jdrost1818.plaster.data.TemplateType;
 import github.jdrost1818.plaster.domain.FileInformation;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class UtilityServiceTest {
 
         FileInformation fileInformation = new FileInformation("ClassName", null, null);
 
-        String path = this.classUnderTest.getFilePath(fileInformation, ModeScope.MODEL);
+        String path = this.classUnderTest.getFilePath(fileInformation, TemplateType.MODEL);
 
         assertThat(path, equalTo("project/base/app/model/sub/ClassName.java"));
     }
@@ -50,7 +50,7 @@ public class UtilityServiceTest {
 
         FileInformation fileInformation = new FileInformation("ClassName", null, null);
 
-        String path = this.classUnderTest.getFilePath(fileInformation, ModeScope.CONTROLLER);
+        String path = this.classUnderTest.getFilePath(fileInformation, TemplateType.CONTROLLER);
 
         assertThat(path, equalTo("project/base/app/controller/sub/ClassNameController.java"));
     }

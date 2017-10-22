@@ -1,11 +1,15 @@
 package github.jdrost1818.plaster.service;
 
-import github.jdrost1818.plaster.service.modifier.DeleteService;
-import github.jdrost1818.plaster.service.modifier.GenerateService;
-import github.jdrost1818.plaster.service.template.ControllerTemplateService;
-import github.jdrost1818.plaster.service.template.ModelTemplateService;
-import github.jdrost1818.plaster.service.template.RepositoryTemplateService;
-import github.jdrost1818.plaster.service.template.ServiceTemplateService;
+import github.jdrost1818.plaster.service.task.TaskService;
+import github.jdrost1818.plaster.service.template.controller.ControllerItTemplateService;
+import github.jdrost1818.plaster.service.template.controller.ControllerTemplateService;
+import github.jdrost1818.plaster.service.template.controller.ControllerTestTemplateService;
+import github.jdrost1818.plaster.service.template.model.ModelTemplateService;
+import github.jdrost1818.plaster.service.template.model.ModelTestTemplateService;
+import github.jdrost1818.plaster.service.template.repository.RepositoryTemplateService;
+import github.jdrost1818.plaster.service.template.repository.RepositoryTestTemplateService;
+import github.jdrost1818.plaster.service.template.service.ServiceTemplateService;
+import github.jdrost1818.plaster.service.template.service.ServiceTestTemplateService;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
@@ -35,28 +39,33 @@ public class ServiceProvider {
     private static final FieldService fieldService = new FieldService(typeService);
 
     @Getter
+    private static final TaskService taskService = new TaskService(configurationService);
+
+    @Getter
     private static final ModelTemplateService modelTemplateService = new ModelTemplateService(configurationService);
+
+    @Getter
+    private static final ModelTestTemplateService modelTestTemplateService = new ModelTestTemplateService(configurationService);
 
     @Getter
     private static final ControllerTemplateService controllerTemplateService = new ControllerTemplateService(configurationService);
 
     @Getter
+    private static final ControllerTestTemplateService controllerTestTemplateService = new ControllerTestTemplateService(configurationService);
+
+    @Getter
+    private static final ControllerItTemplateService controllerItTemplateService = new ControllerItTemplateService(configurationService);
+
+    @Getter
     private static final RepositoryTemplateService repositoryTemplateService = new RepositoryTemplateService(configurationService);
+
+    @Getter
+    private static final RepositoryTestTemplateService repositoryTestTemplateService = new RepositoryTestTemplateService(configurationService);
 
     @Getter
     private static final ServiceTemplateService serviceTemplateService = new ServiceTemplateService(configurationService);
 
     @Getter
-    private static final GenerateService generateService = new GenerateService(
-            configurationService,
-            utilityService,
-            modelTemplateService,
-            controllerTemplateService,
-            serviceTemplateService,
-            repositoryTemplateService
-    );
-
-    @Getter
-    private static final DeleteService deleteService = new DeleteService(utilityService);
+    private static final ServiceTestTemplateService serviceTestTemplateService = new ServiceTestTemplateService(configurationService);
 
 }

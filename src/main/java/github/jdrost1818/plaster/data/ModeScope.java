@@ -6,6 +6,6 @@ public enum ModeScope {
     MODEL,
     REPOSITORY,
     SERVICE,
-    CONTROLLER;
+    CONTROLLER
 
 }
