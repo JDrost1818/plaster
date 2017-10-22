@@ -74,20 +74,6 @@ public enum TemplateType {
             "controller/controllerIT.twig",
             Setting.REL_CONTROLLER_PACKAGE,
             GenerationLocation.TEST
-    ),
-    CONTROLLER_DOC_IT(
-            "ControllerDocumentation",
-            "controllerITField",
-            "controller/controllerITDoc.twig",
-            Setting.REL_CONTROLLER_PACKAGE,
-            GenerationLocation.TEST
-    ),
-    IT_DOC_PARENT(
-            "DocIT",
-            "docField",
-            "general/docITParent.twig",
-            Setting.APP_PATH,
-            GenerationLocation.ROOT_TEST
     );
 
     public final String suffix;

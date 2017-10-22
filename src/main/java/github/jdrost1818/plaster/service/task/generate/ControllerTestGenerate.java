@@ -6,6 +6,7 @@ import github.jdrost1818.plaster.service.ServiceProvider;
 import github.jdrost1818.plaster.service.task.PlasterTaskId;
 import github.jdrost1818.plaster.service.task.util.CheckFileExists;
 import github.jdrost1818.plaster.service.task.util.CheckSetting;
+import github.jdrost1818.plaster.service.task.util.DoNothing;
 
 public class ControllerTestGenerate extends GenerateTask {
 
@@ -15,13 +16,9 @@ public class ControllerTestGenerate extends GenerateTask {
                 PlasterTaskId.CONTROLLER_TEST,
                 ServiceProvider.getControllerTestTemplateService(),
                 new CheckSetting(
-                        Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED,
-                        new CheckFileExists(
-                                TemplateType.IT_DOC_PARENT,
-                                new ControllerDocITGenerate(),
-                                new DocITParentGenerate(new ControllerDocITGenerate())
-                        ),
-                        new ControllerItGenerate())
+                        Setting.IS_TESTING_ENABLED,
+                        new ControllerItGenerate(),
+                        new DoNothing())
         );
     }
 

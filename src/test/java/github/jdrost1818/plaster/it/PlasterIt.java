@@ -45,8 +45,6 @@ public class PlasterIt {
 
     private File controllerITFile;
 
-    private File controllerDocITFile;
-
     private List<File> allFiles;
 
     @Before
@@ -78,7 +76,6 @@ public class PlasterIt {
         this.controllerFile = new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/controller/someplace/ExampleClassController.java");
         this.controllerTestFile = new File("src/test/resources/testProject/src/test/java/com/example/app/somewhere/controller/someplace/ExampleClassControllerTest.java");
         this.controllerITFile = new File("src/test/resources/testProject/src/test/java/com/example/app/somewhere/controller/someplace/ExampleClassControllerIT.java");
-        this.controllerDocITFile = new File("src/test/resources/testProject/src/test/java/com/example/app/somewhere/controller/someplace/ExampleClassControllerDocumentation.java");
 
         this.allFiles = Lists.newArrayList(
                 this.modelFile,
@@ -89,8 +86,7 @@ public class PlasterIt {
                 this.serviceTestFile,
                 this.controllerFile,
                 this.controllerTestFile,
-                this.controllerITFile,
-                this.controllerDocITFile
+                this.controllerITFile
         );
     }
 
@@ -197,49 +193,6 @@ public class PlasterIt {
     }
 
     @Test
-    public void main_gen_scope_controller() throws Exception {
-        ServiceProvider.getConfigurationService().put(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED, "true");
-
-        this.perform(Mode.GENERATE, ModeScope.CONTROLLER);
-
-        this.ensureOnlyTheseFilesExist(Lists.newArrayList(
-                this.modelFile, this.modelTestFile,
-                this.repositoryFile, this.repositoryTestFile,
-                this.serviceFile, this.serviceTestFile,
-                this.controllerFile, this.controllerTestFile, this.controllerDocITFile
-        ));
-    }
-
-    @Test
-    public void main_gen_scope_controller_tests_not_enabled() throws Exception {
-        ServiceProvider.getConfigurationService().put(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED, "true");
-        ServiceProvider.getConfigurationService().put(Setting.IS_TESTING_ENABLED, "false");
-
-        this.perform(Mode.GENERATE, ModeScope.CONTROLLER);
-
-        this.ensureOnlyTheseFilesExist(Lists.newArrayList(
-                this.modelFile,
-                this.repositoryFile,
-                this.serviceFile,
-                this.controllerFile
-        ));
-    }
-
-    @Test
-    public void main_gen_scope_controller_doc_tests_not_enabled() throws Exception {
-        ServiceProvider.getConfigurationService().put(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED, "false");
-
-        this.perform(Mode.GENERATE, ModeScope.CONTROLLER);
-
-        this.ensureOnlyTheseFilesExist(Lists.newArrayList(
-                this.modelFile, this.modelTestFile,
-                this.repositoryFile, this.repositoryTestFile,
-                this.serviceFile, this.serviceTestFile,
-                this.controllerFile, this.controllerTestFile, this.controllerITFile
-        ));
-    }
-
-    @Test
     public void main_del_scope_model_test_not_enabled() throws Exception {
         ServiceProvider.getConfigurationService().put(Setting.IS_TESTING_ENABLED, "false");
 
@@ -250,24 +203,6 @@ public class PlasterIt {
                 this.repositoryFile,
                 this.serviceFile,
                 this.controllerFile
-        ));
-
-        this.perform(Mode.DELETE, ModeScope.MODEL);
-
-        this.ensureOnlyTheseFilesExist(Lists.newArrayList());
-    }
-
-    @Test
-    public void main_del_scope_model_test_rest_docs_enabled() throws Exception {
-        ServiceProvider.getConfigurationService().put(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED, "true");
-
-        this.perform(Mode.GENERATE, ModeScope.SCAFFOLD);
-
-        this.ensureOnlyTheseFilesExist(Lists.newArrayList(
-                this.modelFile, this.modelTestFile,
-                this.repositoryFile, this.repositoryTestFile,
-                this.serviceFile, this.serviceTestFile,
-                this.controllerFile, this.controllerTestFile, this.controllerDocITFile
         ));
 
         this.perform(Mode.DELETE, ModeScope.MODEL);
@@ -353,7 +288,6 @@ public class PlasterIt {
     public void tearDown() throws IOException {
         FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/main/java/com/example/app/somewhere/"));
         FileUtils.deleteDirectory(new File("src/test/resources/testProject/src/test/java/com/example/app/somewhere/"));
-        Files.deleteIfExists(new File("src/test/resources/testProject/src/test/java/com/example/app/AppDocIT.java").toPath());
     }
 
 }

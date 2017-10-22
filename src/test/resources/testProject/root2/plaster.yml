@@ -12,4 +12,3 @@ property:
   enablePrimitives: true
   key: key:string
   enableTesting: false
-  enableRestDocumentationTesting: true

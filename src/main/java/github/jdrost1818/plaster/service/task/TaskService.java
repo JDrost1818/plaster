@@ -77,7 +77,6 @@ public class TaskService {
 
     private PlasterTaskId getLastGenerationTaskId(ModeScope scope) {
         boolean testsEnabled = this.configurationService.getBoolean(Setting.IS_TESTING_ENABLED);
-        boolean docTestingEnabled = this.configurationService.getBoolean(Setting.IS_REST_DOCUMENTATION_TESTING_ENABLED);
 
         switch (scope) {
             case MODEL:
@@ -88,13 +87,7 @@ public class TaskService {
                 return (testsEnabled) ? PlasterTaskId.SERVICE_TEST : PlasterTaskId.SERVICE;
             case CONTROLLER:
             case SCAFFOLD:
-                if (testsEnabled && docTestingEnabled) {
-                    return PlasterTaskId.CONTROLLER_DOC_IT;
-                } else if (testsEnabled) {
-                    return PlasterTaskId.CONTROLLER_IT;
-                } else {
-                    return PlasterTaskId.CONTROLLER;
-                }
+                return (testsEnabled) ? PlasterTaskId.CONTROLLER_IT : PlasterTaskId.CONTROLLER;
             default:
                 throw new PlasterException("Could not find end task for scope ['" + scope + "']");
         }

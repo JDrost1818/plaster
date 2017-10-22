@@ -51,14 +51,6 @@ public enum Setting {
             Lists.newArrayList("org.projectlombok")),
 
     /**
-     * boolean string. If true, integration tests will document the API.
-     *
-     * This is determined via inspecting the pom and the plaster.yml file
-     */
-    IS_REST_DOCUMENTATION_TESTING_ENABLED("property.enableRestDocumentationTesting", Boolean.class, false,
-            Lists.newArrayList("org.springframework.restdocs")),
-
-    /**
      * string defining where the src directory is from the root of the repository.
      * Most commonly and empty string.
      *
