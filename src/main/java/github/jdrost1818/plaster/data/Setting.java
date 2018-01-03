@@ -78,7 +78,7 @@ public enum Setting {
      *
      *      com/example/app
      */
-    APP_PATH(null, String.class, null),
+    APP_PATH("directory.app", String.class, null),
 
     /**
      * string defining a path to append to the generation relative paths for the current generation.
