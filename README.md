@@ -34,10 +34,7 @@ Coming Features
 Plaster is integrated with [waffle.io] and new features are tracked [here]. Below is the up-to-date snapshot of 
 feature development.
 
-[![Stories in Backlog](https://badge.waffle.io/JDrost1818/plaster.png?label=backlog&title=Backlog)](https://waffle.io/JDrost1818/plaster?utm_source=badge)
-[![Stories in Ready](https://badge.waffle.io/JDrost1818/plaster.png?label=ready&title=Ready)](https://waffle.io/JDrost1818/plaster?utm_source=badge)
-[![Stories in Development](https://badge.waffle.io/JDrost1818/plaster.png?label=in%20progress&title=In%20Development)](https://waffle.io/JDrost1818/plaster?utm_source=badge)
-[![Stories in Development](https://badge.waffle.io/JDrost1818/plaster.png?label=in%20review&title=Coming%20Next%20Release)](https://waffle.io/JDrost1818/plaster?utm_source=badge)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/JDrost1818/plaster.svg?columns=all)](https://waffle.io/JDrost1818/plaster)
 
 Installation
 ------------
