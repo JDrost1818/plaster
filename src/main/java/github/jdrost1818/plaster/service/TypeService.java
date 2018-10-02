@@ -63,7 +63,7 @@ public class TypeService {
         }
 
         List<Type> types = TypeUtil.splitToIndividualTypes(normalizedTypeString).stream()
-                .map(t -> this.convertToType(t, configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)))
+                .map(t -> this.convertToType(t, this.configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)))
                 .collect(Collectors.toList());
 
         String mergedTypeString = TypeUtil.mergeTypeStringAndListOfTypes(typeString, types);
