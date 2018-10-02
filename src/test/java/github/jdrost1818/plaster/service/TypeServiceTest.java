@@ -1,6 +1,7 @@
 package github.jdrost1818.plaster.service;
 
 import com.google.common.collect.Lists;
+import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.domain.Dependency;
 import github.jdrost1818.plaster.domain.Type;
 import github.jdrost1818.plaster.domain.TypeDeclaration;
@@ -30,6 +31,9 @@ public class TypeServiceTest {
     @Mock
     private DependencyService dependencyService;
 
+    @Mock
+    private ConfigurationService configurationService;
+
     @InjectMocks
     private TypeService classUnderTest;
 
@@ -37,7 +41,9 @@ public class TypeServiceTest {
     public void setUp() {
         initMocks(this);
 
-        this.classUnderTest = new TypeService(searchService, dependencyService);
+        this.classUnderTest = new TypeService(searchService, dependencyService, configurationService);
+
+        when(configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)).thenReturn(false);
     }
 
     @Test(expected = PlasterException.class)
