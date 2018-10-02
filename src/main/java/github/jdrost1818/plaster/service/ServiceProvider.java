@@ -33,7 +33,7 @@ public class ServiceProvider {
     private static final DependencyService dependencyService = new DependencyService(searchService);
 
     @Getter
-    private static final TypeService typeService = new TypeService(searchService, dependencyService);
+    private static final TypeService typeService = new TypeService(searchService, dependencyService, configurationService);
 
     @Getter
     private static final FieldService fieldService = new FieldService(typeService);

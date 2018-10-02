@@ -1,6 +1,7 @@
 package github.jdrost1818.plaster.service;
 
 import github.jdrost1818.plaster.data.Regex;
+import github.jdrost1818.plaster.data.Setting;
 import github.jdrost1818.plaster.data.StoredJavaType;
 import github.jdrost1818.plaster.domain.Type;
 import github.jdrost1818.plaster.domain.TypeDeclaration;
@@ -29,6 +30,8 @@ public class TypeService {
     private final SearchService searchService;
 
     private final DependencyService dependencyService;
+
+    private final ConfigurationService configurationService;
 
     /**
      * Validates that the string is correctly formatted for a Java type
@@ -60,7 +63,7 @@ public class TypeService {
         }
 
         List<Type> types = TypeUtil.splitToIndividualTypes(normalizedTypeString).stream()
-                .map(t -> this.convertToType(t, false))
+                .map(t -> this.convertToType(t, configurationService.getBoolean(Setting.SHOULD_USE_PRIMITIVES)))
                 .collect(Collectors.toList());
 
         String mergedTypeString = TypeUtil.mergeTypeStringAndListOfTypes(typeString, types);
