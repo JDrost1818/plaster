@@ -2,3 +2,4 @@
 exclude_paths:
   - src/test/**
   - src/main/java/github/jdrost1818/dev/**
+  - docs/**
